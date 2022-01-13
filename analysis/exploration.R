@@ -29,11 +29,6 @@ https://www.scirp.org/journal/paperinformation.aspx?paperid=113444
 https://dl.acm.org/doi/pdf/10.1145/3441452
 https://www.nature.com/articles/s41598-019-49278-8
 "
-## school closure
-"https://www.nature.com/articles/s41591-021-01571-8"
-"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8165592/pdf/rstb.2020.0277.pdf"
-"https://www.ijidonline.com/article/S1201-9712(20)30598-1/fulltext"
-"https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0239455"
 
 # libraries --------------------------------------------------------------------
 library(tidyverse)
@@ -392,7 +387,7 @@ NlinTS::causality.test(df_wide_changes$aged1to4, df_wide_changes$aged15to24, lag
 ### see corresponding paper https://www.sciencedirect.com/science/article/pii/S2352711019300779
 library(RTransferEntropy)
 df_model <- transfer_entropy(df_wide_7davg$aged1to4, df_wide_7davg$aged25to34);df_model
-df_model <- transfer_entropy(df_wide_7davg$aged1to4, df_wide_7davg$aged45to54);df_model
+df_model <- transfer_entropy(df_wide_7davg$aged1to4, df_wide_7davg$aged25to34);df_model
 df_model <- transfer_entropy(df_wide_7davg$aged15to24, df_wide_7davg$aged35to44);df_model
 df_model <- transfer_entropy(df_wide_7davg$aged15to24, df_wide_7davg$aged45to54);df_model
 df_model <- transfer_entropy(df$aged15to24, df$aged35to44);df_model
