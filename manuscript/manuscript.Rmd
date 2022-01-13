@@ -51,10 +51,40 @@ One of the strongest assumption of government actions is that by reducing social
 
 ## Causal Relationship Between Age Groups
 
-A second implicit believe regarding the effect of school closure on the spread of Covid-19 is that school not only has an effect on to the spread of the virus in children and teenagers but also has a knock-on effect on the spread of the virus in older age groups also called Secondary Attack Rate (SAR). The contaminated children and teenagers would bring the virus back at home and, then, they will contaminate their parents and relatives. Despite being reported in several clinical and epidemiological studies [@zhendong2020clinical; @siebach2021childhood], multiple research have shown that the SAR from children to household members was, in fact, lower than expected [@kim2021role; @ludvigsson2020children; @vanderhoek2020role; @heavey2020evidence]. However, the SAR of children and teenagers to the household member is likely to be age-dependent, with difference between infants, primary and secondary school children, and  college students [@grasleguen2021reopening]. A research investigating the contamination in the household network not only revealed an exceptional high rate of secondary contamination but also that these contamination happened when the school were closed [@sorianoarandes2021household].
+A second implicit believe regarding the effect of school closure on the spread of Covid-19 is that school not only has an effect on to the spread of the virus in children and teenagers but also has a knock-on effect on the spread of the virus in older age groups also called Secondary Attack Rate (SAR). The contaminated children and teenagers would bring the virus back at home and, then, they will contaminate their parents and relatives. For example, a research investigating the contamination in the household network not only revealed an exceptional high rate of secondary contamination but also that these contamination happened when the school were closed [@sorianoarandes2021household]. 
+
+Despite being reported in several clinical and epidemiological studies [@zhendong2020clinical; @siebach2021childhood], multiple research have shown that the SAR from children to household members was, in fact, lower than expected [@kim2021role; @ludvigsson2020children; @vanderhoek2020role; @heavey2020evidence]. However, the SAR of children and teenagers to the household member is likely to be age-dependent, with difference between infants, primary and secondary school children, and college students [@grasleguen2021reopening]. If a secondary transmission from children and teenagers to household member has a significant influence, then a temporal causality relationship between their evolution should be observed.
 
 Method
 ============
+
+## Observations
+
+The data were collected from the official daily publication of Covid-19 cases by the Irish Department of Health. They include the amount of daily cases for 10 age groups from March 4th, 2020 to January 1st, 2022. For each day during this period, school closure either due to a government decision or a public holiday is determined.
+
+## Data Pre-processing
+
+A 7-day rolling average of the day-by-by change in Covid-19 cases reported (i.e., lag 1) is used to evaluate the efficiency of school closures. This rolling average approximate the real day-by-by change in Covid-19 cases reported which can be artificially increased or decreased due to days under- or over-reporting cases such as weekend or bank holidays for example.
+
+## Data Analysis
+
+Four periods of school closure longer that 14 days have been identified. These four periods are used to fit a Generalised Additive Model (or GAM) using the R package mgcv [@wood2017generalized] in order to test the hypothesis of a significant change in the evolution of cases among age groups from 1 to 4, from 5 to 14, and from 15 to 24.
+
+By estimating the degree of smoothness of a Bayesian spline smoothing using restricted maximum likelihood estimation [@wood2011fast], GAMs allow the identification of dynamic patterns underlying the day-by-day changes in Covid-19 cases reported while taking into account the random effect of different age groups as follows:
+
+\begin{align}
+Y_{is} = \alpha_{i} + f(X_{s}) + a_{is} + \epsilon_{is}
+\end{align}
+
+\noindent where $i$ is an age group among the 10 age groups investigated and $s$ is the date corresponding to the day-by-day change in Covid-19 cases. $Y_{is}$ represents the day-by-day change in Covid-19 cases assuming a negative binomial distribution for the fitting [@loader2006local]. The response variable $Y_{is}$ includes a specific intercept for each age group ($\alpha_{i}$). A smooth effect over time $f(X_{s})$ is applied to model (Eq 1) to predict the nonlinear evolution of day-by-day change in Covid-19 cases. This smooth effect $f(X_{s})$ is built up in basic components, called the basis functions $b_{j}(X_{s})$, such that:
+
+\begin{align}
+f(X_{s})=\sum_{j=1}^{k}\beta_{j}\times b_{j}(X_{s})
+\end{align}
+
+\noindent where the regression parameters $\beta_{j}$ are estimated by penalized likelihood maximization.
+
+The model also includes the random effects term $a_{is}= Zb_{i}$ where $Z$ is a random effects matrix and $b_{i}$ is a vector of random effects described by $b_{i} \sim N(0, D)$. In this, $D$ represents a covariance matrix. The error term $\epsilon_{is}$ is assumed to be normally and independently distributed $\epsilon_{is} \sim N(0, \sigma^2)$.
 
 Contrary to Granger Causality, Transfer Entropy is robust to non-stationary time series [@silini2021fast]. The Transfer Entropy analysis of younger age groups daily changes in Covid-19 cases on older age groups is done using the R package RTransferEntropy [@behrendt2019rtransferentropy].
 
