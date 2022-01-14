@@ -80,7 +80,7 @@ df_long <- df |>
   mutate(
     covid_cases_7davg = rollmean(covid_cases, k = 7, fill = NA),
     covid_changes = covid_cases - lag(covid_cases),
-    covid_changes_7davg = rollmean(covid_cases, k = 7, fill = NA)
+    covid_changes_7davg = rollmean(covid_changes, k = 7, fill = NA)
   ) |> 
   ungroup()
 
@@ -222,15 +222,16 @@ df_long |>
   theme(legend.position = "none")
 
 df_long |> 
-  ggplot(aes(date, covid_changes_7davg, color = age_group)) +
-  geom_line(na.rm = TRUE) +
+  ggplot() +
+  geom_col(aes(date, covid_changes), na.rm = TRUE) +
+  geom_line(aes(date, covid_changes_7davg, color = age_group), na.rm = TRUE) +
   scale_x_date("Date") +
-  scale_y_continuous("Rolling Average of Day-by-day Changes in Covid Cases") +
+  scale_y_continuous("Day-by-day Changes in Covid Cases") +
   scale_color_manual(labels = age_name, values = age_color) +
   facet_grid(age_group ~ ., scales = "free") +
   labs(
-    title = "Rolling Average of Day-by-day Changes in COVID-19 Cases by Age Groups in Ireland",
-    subtitle = "7 Day Rolling Average of Data Lag 1",
+    title = "Day-by-day Changes in COVID-19 Cases by Age Groups in Ireland",
+    subtitle = "Raw Data (Bars) and 7 Day Rolling Average of Data Lag 1 (Lines)",
     caption = "Source: Irish Department of Health (last update 2022-01-01)",
     x = "Date", 
     y = "Covid Cases",

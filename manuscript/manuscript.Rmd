@@ -29,7 +29,13 @@ bibliography: ["bib/reference_list.bib"]
 #linenumbers: true
 #numbersections: true
 
-output: rticles::elsevier_article
+header-includes:
+  - \usepackage{booktabs}
+  - \usepackage{float}
+
+output:
+  bookdown::pdf_book:
+    base_format: rticles::elsevier_article
 knit: (function(input, ...) {
     rmarkdown::render(
       input,
@@ -39,6 +45,64 @@ knit: (function(input, ...) {
     )
   })
 ---
+
+(ref:overall) Evolution of confirmed Covid-19 cases in Ireland alongside with school closures.
+(ref:descriptive) Day-by-day changes in Covid-19 cases by age groups in Ireland: raw data (bars) and 7 aay rolling average (lines).
+
+```{r setup, include = FALSE}
+# libraries --------------------------------------------------------------------
+library(here)
+library(janitor)
+library(knitr)
+library(tidyverse)
+library(zoo)
+
+# options ----------------------------------------------------------------------
+set.seed(123) # Seed for random number generation
+options(scipen = 999) # disable sci number format
+opts_chunk$set(
+  cache.extra = rand_seed, 
+  message = FALSE, 
+  warning = FALSE, 
+  error = FALSE,
+  echo = FALSE, 
+  fig.retina = 3
+  )
+
+# variables --------------------------------------------------------------------
+age_order <- c("aged1to4", "aged5to14", "aged15to24", "aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65to74", "aged75to84", "aged85up")
+age_name  <- c("1 to 4",   "5 to 14",   "15 to 24",   "25 to 34",   "35 to 44",   "45 to 54",   "55 to 64",   "65 to 74",   "75 to 84",   "85 and up")
+age_color <- c("#999999",  "#E69F00",   "#56B4E9",    "#009E73",    "#F0E442",    "#0072B2",    "#D55E00",    "#CC79A7",    "#000000",    "#CAB2D6")
+
+# data -------------------------------------------------------------------------
+df <- 
+  read_csv(
+    here("data/age_groups.csv"), 
+    col_types = list(
+      .default = col_double(), 
+      Date = col_date(format = "%d/%m/%Y")
+    )
+  ) |> 
+  clean_names() |> 
+  rename(total_cases = total) |> 
+  arrange(date) |> 
+  mutate(
+    timeline = date - lag(date),  # check if gap between dates
+    total_changes = total_cases - lag(total_cases)
+  )
+
+df_long <- df |> 
+  select(c(date, starts_with("aged"))) |> 
+  pivot_longer(-date, names_to = "age_group", values_to = "covid_cases") |> 
+  mutate(age_group = factor(age_group, levels = age_order)) |> 
+  group_by(age_group) |> 
+  mutate(
+    covid_cases_7davg = rollmean(covid_cases, k = 7, fill = NA),
+    covid_changes = covid_cases - lag(covid_cases),
+    covid_changes_7davg = rollmean(covid_changes, k = 7, fill = NA)
+  ) |> 
+  ungroup()
+```
 
 Introduction
 ==========================
@@ -60,7 +124,7 @@ Method
 
 ## Observations
 
-The data were collected from the official daily publication of Covid-19 cases by the Irish Department of Health. They include the amount of daily cases for 10 age groups from March 4th, 2020 to January 1st, 2022. For each day during this period, school closure either due to a government decision or a public holiday is determined.
+The data were collected from the official daily publication of Covid-19 cases by the Irish Department of Health. They include the amount of daily cases for 10 age groups from `r format(min(df$date), "%B %d, %Y")` to `r format(max(df$date), "%B %d, %Y")`. For each day during this period, school closure either due to a government decision or a public holiday is determined.
 
 ## Data Pre-processing
 
@@ -68,9 +132,11 @@ A 7-day rolling average of the day-by-by change in Covid-19 cases reported (i.e.
 
 ## Data Analysis
 
+### Generalised Additive Model
+
 Four periods of school closure longer that 14 days have been identified. These four periods are used to fit a Generalised Additive Model (or GAM) using the R package mgcv [@wood2017generalized] in order to test the hypothesis of a significant change in the evolution of cases among age groups from 1 to 4, from 5 to 14, and from 15 to 24.
 
-By estimating the degree of smoothness of a Bayesian spline smoothing using restricted maximum likelihood estimation [@wood2011fast], GAMs allow the identification of dynamic patterns underlying the day-by-day changes in Covid-19 cases reported while taking into account the random effect of different age groups as follows:
+By estimating the degree of smoothness of a Bayesian spline smoothing using restricted maximum likelihood estimation [@wood2011fast], GAM identifies dynamic patterns underlying the day-by-day changes in Covid-19 cases reported while taking into account the random effect of different age groups as follows:
 
 \begin{align}
 Y_{is} = \alpha_{i} + f(X_{s}) + a_{is} + \epsilon_{is}
@@ -86,10 +152,86 @@ f(X_{s})=\sum_{j=1}^{k}\beta_{j}\times b_{j}(X_{s})
 
 The model also includes the random effects term $a_{is}= Zb_{i}$ where $Z$ is a random effects matrix and $b_{i}$ is a vector of random effects described by $b_{i} \sim N(0, D)$. In this, $D$ represents a covariance matrix. The error term $\epsilon_{is}$ is assumed to be normally and independently distributed $\epsilon_{is} \sim N(0, \sigma^2)$.
 
-Contrary to Granger Causality, Transfer Entropy is robust to non-stationary time series [@silini2021fast]. The Transfer Entropy analysis of younger age groups daily changes in Covid-19 cases on older age groups is done using the R package RTransferEntropy [@behrendt2019rtransferentropy].
+### Transfer Entropy 
+
+Transfer Entropy can be used to infer the temporal relationship between two time series $I$ and $J$. This measure indicates whether $J$ can be used to to reduce the uncertainty on the future of $I$ and, consequently, that $J$ causes $I$ [@schreiber2000measuring]. Contrary to Wiener-Granger Causality, Transfer Entropy is robust to non-stationary time series [@wollstadt2014efficient; @papana2016detecting]. The Transfer Entropy analysis of younger age groups daily changes in Covid-19 cases on older age groups using Shannon's calculation [@shannon1948mathematical] is done using the R package RTransferEntropy [@behrendt2019rtransferentropy].
+
+The influence of day-by-day changes in Covid-19 cases across all age groups is evaluated using Shannon's transfer entropy is given by:
+  
+\begin{align}
+  T_{J \rightarrow I}(k,l) = \sum_{i,j} p\left(i_{t+1}, i_t^{(k)}, j_t^{(l)}\right) \cdot log \left(\frac{p\left(i_{t+1}| i_t^{(k)}, j_t^{(l)}\right)}{p\left(i_{t+1}|i_t^{(k)}\right)}\right),
+\end{align}
+
+\noindent where $T_{J\rightarrow I}$ consequently measures the influence of the change dynamic from an eage group $J$ to another age group $I$. 
 
 Results
 ===================
+
+Overall, the trend of comfirm Covid-19 cases in Ireland is similar to those of other European countries (Figure \@ref(fig:overall)). Indeed it is possible to observe a significant increase corresponding to each of the 4 waves of transmission (March-April 2020, December 2020-January 2021, September-October 2021 and November-December 2021). 
+
+```{r overall, fig.width=4.5, fig.height=3, fig.cap="(ref:overall)", fig.pos = "!h"}
+overall_plot <- df |> 
+  ggplot(aes(date, total_cases)) +
+  geom_tile(aes(fill = factor(schools_closed), height = Inf), na.rm = TRUE, alpha = .4) +
+  geom_line(na.rm = TRUE) +
+  scale_x_date(date_breaks = "3 months", date_labels = "%b %y") +
+  scale_fill_manual(labels = c("Open", "Closed", "Na"), values = c("light blue", "red", "orange")) +
+  labs(
+    x = "Date", 
+    y = "Covid-19 Cases",
+    fill = "Schools"
+  ) +
+  theme_bw() +
+  theme(
+    legend.position = "bottom",
+    text = element_text(size = 10, family = "serif"),
+    axis.text = element_text(size = 10),
+    panel.background = element_rect(colour = "black", size = 0.1)
+  )
+
+overall_plot
+```
+
+The evolution of day-by-day changes in Covid-19 cases reveals some similarities across all age groups. However, the influence of each waves on the each groups has also some particularities (Figure \@ref(fig:descriptive)). For example, the first wave was more important among the oldest age groups whereas the third wave was more important among the youngest age groups.
+
+```{r descriptive, fig.width=4.5, fig.height=7, fig.cap="(ref:descriptive)"}
+descriptive_plot <- df_long |> 
+  ggplot() +
+  geom_col(aes(date, covid_changes), na.rm = TRUE) +
+  geom_line(aes(date, covid_changes_7davg, color = age_group), na.rm = TRUE) +
+  scale_x_date("Date", date_breaks = "3 months", date_labels = "%b %y") +
+  scale_y_continuous("Day-by-day Changes in Covid-19 Cases") +
+  scale_color_manual(labels = age_name, values = age_color) +
+  facet_grid(
+    age_group ~ ., 
+    scales = "free",
+    labeller = as_labeller(
+      c(
+        aged1to4 = "1 to 4",
+        aged5to14 = "5 to 14",
+        aged15to24 = "15 to 24", 
+        aged25to34 = "25 to 34", 
+        aged35to44 = "35 to 44", 
+        aged45to54 = "45 to 54", 
+        aged55to64 = "55 to 64", 
+        aged65to74 = "65 to 74", 
+        aged75to84 = "75 to 84", 
+        aged85up = "85 and up"
+        )
+      )
+  ) +
+  theme_bw() +
+  theme(
+    legend.position = "none",
+    strip.background = element_blank(),
+    strip.placement = "outside",
+    text = element_text(size = 10, family = "serif"),
+    axis.text = element_text(size = 10),
+    panel.background = element_rect(colour = "black", size = 0.1)
+  )
+
+descriptive_plot
+```
 
 Discussion
 ===================
