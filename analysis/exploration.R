@@ -36,7 +36,7 @@ library(here)
 library(janitor)
 library(zoo)
 library(mgcv)
-library(gratia)
+#  library(gratia)
 # variables --------------------------------------------------------------------
 age_order <- c("aged1to4", "aged5to14", "aged15to24", "aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65to74", "aged75to84", "aged85up")
 age_name  <- c("1 to 4",   "5 to 14",   "15 to 24",   "25 to 34",   "35 to 44",   "45 to 54",   "55 to 64",   "65 to 74",   "75 to 84",   "85 and up")
@@ -101,7 +101,12 @@ df_school_long <- df_school |>
     age_group = factor(age_group, levels = c("aged1to4", "aged5to14", "aged15to24"))
   ) |> 
   group_by(age_group) |> 
-  mutate(covid_changes = covid_cases - lag(covid_cases)) |> 
+  arrange(date) |> 
+  mutate(
+    covid_changes = covid_cases - lag(covid_cases),
+    covid_cases_7davg = rollmean(covid_cases, k = 7, fill = NA),
+    covid_changes_7davg = rollmean(covid_changes, k = 7, fill = NA)
+  ) |> 
   ungroup()
 
 df_school_long |> 
@@ -304,8 +309,39 @@ df_school_long |>
   theme_bw() +
   theme(legend.position = "bottom")
 
+df_wide_7davg <- df_long |> 
+  select(date, age_group, covid_cases_7davg) |> 
+  pivot_wider(names_from = age_group, values_from = covid_cases_7davg) |> 
+  drop_na() |> 
+  left_join(df_school |> select(!starts_with("aged")), by = "date")
+
+
 # modelling --------------------------------------------------------------------
 ## Generalised Additive Model ##################################################
+#99%
+gam_model <- 
+  gam(
+    covid_cases_7davg ~ age_group +
+      s(schools_time_since_closure, by = age_group) +
+      s(schools_time_since_closure, schools_closure_wave, bs = "fs"),
+    data = df_school_long,
+    method = "REML",
+    family = nb()
+  ); summary(gam_model)
+
+gam_results <- broom::tidy(gam_model) |> 
+  mutate(
+    term = c("s(date):1to4", "s(date):5to14", "s(date):15to24", "s(date*wave"),
+    p.value = scales::pvalue(p.value, accuracy = 0.001, add_p = FALSE, prefix = c("< ", "= ", "> ")),
+    across(where(is.numeric), round, 2),
+    print = glue::glue("$\chi^2({edf}) = {statistic}$, $p {p.value}$")
+  ) |> 
+  select(term, print) |> 
+  deframe()
+
+gam_summary <- summary(gam_model)
+scales::percent(gam_summary$dev.expl, accuracy = 0.1)
+# 96%
 df_model <- 
   gam(
     covid_cases ~ age_group +
@@ -314,12 +350,29 @@ df_model <-
     data = df_school_long,
     family = nb(), 
     method = "REML"
-  )
-summary(df_model)
-draw(df_model)
-appraise(df_model)
-k.check(df_model)
+  ); summary(df_model)
 
+# 65%
+df_model <- 
+  gam(
+    covid_changes_7davg ~ age_group +
+      s(schools_time_since_closure, by = age_group) +
+      s(schools_time_since_closure, schools_closure_wave, bs = "fs"),
+    data = df_long_7davg,
+    method = "REML"
+  ); summary(df_model)
+
+# 7%
+df_model <- 
+  gam(
+    covid_changes_cases ~ age_group +
+      s(schools_time_since_closure, by = age_group) +
+      s(schools_time_since_closure, schools_closure_wave, bs = "fs"),
+    data = df_long_changes,
+    method = "REML"
+  ); summary(df_model)
+
+# 3%
 df_model <- 
   gam(
     covid_changes ~ age_group +
@@ -327,8 +380,9 @@ df_model <-
       s(schools_time_since_closure, schools_closure_wave, bs = "fs"),
     data = df_school_long,
     method = "REML"
-  )
-summary(df_model)
+  ); summary(df_model)
+
+equatiomatic::extract_eq(df_model)
 draw(df_model)
 appraise(df_model)
 k.check(df_model)
@@ -344,39 +398,19 @@ k.check(df_model)
 # 
 # summary(df_model$gam)
 
-df_model <- 
-  gam(
-    covid_changes_cases ~ age_group +
-      s(schools_time_since_closure, by = age_group) +
-      s(schools_time_since_closure, schools_closure_wave, bs = "fs"),
-    data = df_long_changes,
-    method = "REML"
-  )
-summary(df_model)
-draw(df_model)
-appraise(df_model)
-k.check(df_model)
-
-df_model <- 
-  gam(
-    covid_changes_7davg ~ age_group +
-      s(schools_time_since_closure, by = age_group) +
-      s(schools_time_since_closure, schools_closure_wave, bs = "fs"),
-    data = df_long_7davg,
-    method = "REML",
-    family = nb()
-  )
-summary(df_model)
-draw(df_model)
-appraise(df_model)
-k.check(df_model)
-
 ## Augmented Dickey-Fuller Test ################################################
 ### significant p-value indicates the TS is stationary
 aTSA::adf.test(df_long$covid_changes)
 tseries::adf.test(na.omit(df_long$covid_changes), k = 6)
 aTSA::adf.test(df_long$covid_changes)
 tseries::adf.test(na.omit(df_long$covid_changes), k = 6)
+
+adf_res <- df_long |> 
+  group_by(age_group) |> 
+  summarise(
+    aTSA::adf.test(covid_changes, output = FALSE) |> 
+      map_df(as_tibble)
+  )
 
 ## Granger Causality ###########################################################
 ### for stationary time series only
@@ -387,11 +421,56 @@ NlinTS::causality.test(df_wide_changes$aged1to4, df_wide_changes$aged15to24, lag
 ### see package vignette https://cran.r-project.org/web/packages/RTransferEntropy/vignettes/transfer-entropy.html
 ### see corresponding paper https://www.sciencedirect.com/science/article/pii/S2352711019300779
 library(RTransferEntropy)
-df_model <- transfer_entropy(df_wide_7davg$aged1to4, df_wide_7davg$aged25to34);df_model
-df_model <- transfer_entropy(df_wide_7davg$aged1to4, df_wide_7davg$aged25to34);df_model
-df_model <- transfer_entropy(df_wide_7davg$aged15to24, df_wide_7davg$aged35to44);df_model
-df_model <- transfer_entropy(df_wide_7davg$aged15to24, df_wide_7davg$aged45to54);df_model
-df_model <- transfer_entropy(df$aged15to24, df$aged35to44);df_model
-df_model <- transfer_entropy(df$aged1to4, df$aged35to44);df_model
-df_model <- transfer_entropy(df$aged1to4, df$aged25to34);df_model
-df_model <- transfer_entropy(df$aged25to34, df$aged55to64);df_model
+
+fruits <- tibble(
+  type   = c("apple", "orange", "apple", "orange", "orange", "orange"),
+  year   = c(2010, 2010, 2012, 2010, 2010, 2012),
+  size  =  factor(
+    c("XS", "S",  "M", "S", "S", "M"),
+    levels = c("XS", "S", "M", "L")
+  ),
+  weights = rnorm(6, as.numeric(size) + 2)
+)
+
+
+test <- fruits %>% expand(type, year)
+
+df_model <- transfer_entropy(df_wide_changes$aged1to4, df_wide_changes$aged25to34);df_model
+df_model <- transfer_entropy(df_wide_changes$aged1to4, df_wide_changes$aged35to44);df_model
+df_model <- transfer_entropy(df_wide_changes$aged1to4, df_wide_changes$aged45to54);df_model
+df_model <- transfer_entropy(df_wide_changes$aged5to14, df_wide_changes$aged25to34);df_model
+df_model <- transfer_entropy(df_wide_changes$aged5to14, df_wide_changes$aged35to44);df_model
+df_model <- transfer_entropy(df_wide_changes$aged5to14, df_wide_changes$aged45to54);df_model
+df_model <- transfer_entropy(df_wide_changes$aged15to24, df_wide_changes$aged35to44);df_model
+df_model <- transfer_entropy(df_wide_changes$aged15to24, df_wide_changes$aged45to54);df_model
+
+test <- transfer_entropy(df_wide_changes$aged15to24, df_wide_changes$aged45to54)[["coef"]] |> 
+  as_tibble() |> 
+  mutate(direction = c("X->Y", "Y->X"))
+
+test <- expand_grid(
+  X = c("aged1to4", "aged5to14", "aged15to24", "aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65to74", "aged75to84", "aged85up"),
+  Y = c("aged1to4", "aged5to14", "aged15to24", "aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65to74", "aged75to84", "aged85up")
+)
+
+age_order <- c("aged1to4", "aged5to14", "aged15to24")
+
+te_agegroup <- function(var_x, var_y){
+  
+  var_x <- select(df_wide_changes, all_of(var_x))
+  var_y <- select(df_wide_changes, all_of(var_y))
+  
+  transfer_entropy(var_x, var_y)[["coef"]] |> 
+    as_tibble() |> 
+    mutate(direction = c("X->Y", "Y->X"))
+}
+
+test <- gtools::combinations(n = length(age_order), r = 2, v = age_order, repeats.allowed = FALSE) |> 
+  as_tibble() |> 
+  rename(
+    X = V1,
+    Y = V2
+  ) |> 
+  group_by(X, Y) |> 
+  summarise(te_agegroup(X, Y))
+

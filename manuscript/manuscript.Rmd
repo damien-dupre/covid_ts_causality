@@ -40,20 +40,25 @@ knit: (function(input, ...) {
     rmarkdown::render(
       input,
       output_dir = here::here("output"),
-      output_file = glue::glue("{xfun::sans_ext(input)}_{Sys.Date()}.pdf"),
+      output_file = glue::glue("{xfun::sans_ext(input)}.pdf"),
       envir = globalenv()
     )
   })
 ---
 
 (ref:overall) Evolution of confirmed Covid-19 cases in Ireland alongside with school closures.
-(ref:descriptive) Day-by-day changes in Covid-19 cases by age groups in Ireland: raw data (bars) and 7 aay rolling average (lines).
+(ref:descriptive) Evolution of confirmed Covid-19 cases by age groups in Ireland: raw data (bars) and 7 day rolling average (lines).
+(ref:gam) Standardized effect of the smooth term in Generalized Additive Model by age group.
+(ref:te) Matrix of Transfer Entropy coefficient and their corresponding p-value according every age group combination. Age groups on the x-axis are influencing the age groups on the y-axis ($X \rightarrow Y$). * $p < .05$, ** $p < .01$, *** $p < .001$.
 
 ```{r setup, include = FALSE}
 # libraries --------------------------------------------------------------------
 library(here)
 library(janitor)
 library(knitr)
+library(mgcv)
+library(patchwork)
+library(RTransferEntropy)
 library(tidyverse)
 library(zoo)
 
@@ -102,6 +107,68 @@ df_long <- df |>
     covid_changes_7davg = rollmean(covid_changes, k = 7, fill = NA)
   ) |> 
   ungroup()
+
+df_wide_changes <- df_long |> 
+  select(date, age_group, covid_changes) |> 
+  pivot_wider(names_from = age_group, values_from = covid_changes) |> 
+  drop_na()
+
+df_school <- df |> 
+  select(date, schools_closed) |> 
+  mutate(schools_closure_day = schools_closed - lag(schools_closed)) |> 
+  filter(schools_closure_day == 1) |> 
+  rowid_to_column("schools_closure_wave") |> 
+  full_join(df, by = c("date", "schools_closed")) |> 
+  arrange(date) |> 
+  fill(schools_closure_wave, .direction = "down") |> 
+  mutate(schools_closure_wave = replace_na(schools_closure_wave, 0)) |> 
+  group_by(schools_closure_wave) |> 
+  mutate(schools_time_since_closure = row_number()) |> 
+  ungroup()
+
+# df_school |> 
+#   filter(schools_closed == 1) |> 
+#   count(schools_closure_wave) |> 
+#   rename(schools_closure_wave_n = n)
+
+df_school_long <- df_school |> 
+  filter(schools_closed == 1) |> 
+  count(schools_closure_wave) |> 
+  rename(schools_closure_wave_n = n) |> 
+  right_join(df_school, by = "schools_closure_wave") |> 
+  filter(schools_closure_wave_n > 20 & schools_time_since_closure < 40) |> # keep only closure waves longer than 20 days but display only the first 39 days
+  pivot_longer(c("aged1to4", "aged5to14", "aged15to24"), names_to = "age_group", values_to = "covid_cases") |> 
+  mutate(
+    schools_closure_wave = factor(schools_closure_wave),
+    age_group = factor(age_group, levels = c("aged1to4", "aged5to14", "aged15to24"))
+  ) |> 
+  group_by(age_group) |> 
+  mutate(
+    covid_changes = covid_cases - lag(covid_cases),
+    covid_cases_7davg = rollmean(covid_cases, k = 7, fill = NA),
+    covid_changes_7davg = rollmean(covid_changes, k = 7, fill = NA)
+  ) |> 
+  ungroup()
+
+# df_school_long |> 
+#   filter(schools_closure_day == 1 & age_group == "aged1to4") |> 
+#   select(date, schools_closure_wave, schools_closure_wave_n)
+
+# analyses ---------------------------------------------------------------------
+gam_model <- 
+  gam(
+    covid_cases_7davg ~ age_group +
+      s(schools_time_since_closure, by = age_group) +
+      s(schools_time_since_closure, schools_closure_wave, bs = "fs"),
+    data = df_school_long,
+    method = "REML",
+    family = nb()
+  )
+
+# analyses ---------------------------------------------------------------------
+source(here("analysis/gam_analysis.R"))
+source(here("analysis/te_analysis.R"))
+
 ```
 
 Introduction
@@ -126,23 +193,19 @@ Method
 
 The data were collected from the official daily publication of Covid-19 cases by the Irish Department of Health. They include the amount of daily cases for 10 age groups from `r format(min(df$date), "%B %d, %Y")` to `r format(max(df$date), "%B %d, %Y")`. For each day during this period, school closure either due to a government decision or a public holiday is determined.
 
-## Data Pre-processing
-
-A 7-day rolling average of the day-by-by change in Covid-19 cases reported (i.e., lag 1) is used to evaluate the efficiency of school closures. This rolling average approximate the real day-by-by change in Covid-19 cases reported which can be artificially increased or decreased due to days under- or over-reporting cases such as weekend or bank holidays for example.
-
 ## Data Analysis
 
 ### Generalised Additive Model
 
-Four periods of school closure longer that 14 days have been identified. These four periods are used to fit a Generalised Additive Model (or GAM) using the R package mgcv [@wood2017generalized] in order to test the hypothesis of a significant change in the evolution of cases among age groups from 1 to 4, from 5 to 14, and from 15 to 24.
+Four periods of school closure longer that 14 days have been identified. These four periods are used to fit a Generalised Additive Model (or GAM) using the R package *mgcv* [@wood2017generalized] in order to test the hypothesis of a significant change in the evolution of cases among age groups from 1 to 4, from 5 to 14, and from 15 to 24 (Eq 1).
 
-By estimating the degree of smoothness of a Bayesian spline smoothing using restricted maximum likelihood estimation [@wood2011fast], GAM identifies dynamic patterns underlying the day-by-day changes in Covid-19 cases reported while taking into account the random effect of different age groups as follows:
+By estimating the degree of smoothness of a Bayesian spline smoothing using restricted maximum likelihood estimation [@wood2011fast], GAM identifies dynamic patterns underlying the evolution of Covid-19 cases reported while taking into account the random effect of different age groups as follows:
 
 \begin{align}
 Y_{is} = \alpha_{i} + f(X_{s}) + a_{is} + \epsilon_{is}
 \end{align}
 
-\noindent where $i$ is an age group among the 10 age groups investigated and $s$ is the date corresponding to the day-by-day change in Covid-19 cases. $Y_{is}$ represents the day-by-day change in Covid-19 cases assuming a negative binomial distribution for the fitting [@loader2006local]. The response variable $Y_{is}$ includes a specific intercept for each age group ($\alpha_{i}$). A smooth effect over time $f(X_{s})$ is applied to model (Eq 1) to predict the nonlinear evolution of day-by-day change in Covid-19 cases. This smooth effect $f(X_{s})$ is built up in basic components, called the basis functions $b_{j}(X_{s})$, such that:
+\noindent where $i$ is an age group among the 10 age groups investigated and $s$ is the date corresponding to the confirmed Covid-19 cases. $Y_{is}$ represents the confirmed Covid-19 cases assuming a negative binomial distribution for the fitting [@loader2006local]. The response variable $Y_{is}$ includes a specific intercept for each age group ($\alpha_{i}$). A smooth effect over time $f(X_{s})$ is applied to model (Eq 2) to predict the nonlinear evolution of Covid-19 cases. This smooth effect $f(X_{s})$ is built up in basic components, called the basis functions $b_{j}(X_{s})$, such that:
 
 \begin{align}
 f(X_{s})=\sum_{j=1}^{k}\beta_{j}\times b_{j}(X_{s})
@@ -154,20 +217,22 @@ The model also includes the random effects term $a_{is}= Zb_{i}$ where $Z$ is a 
 
 ### Transfer Entropy 
 
-Transfer Entropy can be used to infer the temporal relationship between two time series $I$ and $J$. This measure indicates whether $J$ can be used to to reduce the uncertainty on the future of $I$ and, consequently, that $J$ causes $I$ [@schreiber2000measuring]. Contrary to Wiener-Granger Causality, Transfer Entropy is robust to non-stationary time series [@wollstadt2014efficient; @papana2016detecting]. The Transfer Entropy analysis of younger age groups daily changes in Covid-19 cases on older age groups using Shannon's calculation [@shannon1948mathematical] is done using the R package RTransferEntropy [@behrendt2019rtransferentropy].
+Transfer Entropy (TE) can be used to infer the temporal relationship between two time series $I$ and $J$. This measure indicates whether $J$ can be used to to reduce the uncertainty on the future of $I$ and, consequently, that $J$ causes $I$ [@schreiber2000measuring]. As such, Granger causality is a special case of TE applied to times series that are jointly Gaussian distributed [@barnett2009granger]. Therefore, TE is a more robust analysis of times series especially when applied to the impact of age cohort in pandemic transmission [@kissler2020symbolic].
 
-The influence of day-by-day changes in Covid-19 cases across all age groups is evaluated using Shannon's transfer entropy is given by:
+The influence of the evolution in Covid-19 cases across all age groups is evaluated using Shannon's transfer entropy is given by:
   
 \begin{align}
   T_{J \rightarrow I}(k,l) = \sum_{i,j} p\left(i_{t+1}, i_t^{(k)}, j_t^{(l)}\right) \cdot log \left(\frac{p\left(i_{t+1}| i_t^{(k)}, j_t^{(l)}\right)}{p\left(i_{t+1}|i_t^{(k)}\right)}\right),
 \end{align}
 
-\noindent where $T_{J\rightarrow I}$ consequently measures the influence of the change dynamic from an eage group $J$ to another age group $I$. 
+\noindent where $T_{J\rightarrow I}$ consequently measures the influence of the change dynamic from an age group $J$ to another age group $I$ (Eq 3). 
+
+In order to observe how increase in daily numbers reported from a specific age group affects the other age groups, the day-by-day difference in Covid-19 confirmed cases (i.e., differences with a lag 1) is calculated. The use of day-by-day difference in Covid-19 confirmed cases satisfies the requirement of stationary for the calculation of Shannon's Transfer Entropy [@shannon1948mathematical]. The Transfer Entropy analysis of younger age groups daily changes in Covid-19 cases on older age groups is done using the R package *RTransferEntropy* [@behrendt2019rtransferentropy].
 
 Results
 ===================
 
-Overall, the trend of comfirm Covid-19 cases in Ireland is similar to those of other European countries (Figure \@ref(fig:overall)). Indeed it is possible to observe a significant increase corresponding to each of the 4 waves of transmission (March-April 2020, December 2020-January 2021, September-October 2021 and November-December 2021). 
+Overall, the trend of confirmed Covid-19 cases in Ireland is similar to those of other European countries (Figure \@ref(fig:overall)). Indeed it is possible to observe a significant increase corresponding to each of the 4 waves of transmission (March-April 2020, December 2020-January 2021, September-October 2021 and November-December 2021). 
 
 ```{r overall, fig.width=4.5, fig.height=3, fig.cap="(ref:overall)", fig.pos = "!h"}
 overall_plot <- df |> 
@@ -178,7 +243,7 @@ overall_plot <- df |>
   scale_fill_manual(labels = c("Open", "Closed", "Na"), values = c("light blue", "red", "orange")) +
   labs(
     x = "Date", 
-    y = "Covid-19 Cases",
+    y = "Covid-19 Cases in Ireland",
     fill = "Schools"
   ) +
   theme_bw() +
@@ -192,15 +257,15 @@ overall_plot <- df |>
 overall_plot
 ```
 
-The evolution of day-by-day changes in Covid-19 cases reveals some similarities across all age groups. However, the influence of each waves on the each groups has also some particularities (Figure \@ref(fig:descriptive)). For example, the first wave was more important among the oldest age groups whereas the third wave was more important among the youngest age groups.
+The evolution of Covid-19 cases reveals some similarities across all age groups. However, the influence of each waves on the each groups has also some particularities (Figure \@ref(fig:descriptive)). For example, the first wave was more important among the oldest age groups whereas the third wave was more important among the youngest age groups.
 
 ```{r descriptive, fig.width=4.5, fig.height=7, fig.cap="(ref:descriptive)"}
 descriptive_plot <- df_long |> 
   ggplot() +
-  geom_col(aes(date, covid_changes), na.rm = TRUE) +
-  geom_line(aes(date, covid_changes_7davg, color = age_group), na.rm = TRUE) +
+  geom_col(aes(date, covid_cases), na.rm = TRUE) +
+  geom_line(aes(date, covid_cases_7davg, color = age_group), na.rm = TRUE) +
   scale_x_date("Date", date_breaks = "3 months", date_labels = "%b %y") +
-  scale_y_continuous("Day-by-day Changes in Covid-19 Cases") +
+  scale_y_continuous("Confirmed Covid-19 Cases in Ireland") +
   scale_color_manual(labels = age_name, values = age_color) +
   facet_grid(
     age_group ~ ., 
@@ -233,10 +298,35 @@ descriptive_plot <- df_long |>
 descriptive_plot
 ```
 
+In order to evaluate the shape of the trend in the numbers of Covid-19 cases reported after the three school closure longer than 14 consecutive days, a GAM was fitted taking into account numbers for 1 to 4, 5 to 14, and 15 to 24 year old. The obtained results satisfy the requirements to fit this model which explains `r scales::percent(gam_summary$dev.expl, accuracy = 0.1)` of the deviance in Covid-19 cases. These results show no significant change in the evolution of cases for 1 to 4 year old (`r gam_results["s(date):1to4"]`) as well as for 5 to 14 year old (`r gam_results["s(date):5to14"]`). However, the smooth term of the GAM is significant for 15 to 24 year old (`r gam_results["s(date):15to24"]`), which indicates that the evolution of cases is not linear and, therefore, the school closure had a significant impact on the evolution of cases.
+
+```{r gam, fig.width=4.5, fig.height=3, fig.cap="(ref:gam)"}
+gam_plot_1 + gam_plot_2 + gam_plot_3
+```
+
+Before the Transfer Entropy analysis, an Augmented Dickey-Fuller has been applied on each age group in order to insure that the daily changes in Covid-19 cases are stationary. 
+
+```{r}
+# adf_res <- df_long |> 
+#   group_by(age_group) |> 
+#   summarise(
+#     aTSA::adf.test(covid_changes, output = FALSE) |> 
+#       map_df(as_tibble)
+#   )
+```
+
+```{r te, fig.width=4.5, fig.height=4.5, fig.cap="(ref:te)"}
+te_plot
+```
+
+
+
 Discussion
 ===================
 
 Knowledge about the transmission of the virus significantly improved with the amount of studies performed, especially in the case of how the virus behaves with children. From the early analyses showing that the virus was instantness in children [@li2020role], the results has changed to more nuanced position which states that the spread of the virus in children is moderate.
+
+This indicate mix results, while the school closure was ineffective in child care settings and primary school, the closure of secondary schools and colleges had an impact on Covid-19 transmission.
 
 Conclusion
 ===================
