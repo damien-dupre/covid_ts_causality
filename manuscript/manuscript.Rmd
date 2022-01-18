@@ -36,11 +36,15 @@ header-includes:
 output:
   bookdown::pdf_book:
     base_format: rticles::elsevier_article
+    keep_tex: false
+  bookdown::word_document2:
+    default
 knit: (function(input, ...) {
     rmarkdown::render(
       input,
       output_dir = here::here("output"),
-      output_file = glue::glue("{xfun::sans_ext(input)}.pdf"),
+      output_file = c(glue::glue("{xfun::sans_ext(input)}.pdf"), glue::glue("{xfun::sans_ext(input)}.docx")), 
+      output_format = "all",
       envir = globalenv()
     )
   })
@@ -67,6 +71,7 @@ set.seed(123) # Seed for random number generation
 options(scipen = 999) # disable sci number format
 opts_chunk$set(
   cache.extra = rand_seed, 
+  cache = TRUE,
   message = FALSE, 
   warning = FALSE, 
   error = FALSE,
@@ -222,10 +227,10 @@ Transfer Entropy (TE) can be used to infer the temporal relationship between two
 The influence of the evolution in Covid-19 cases across all age groups is evaluated using Shannon's transfer entropy is given by:
   
 \begin{align}
-  T_{J \rightarrow I}(k,l) = \sum_{i,j} p\left(i_{t+1}, i_t^{(k)}, j_t^{(l)}\right) \cdot log \left(\frac{p\left(i_{t+1}| i_t^{(k)}, j_t^{(l)}\right)}{p\left(i_{t+1}|i_t^{(k)}\right)}\right),
+  T_{X \rightarrow Y}(k,l) = \sum_{x,y} p\left(x_{t+1}, x_t^{(k)}, y_t^{(l)}\right) \cdot log \left(\frac{p\left(x_{t+1}| x_t^{(k)}, y_t^{(l)}\right)}{p\left(x_{t+1}|x_t^{(k)}\right)}\right),
 \end{align}
 
-\noindent where $T_{J\rightarrow I}$ consequently measures the influence of the change dynamic from an age group $J$ to another age group $I$ (Eq 3). 
+\noindent where $T_{X\rightarrow Y}$ consequently measures the influence of the change dynamic from an age group $X$ to another age group $Y$ (Eq 3). 
 
 In order to observe how increase in daily numbers reported from a specific age group affects the other age groups, the day-by-day difference in Covid-19 confirmed cases (i.e., differences with a lag 1) is calculated. The use of day-by-day difference in Covid-19 confirmed cases satisfies the requirement of stationary for the calculation of Shannon's Transfer Entropy [@shannon1948mathematical]. The Transfer Entropy analysis of younger age groups daily changes in Covid-19 cases on older age groups is done using the R package *RTransferEntropy* [@behrendt2019rtransferentropy].
 
@@ -298,7 +303,7 @@ descriptive_plot <- df_long |>
 descriptive_plot
 ```
 
-In order to evaluate the shape of the trend in the numbers of Covid-19 cases reported after the three school closure longer than 14 consecutive days, a GAM was fitted taking into account numbers for 1 to 4, 5 to 14, and 15 to 24 year old. The obtained results satisfy the requirements to fit this model which explains `r scales::percent(gam_summary$dev.expl, accuracy = 0.1)` of the deviance in Covid-19 cases. These results show no significant change in the evolution of cases for 1 to 4 year old (`r gam_results["s(date):1to4"]`) as well as for 5 to 14 year old (`r gam_results["s(date):5to14"]`). However, the smooth term of the GAM is significant for 15 to 24 year old (`r gam_results["s(date):15to24"]`), which indicates that the evolution of cases is not linear and, therefore, the school closure had a significant impact on the evolution of cases.
+In order to evaluate the shape of the trend in the numbers of Covid-19 cases reported after the three school closure longer than 14 consecutive days, a GAM was fitted taking into account numbers for 1 to 4, 5 to 14, and 15 to 24 year old. The obtained results satisfy the requirements to fit this model which explains `r scales::percent(gam_summary$dev.expl, accuracy = 0.1)` of the deviance in Covid-19 cases. These results show no significant change in the evolution of cases for 1 to 4 year old (`r gam_results["s(date):1to4"]`) as well as for 5 to 14 year old (`r gam_results["s(date):5to14"]`). However, the smooth term of the GAM is significant for 15 to 24 year old (`r gam_results["s(date):15to24"]`), which indicates that the evolution of cases is not linear and, therefore, the school closure had a significant impact on the evolution of cases (Figure \@ref(fig:gam)).
 
 ```{r gam, fig.width=4.5, fig.height=3, fig.cap="(ref:gam)"}
 gam_plot_1 + gam_plot_2 + gam_plot_3
@@ -319,17 +324,14 @@ Before the Transfer Entropy analysis, an Augmented Dickey-Fuller has been applie
 te_plot
 ```
 
+The results of the Transfer Entropy calculations between age groups are reported Figure \@ref(fig:te). The first observation is the absence of symmetry between influencing age groups (i.e., $X$) and influenced age groups (i.e., $Y$). Indeed, the change in Covid-19 cases in some age groups are influenced by other age groups but they are not reciprocally influencing these age groups. This is the case of 15 to 24 years old who appears to be contaminated by all age groups until 84 but there is no significant support that they are contaminating groups older than 34 which should include their parents and relatives.
 
-
-Discussion
+Discussion & Conclusion
 ===================
 
 Knowledge about the transmission of the virus significantly improved with the amount of studies performed, especially in the case of how the virus behaves with children. From the early analyses showing that the virus was instantness in children [@li2020role], the results has changed to more nuanced position which states that the spread of the virus in children is moderate.
 
-This indicate mix results, while the school closure was ineffective in child care settings and primary school, the closure of secondary schools and colleges had an impact on Covid-19 transmission.
-
-Conclusion
-===================
+This indicate mix results, while the school closure was ineffective in child care settings and primary school, the closure of secondary schools and colleges had an impact on Covid-19 transmission. This impact is probably responsible for the absence of reciprocity in the transmission of 15 to 24 age group. By drastically reducing their social contacts in secondary schools and colleges, this cohort has more been the target of Covid-19 contaminations rather than the vector of Covid-19.
 
 References {#references .unnumbered}
 ==========

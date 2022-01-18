@@ -85,15 +85,17 @@ te_plot <- bind_rows(te_results_XY,te_results_YX) |>
   ) |>
   arrange(X, Y) |>
   ggplot(aes(X, Y)) + 
-  geom_raster(aes(fill = te)) + 
+  geom_tile(aes(fill = te)) + 
   geom_text(aes(label = p_stars)) +
   scale_x_discrete("Influencing Age Groups", labels = age_name) +
   scale_y_discrete("Influenced Age Groups", labels = age_name) +
   scale_fill_gradient("Transfer Entropy", low = "grey90", high = "red") +
   theme_bw() +
   theme(
+    legend.position = "bottom",
     text = element_text(size = 10, family = "serif"),
     axis.text = element_text(size = 10),
+    axis.text.x = element_text(angle = 45, hjust = 1),
     panel.background = element_rect(colour = "black", size = 0.1)
   )
 
