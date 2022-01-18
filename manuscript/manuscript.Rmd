@@ -57,11 +57,11 @@ knit: (function(input, ...) {
 
 ```{r setup, include = FALSE}
 # libraries --------------------------------------------------------------------
+library(gratia)
 library(here)
 library(janitor)
 library(knitr)
 library(mgcv)
-library(patchwork)
 library(RTransferEntropy)
 library(tidyverse)
 library(zoo)
@@ -131,10 +131,10 @@ df_school <- df |>
   mutate(schools_time_since_closure = row_number()) |> 
   ungroup()
 
-# df_school |> 
-#   filter(schools_closed == 1) |> 
-#   count(schools_closure_wave) |> 
-#   rename(schools_closure_wave_n = n)
+df_school |>
+  filter(schools_closed == 1) |>
+  count(schools_closure_wave) |>
+  rename(schools_closure_wave_n = n)
 
 df_school_long <- df_school |> 
   filter(schools_closed == 1) |> 
@@ -155,25 +155,14 @@ df_school_long <- df_school |>
   ) |> 
   ungroup()
 
-# df_school_long |> 
-#   filter(schools_closure_day == 1 & age_group == "aged1to4") |> 
-#   select(date, schools_closure_wave, schools_closure_wave_n)
+df_school_long |>
+  filter(schools_closure_day == 1 & age_group == "aged1to4") |>
+  select(date, schools_closure_wave, schools_closure_wave_n)
+```
 
-# analyses ---------------------------------------------------------------------
-gam_model <- 
-  gam(
-    covid_cases_7davg ~ age_group +
-      s(schools_time_since_closure, by = age_group) +
-      s(schools_time_since_closure, schools_closure_wave, bs = "fs"),
-    data = df_school_long,
-    method = "REML",
-    family = nb()
-  )
-
-# analyses ---------------------------------------------------------------------
+```{r analyses, cache=TRUE}
 source(here("analysis/gam_analysis.R"))
 source(here("analysis/te_analysis.R"))
-
 ```
 
 Introduction
@@ -306,7 +295,7 @@ descriptive_plot
 In order to evaluate the shape of the trend in the numbers of Covid-19 cases reported after the three school closure longer than 14 consecutive days, a GAM was fitted taking into account numbers for 1 to 4, 5 to 14, and 15 to 24 year old. The obtained results satisfy the requirements to fit this model which explains `r scales::percent(gam_summary$dev.expl, accuracy = 0.1)` of the deviance in Covid-19 cases. These results show no significant change in the evolution of cases for 1 to 4 year old (`r gam_results["s(date):1to4"]`) as well as for 5 to 14 year old (`r gam_results["s(date):5to14"]`). However, the smooth term of the GAM is significant for 15 to 24 year old (`r gam_results["s(date):15to24"]`), which indicates that the evolution of cases is not linear and, therefore, the school closure had a significant impact on the evolution of cases (Figure \@ref(fig:gam)).
 
 ```{r gam, fig.width=4.5, fig.height=3, fig.cap="(ref:gam)"}
-gam_plot_1 + gam_plot_2 + gam_plot_3
+gam_plot
 ```
 
 Before the Transfer Entropy analysis, an Augmented Dickey-Fuller has been applied on each age group in order to insure that the daily changes in Covid-19 cases are stationary. 

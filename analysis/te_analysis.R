@@ -49,7 +49,7 @@ te_agegroup <- function(var_x, var_y){
   var_x <- select(df_wide_changes, all_of(var_x))
   var_y <- select(df_wide_changes, all_of(var_y))
   
-  transfer_entropy(var_x, var_y)[["coef"]] |> 
+  transfer_entropy(var_x, var_y, quiet = TRUE)[["coef"]] |> 
     as_tibble() |> 
     mutate(direction = c("X->Y", "Y->X"))
 }
@@ -98,7 +98,3 @@ te_plot <- bind_rows(te_results_XY,te_results_YX) |>
     axis.text.x = element_text(angle = 45, hjust = 1),
     panel.background = element_rect(colour = "black", size = 0.1)
   )
-
-
-
-

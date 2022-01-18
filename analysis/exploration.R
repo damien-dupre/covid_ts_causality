@@ -1,8 +1,3 @@
-################################################################################
-#            Influence of School Closure on COVID-19 Contaminations 
-#                     and Repercussions across Age Groups  
-################################################################################
-
 # references -------------------------------------------------------------------
 ## ts causality
 "https://towardsdatascience.com/inferring-causality-in-time-series-data-b8b75fe52c46"
@@ -31,12 +26,26 @@ https://www.nature.com/articles/s41598-019-49278-8
 "
 
 # libraries --------------------------------------------------------------------
-library(tidyverse)
 library(here)
+library(httr2)
+library(gratia)
 library(janitor)
-library(zoo)
+library(magrittr)
 library(mgcv)
-#  library(gratia)
+library(tidyverse)
+library(zoo)
+
+# api access -------------------------------------------------------------------
+req <- request("https://services1.arcgis.com/eNO7HHeQ3rUcBllm/arcgis/rest/services/CovidStatisticsProfileHPSCIrelandOpenData/FeatureServer/0/query?where=1%3D1&outFields=*&returnGeometry=false&outSR=4326&f=json") |> 
+  req_headers("Accept" = "application/json")
+resp <- req_perform(req) |> 
+  resp_body_json() |> 
+  use_series(features) |> 
+  flatten_dfr() |> 
+  clean_names() |> 
+  mutate(date = as.Date(as.POSIXct(date/1000, origin = "1970-01-01"))) |> 
+  select(c(date, starts_with("aged")))
+
 # variables --------------------------------------------------------------------
 age_order <- c("aged1to4", "aged5to14", "aged15to24", "aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65to74", "aged75to84", "aged85up")
 age_name  <- c("1 to 4",   "5 to 14",   "15 to 24",   "25 to 34",   "35 to 44",   "45 to 54",   "55 to 64",   "65 to 74",   "75 to 84",   "85 and up")
@@ -387,90 +396,4 @@ draw(df_model)
 appraise(df_model)
 k.check(df_model)
 
-# df_model <- 
-#   gamm(
-#     covid_cases ~ s(schools_time_since_closure, by = age_group) + age_group,
-#     data = df_school_long,
-#     random = list(schools_closure_wave =~ 1),
-#     family = poisson, 
-#     method = "REML"
-#   )
-# 
-# summary(df_model$gam)
-
-## Augmented Dickey-Fuller Test ################################################
-### significant p-value indicates the TS is stationary
-aTSA::adf.test(df_long$covid_changes)
-tseries::adf.test(na.omit(df_long$covid_changes), k = 6)
-aTSA::adf.test(df_long$covid_changes)
-tseries::adf.test(na.omit(df_long$covid_changes), k = 6)
-
-adf_res <- df_long |> 
-  group_by(age_group) |> 
-  summarise(
-    aTSA::adf.test(covid_changes, output = FALSE) |> 
-      map_df(as_tibble)
-  )
-
-## Granger Causality ###########################################################
-### for stationary time series only
-lmtest::grangertest(aged1to4 ~ aged15to24, order = 3, data = df_wide_changes)
-NlinTS::causality.test(df_wide_changes$aged1to4, df_wide_changes$aged15to24, lag = 3)$summary()
-
-## Transfer Entropy ############################################################
-### see package vignette https://cran.r-project.org/web/packages/RTransferEntropy/vignettes/transfer-entropy.html
-### see corresponding paper https://www.sciencedirect.com/science/article/pii/S2352711019300779
-library(RTransferEntropy)
-
-fruits <- tibble(
-  type   = c("apple", "orange", "apple", "orange", "orange", "orange"),
-  year   = c(2010, 2010, 2012, 2010, 2010, 2012),
-  size  =  factor(
-    c("XS", "S",  "M", "S", "S", "M"),
-    levels = c("XS", "S", "M", "L")
-  ),
-  weights = rnorm(6, as.numeric(size) + 2)
-)
-
-
-test <- fruits %>% expand(type, year)
-
-df_model <- transfer_entropy(df_wide_changes$aged1to4, df_wide_changes$aged25to34);df_model
-df_model <- transfer_entropy(df_wide_changes$aged1to4, df_wide_changes$aged35to44);df_model
-df_model <- transfer_entropy(df_wide_changes$aged1to4, df_wide_changes$aged45to54);df_model
-df_model <- transfer_entropy(df_wide_changes$aged5to14, df_wide_changes$aged25to34);df_model
-df_model <- transfer_entropy(df_wide_changes$aged5to14, df_wide_changes$aged35to44);df_model
-df_model <- transfer_entropy(df_wide_changes$aged5to14, df_wide_changes$aged45to54);df_model
-df_model <- transfer_entropy(df_wide_changes$aged15to24, df_wide_changes$aged35to44);df_model
-df_model <- transfer_entropy(df_wide_changes$aged15to24, df_wide_changes$aged45to54);df_model
-
-test <- transfer_entropy(df_wide_changes$aged15to24, df_wide_changes$aged45to54)[["coef"]] |> 
-  as_tibble() |> 
-  mutate(direction = c("X->Y", "Y->X"))
-
-test <- expand_grid(
-  X = c("aged1to4", "aged5to14", "aged15to24", "aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65to74", "aged75to84", "aged85up"),
-  Y = c("aged1to4", "aged5to14", "aged15to24", "aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65to74", "aged75to84", "aged85up")
-)
-
-age_order <- c("aged1to4", "aged5to14", "aged15to24")
-
-te_agegroup <- function(var_x, var_y){
-  
-  var_x <- select(df_wide_changes, all_of(var_x))
-  var_y <- select(df_wide_changes, all_of(var_y))
-  
-  transfer_entropy(var_x, var_y)[["coef"]] |> 
-    as_tibble() |> 
-    mutate(direction = c("X->Y", "Y->X"))
-}
-
-test <- gtools::combinations(n = length(age_order), r = 2, v = age_order, repeats.allowed = FALSE) |> 
-  as_tibble() |> 
-  rename(
-    X = V1,
-    Y = V2
-  ) |> 
-  group_by(X, Y) |> 
-  summarise(te_agegroup(X, Y))
 

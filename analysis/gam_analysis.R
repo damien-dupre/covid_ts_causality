@@ -1,5 +1,5 @@
 # model ------------------------------------------------------------------------
-gam_summary <- 
+gam_model <- 
   gam(
     covid_cases ~ age_group +
       s(schools_time_since_closure, by = age_group) +
@@ -7,7 +7,7 @@ gam_summary <-
     data = df_school_long,
     family = nb(), 
     method = "REML"
-  ); summary(gam_summary)
+  ); summary(gam_model)
 
 # statistics -------------------------------------------------------------------
 gam_summary <- summary(gam_model)
@@ -24,61 +24,29 @@ gam_results <-
   deframe()
 
 # visualisation ----------------------------------------------------------------
-gam_plot <- plot(gam_model, residuals = TRUE)
-
-gam_plot_indiv <- gam_plot[[1]]
-gam_plot_indiv_df <- as.data.frame(gam_plot_indiv[c("x", "se", "fit")])
-#gam_plot_indiv_point <- as.data.frame(gam_plot_indiv[c("raw", "p.resid")])
-gam_plot_1 <- ggplot(gam_plot_indiv_df, aes(x = x, y = fit)) +
-  # geom_rug(data = gam_plot_indiv_point, mapping = aes(x = raw, y = NULL), sides = "b") +
-  # geom_point(data = gam_plot_indiv_point, mapping = aes(x = raw, y = p.resid)) +
-  geom_ribbon(aes(ymin = fit - se, ymax = fit + se, y = NULL), alpha = 0.3) +
-  geom_line() +
+gam_plot <- 
+  confint(gam_model, "s(schools_time_since_closure):age_groupaged15to24") |> 
+  mutate(age_group = factor(age_group, levels = c("aged1to4", "aged5to14", "aged15to24"))) |> 
+  ggplot(aes(x = schools_time_since_closure)) +
+  geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.25) + 
+  geom_line(aes(y = est)) +
+  facet_wrap(
+    ~ age_group,
+    labeller = as_labeller(
+      c(
+        aged1to4 = "1 to 4",
+        aged5to14 = "5 to 14",
+        aged15to24 = "15 to 24"
+      )
+    )) +
   labs(
     x = "Days since School Closure", 
-    y = "Standardized Effect in Age 1 to 4"
+    y = "Standardized Effect"
   ) +
   theme_bw() +
   theme(
     text = element_text(size = 10, family = "serif"),
     axis.text = element_text(size = 10),
-    panel.background = element_rect(colour = "black", size = 0.1)
-  )
-
-gam_plot_indiv <- gam_plot[[2]]
-gam_plot_indiv_df <- as.data.frame(gam_plot_indiv[c("x", "se", "fit")])
-#gam_plot_indiv_point <- as.data.frame(gam_plot_indiv[c("raw", "p.resid")])
-gam_plot_2 <- ggplot(gam_plot_indiv_df, aes(x = x, y = fit)) +
-  # geom_rug(data = gam_plot_indiv_point, mapping = aes(x = raw, y = NULL), sides = "b") +
-  # geom_point(data = gam_plot_indiv_point, mapping = aes(x = raw, y = p.resid)) +
-  geom_ribbon(aes(ymin = fit - se, ymax = fit + se, y = NULL), alpha = 0.3) +
-  geom_line() +
-  labs(
-    x = "Days since School Closure", 
-    y = "Standardized Effect in Age 4 to 14"
-  ) +
-  theme_bw() +
-  theme(
-    text = element_text(size = 10, family = "serif"),
-    axis.text = element_text(size = 10),
-    panel.background = element_rect(colour = "black", size = 0.1)
-  )
-
-gam_plot_indiv <- gam_plot[[3]]
-gam_plot_indiv_df <- as.data.frame(gam_plot_indiv[c("x", "se", "fit")])
-#gam_plot_indiv_point <- as.data.frame(gam_plot_indiv[c("raw", "p.resid")])
-gam_plot_3 <- ggplot(gam_plot_indiv_df, aes(x = x, y = fit)) +
-  # geom_rug(data = gam_plot_indiv_point, mapping = aes(x = raw, y = NULL), sides = "b") +
-  # geom_point(data = gam_plot_indiv_point, mapping = aes(x = raw, y = p.resid)) +
-  geom_ribbon(aes(ymin = fit - se, ymax = fit + se, y = NULL), alpha = 0.3) +
-  geom_line() +
-  labs(
-    x = "Days since School Closure", 
-    y = "Standardized Effect in Age 15 to 24"
-  ) +
-  theme_bw() +
-  theme(
-    text = element_text(size = 10, family = "serif"),
-    axis.text = element_text(size = 10),
+    strip.background = element_blank(),
     panel.background = element_rect(colour = "black", size = 0.1)
   )
