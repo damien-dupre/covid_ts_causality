@@ -42,7 +42,7 @@ age_order <- c("aged1to4", "aged5to14", "aged15to24", "aged25to34", "aged35to44"
 
 # solution 2 -------------------------------------------------------------------
 library(future) # enable parallel processing for all future transfer_entropy calls
-plan(multiprocess)
+plan(multisession)
 
 te_agegroup <- function(var_x, var_y){
   
@@ -61,11 +61,7 @@ te_results <-
     v = age_order, 
     repeats.allowed = FALSE
   ) |> 
-  as_tibble() |> 
-  rename(
-    X = V1,
-    Y = V2
-  ) |> 
+  as_tibble(.name_repair = ~ c("X", "Y")) |> 
   group_by(X, Y) |> 
   summarise(te_agegroup(X, Y)) |> 
   ungroup()

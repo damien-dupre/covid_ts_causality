@@ -50,7 +50,7 @@ knit: (function(input, ...) {
   })
 ---
 
-(ref:overall) Evolution of confirmed Covid-19 cases in Ireland alongside with school closures.
+(ref:overall) Evolution of confirmed Covid-19 cases in Ireland alongside with school closures periods in grey areas (SC).
 (ref:descriptive) Evolution of confirmed Covid-19 cases by age groups in Ireland: raw data (bars) and 7 day rolling average (lines).
 (ref:gam) Standardized effect of the smooth term in Generalized Additive Model by age group.
 (ref:te) Matrix of Transfer Entropy coefficient and their corresponding p-value according every age group combination. Age groups on the x-axis are influencing the age groups on the y-axis ($X \rightarrow Y$). * $p < .05$, ** $p < .01$, *** $p < .001$.
@@ -131,11 +131,6 @@ df_school <- df |>
   mutate(schools_time_since_closure = row_number()) |> 
   ungroup()
 
-df_school |>
-  filter(schools_closed == 1) |>
-  count(schools_closure_wave) |>
-  rename(schools_closure_wave_n = n)
-
 df_school_long <- df_school |> 
   filter(schools_closed == 1) |> 
   count(schools_closure_wave) |> 
@@ -155,9 +150,18 @@ df_school_long <- df_school |>
   ) |> 
   ungroup()
 
-df_school_long |>
-  filter(schools_closure_day == 1 & age_group == "aged1to4") |>
-  select(date, schools_closure_wave, schools_closure_wave_n)
+df_school_closure <- df_school |> 
+  filter(schools_closed == 1) |> 
+  count(schools_closure_wave) |> 
+  rename(schools_closure_wave_n = n) |> 
+  right_join(df_school, by = "schools_closure_wave") |>
+  filter(schools_closure_day == 1) |>
+  select(schools_closure_start_date = date, schools_closure_wave, schools_closure_wave_n) |> 
+  mutate(
+    schools_closure_end_date = schools_closure_start_date + schools_closure_wave_n,
+    schools_closure_name = glue::glue("SC {schools_closure_wave}"),
+    x_text = schools_closure_start_date + (schools_closure_end_date - schools_closure_start_date)/2
+    )
 ```
 
 ```{r analyses, cache=TRUE}
@@ -229,12 +233,12 @@ Results
 Overall, the trend of confirmed Covid-19 cases in Ireland is similar to those of other European countries (Figure \@ref(fig:overall)). Indeed it is possible to observe a significant increase corresponding to each of the 4 waves of transmission (March-April 2020, December 2020-January 2021, September-October 2021 and November-December 2021). 
 
 ```{r overall, fig.width=4.5, fig.height=3, fig.cap="(ref:overall)", fig.pos = "!h"}
-overall_plot <- df |> 
-  ggplot(aes(date, total_cases)) +
-  geom_tile(aes(fill = factor(schools_closed), height = Inf), na.rm = TRUE, alpha = .4) +
-  geom_line(na.rm = TRUE) +
+overall_plot <-
+  ggplot() +
+  geom_rect(data = df_school_closure, aes(xmin = schools_closure_start_date, xmax = schools_closure_end_date, ymin = -Inf, ymax = Inf), alpha = 0.25) +
+  geom_text(data = df_school_closure, aes(label = schools_closure_name, x = x_text, y = Inf), vjust = 2, family = "serif", fontface = "bold", size = 3) +
+  geom_line(data = df, aes(date, total_cases), na.rm = TRUE) +
   scale_x_date(date_breaks = "3 months", date_labels = "%b %y") +
-  scale_fill_manual(labels = c("Open", "Closed", "Na"), values = c("light blue", "red", "orange")) +
   labs(
     x = "Date", 
     y = "Covid-19 Cases in Ireland",
@@ -256,6 +260,7 @@ The evolution of Covid-19 cases reveals some similarities across all age groups.
 ```{r descriptive, fig.width=4.5, fig.height=7, fig.cap="(ref:descriptive)"}
 descriptive_plot <- df_long |> 
   ggplot() +
+  geom_rect(data = df_school_closure, aes(xmin = schools_closure_start_date, xmax = schools_closure_end_date, ymin = -Inf, ymax = Inf), alpha = 0.25) +
   geom_col(aes(date, covid_cases), na.rm = TRUE) +
   geom_line(aes(date, covid_cases_7davg, color = age_group), na.rm = TRUE) +
   scale_x_date("Date", date_breaks = "3 months", date_labels = "%b %y") +
@@ -309,11 +314,11 @@ Before the Transfer Entropy analysis, an Augmented Dickey-Fuller has been applie
 #   )
 ```
 
-```{r te, fig.width=4.5, fig.height=4.5, fig.cap="(ref:te)"}
+The results of the Transfer Entropy calculations between age groups are reported Figure \@ref(fig:te). The first observation is the absence of symmetry between influencing age groups (i.e., $X$) and influenced age groups (i.e., $Y$). Indeed, the change in Covid-19 cases in some age groups are influenced by other age groups but they are not reciprocally influencing these age groups. This is the case of 15 to 24 years old who appears to be contaminated by all age groups until 84 but there is no significant support that they are contaminating groups older than 34 which should include their parents and relatives.
+
+```{r te, fig.width=4.5, fig.height=4.5, fig.cap="(ref:te)", fig.pos = "!h"}
 te_plot
 ```
-
-The results of the Transfer Entropy calculations between age groups are reported Figure \@ref(fig:te). The first observation is the absence of symmetry between influencing age groups (i.e., $X$) and influenced age groups (i.e., $Y$). Indeed, the change in Covid-19 cases in some age groups are influenced by other age groups but they are not reciprocally influencing these age groups. This is the case of 15 to 24 years old who appears to be contaminated by all age groups until 84 but there is no significant support that they are contaminating groups older than 34 which should include their parents and relatives.
 
 Discussion & Conclusion
 ===================
