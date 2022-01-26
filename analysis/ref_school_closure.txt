@@ -1,0 +1,3 @@
+https://en.unesco.org/sites/default/files/covid_impact_education.csv
+https://ourworldindata.org/covid-school-workplace-closures
+https://raw.githubusercontent.com/dianabaltazar/school-closures-COVID/main/Covid_merged.csv
