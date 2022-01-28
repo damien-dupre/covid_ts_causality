@@ -4,6 +4,7 @@ options(scipen = 999)
 
 # libraries --------------------------------------------------------------------
 library(janitor)
+library(mgcv)
 library(osfr)
 library(tidyverse)
 
@@ -27,17 +28,6 @@ df <-
   clean_names()
 
 file.remove("inputDB.zip")
-
-# "7tnfh" |> 
-#   osf_retrieve_file() |> 
-#   osf_download(conflicts = "overwrite", progress = TRUE, verbose = TRUE)
-# 
-# df <- "Output_5.zip" |> 
-#   read_csv(skip = 3, col_types = "ccccciiddd") |> 
-#   mutate(Date = as.Date(Date, format = "%d.%m.%Y")) |> 
-#   clean_names()
-# 
-# file.remove("Output_5.zip")
 
 df_check <- 
   read_csv("https://covid19.who.int/WHO-COVID-19-global-data.csv") |> 
@@ -66,7 +56,7 @@ df_france <- df |>
 
 df_france_check <- df_check |> 
   filter(country == "France") |> 
-  select(date = date_reported, cumulative_cases)
+  select(date, cumulative_cases)
 
 df_comparison <- 
   full_join(df_france, df_france_check, by = "date")
@@ -180,20 +170,44 @@ df_global_age_wide <- df_global_age |>
   select(date, country, cases_changes) |> 
   pivot_wider(names_from = country, values_from = cases_changes)
 
+df_school_closure_wave <- df_global |> 
+  select(date, country, schools_closed) |> 
+  group_by(country) |> 
+  mutate(schools_closure_day = schools_closed - lag(schools_closed)) |> 
+  filter(schools_closure_day == 1) |> 
+  mutate(schools_closure_wave = row_number())
+
 df_global_school <- df_global |> 
   select(date, country, schools_closed) |> 
   group_by(country) |> 
   mutate(schools_closure_day = schools_closed - lag(schools_closed)) |> 
   filter(schools_closure_day == 1) |> 
   mutate(schools_closure_wave = row_number()) |> 
-  full_join(df_global_age, by = c("date", "country")) |> 
-  group_by(country, age_grp) |> 
+  full_join(df_global, by = c("date", "country", "schools_closed")) |> 
+  group_by(country) |> 
+  arrange(date) |> 
   fill(schools_closure_wave, .direction = "down") |> 
   mutate(schools_closure_wave = replace_na(schools_closure_wave, 0)) |> 
-  group_by(country, age_grp, schools_closure_wave) |> 
+  group_by(country, schools_closure_wave) |> 
   mutate(schools_time_since_closure = row_number()) |> 
   ungroup()
 
+df_global_school_age <- df_global_school |> 
+  select(date, country, schools_closed, schools_closure_day, schools_closure_wave, schools_time_since_closure, who_region) |> 
+  full_join(df_global_age, by = c("date", "country"))
+
+df_global_school_age_long <- df_global_school |> 
+  filter(schools_closed == 1) |> 
+  count(country, schools_closure_wave) |> 
+  rename(schools_closure_wave_n = n) |> 
+  right_join(df_global_school_age, by = c("country", "schools_closure_wave")) |> 
+  filter(schools_closure_wave_n > 20 & schools_time_since_closure < 40) |> # keep only closure waves longer than 20 days but display only the first 39 days
+  filter(age_grp %in% c("aged0to4", "aged5to9", "aged10to14", "aged15to19", "aged20to24")) |> 
+  mutate(
+    age_grp = factor(age_grp),
+    country = factor(country)
+  ) |> 
+  filter(cases_changes >= 0)
 # visual exploration -----------------------------------------------------------
 df_global |> 
   ggplot() +
@@ -221,3 +235,76 @@ df_global_age |>
   facet_grid(age_grp ~ who_region) +
   theme_bw() +
   theme(legend.position = "bottom")
+
+library(future)
+plan(multisession)
+
+gam_model <- 
+  bam(
+    cases ~ age_grp + 
+      s(schools_time_since_closure, by = age_grp) +
+      s(schools_time_since_closure, schools_closure_wave, bs = "fs"),
+    data = df_global_school_age_long,
+    family = nb(), 
+    method = "REML",
+    control = list(nthreads = 4)
+  ); summary(gam_model)
+
+gam_model <- 
+  bam(
+    cases_changes ~ age_grp + 
+      s(schools_time_since_closure, by = age_grp) +
+      s(schools_time_since_closure, schools_closure_wave, bs = "fs"),
+    data = df_global_school_age_long,
+    family = nb(), 
+    method = "REML",
+    control = list(nthreads = 4)
+  ); summary(gam_model)
+
+gam_model <- 
+  bam(
+    cases ~ age_grp + country +
+      s(schools_time_since_closure, by = age_grp) +
+      s(schools_time_since_closure, by = country) +
+      s(schools_time_since_closure, schools_closure_wave, bs = "fs"),
+    data = df_global_school_age_long,
+    family = nb(), 
+    method = "REML",
+    control = list(nthreads = 4)
+  ); summary(gam_model)
+
+gam_model <- 
+  bam(
+    cases_changes ~ age_grp + country +
+      s(schools_time_since_closure, by = age_grp) +
+      s(schools_time_since_closure, by = country) +
+      s(schools_time_since_closure, schools_closure_wave, bs = "fs"),
+    data = df_global_school_age_long,
+    family = nb(), 
+    method = "REML",
+    control = list(nthreads = 4)
+  ); summary(gam_model)
+
+gam_model <- 
+  bam(
+    cases ~ age_grp * country +
+      s(schools_time_since_closure, by = interaction(age_grp, country)) +
+      s(schools_time_since_closure, schools_closure_wave, bs = "fs"),
+    data = df_global_school_age_long,
+    family = nb(), 
+    method = "REML",
+    control = list(nthreads = 4)
+  ); summary(gam_model)
+
+gam_model <- 
+  bam(
+    cases_changes ~ age_grp * country +
+      s(schools_time_since_closure, by = interaction(age_grp, country)) +
+      s(schools_time_since_closure, schools_closure_wave, bs = "fs"),
+    data = df_global_school_age_long,
+    family = nb(), 
+    method = "fREML",
+    discrete = TRUE, nthreads = 4
+  ); summary(gam_model)
+
+plot(modelbased::estimate_relation(gam_model, length = 100, preserve_range = FALSE))
