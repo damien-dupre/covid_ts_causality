@@ -1,6 +1,7 @@
 
 # options ----------------------------------------------------------------------
 options(scipen = 999)
+future::plan(multisession)
 
 # libraries --------------------------------------------------------------------
 library(janitor)
@@ -8,14 +9,8 @@ library(mgcv)
 library(osfr)
 library(tidyverse)
 
-# data -------------------------------------------------------------------------
-df_school_closure <- 
-  read_csv(
-    "https://en.unesco.org/sites/default/files/covid_impact_education.csv",
-    col_types = list(.default = col_character(), Date = col_date(format = "%d/%m/%Y"))) |> 
-  clean_names() |>
-  select(date, country, status)
-
+# raw data ---------------------------------------------------------------------
+  
   osf_retrieve_file("9dsfk") |> 
   osf_download(conflicts = "overwrite", progress = TRUE, verbose = TRUE)
 
@@ -29,55 +24,43 @@ df <-
 
 file.remove("inputDB.zip")
 
+df_school_closure <- 
+  read_csv(
+    "https://en.unesco.org/sites/default/files/covid_impact_education_full.csv",
+    col_types = list(.default = col_character(), Date = col_date(format = "%d/%m/%Y"))) |> 
+  clean_names() |>
+  select(date, country, status) |> 
+  mutate(country = case_when(
+    country == "Bolivia (Plurinational State of)" ~ "Bolivia",  
+    country == "Central African republic" ~ "Central African Republic",
+    country == "Iran (Islamic Republic of)" ~ "Iran",
+    country == "Republic of Moldova" ~ "Moldova",
+    country == "Republic of Korea" ~ "South Korea",
+    country == "United Kingdom of Great Britain and Northern Ireland" ~ "United Kingdom",
+    country == "United States of America" ~ "USA",
+    country == "Viet Nam" ~ "Vietnam",
+    TRUE ~ country
+    )
+  )
+
 df_check <- 
   read_csv("https://covid19.who.int/WHO-COVID-19-global-data.csv") |> 
   clean_names() |> 
-  rename(date = date_reported)
-
-# test -------------------------------------------------------------------------
-## integrity data Ireland: non exploitable
-df_ireland <- df |> 
-  filter(country == "Ireland")
-## full length data: 27 countries
-df |> 
-  group_by(country) |> 
-  summarise(
-    range = max(date) - min(date),
-    full_duration = if_else(
-      min(date) < as.Date("2020-04-01") & max(date) > as.Date("2021-12-01"), 
-      "OK", 
-      "Not OK"
+  rename(date = date_reported) |> 
+  mutate(country = case_when(
+    country == "Bolivia (Plurinational State of)" ~ "Bolivia",  
+    country == "Iran (Islamic Republic of)" ~ "Iran",
+    country == "occupied Palestinian territory, including east Jerusalem" ~ "Palestine",
+    country == "Republic of Moldova" ~ "Moldova",
+    country == "Republic of Korea" ~ "South Korea",
+    country == "United States of America" ~ "USA",
+    country == "Venezuela (Bolivarian Republic of)" ~ "Venezuela",
+    country == "Viet Nam" ~ "Vietnam",
+    TRUE ~ country
     )
-  ) |> 
-  count(full_duration)
-# cases similarity between files: example France
-df_france <- df |> 
-  filter(country == "France" & region == "All" & sex == "b" & age == "TOT" & measure == "Cases")
+  )
 
-df_france_check <- df_check |> 
-  filter(country == "France") |> 
-  select(date, cumulative_cases)
-
-df_comparison <- 
-  full_join(df_france, df_france_check, by = "date")
-
-ggplot(df_comparison) +
-  geom_line(aes(date, value), color = "blue") +
-  geom_line(aes(date, cumulative_cases), color = "red")
-
-# list countries with age groups by 5
-list_countries_with_age_by_5 <- df |> 
-  distinct(country, age) |> 
-  filter(str_detect(age, "^[0-9]*$")) |> 
-  mutate(age  = parse_number(age), availability = 1) |> 
-  filter(between(age, 0, 105), age %% 1 == 0) |> 
-  pivot_wider(names_from = country, values_from = availability) |> 
-  filter(age %in% seq(10, 70, by = 5)) %>% 
-  select(where(~!any(is.na(.)))) |> 
-  pivot_longer(-age, names_to = "country", values_to = "availability") |> 
-  distinct(country) |> 
-  pull(country)
-################################################################################
+# transformed data -------------------------------------------------------------
 df_global <- df |> 
   filter(
     date > as.Date("2020-03-01"),
@@ -208,6 +191,24 @@ df_global_school_age_long <- df_global_school |>
     country = factor(country)
   ) |> 
   filter(cases_changes >= 0)
+
+# test -------------------------------------------------------------------------
+## list countries with age groups by 5
+list_countries_with_age_by_5 <- df |> 
+  filter(
+    measure == "Cases",
+    metric == "Count"
+  ) |> 
+  distinct(country, age) |> 
+  filter(str_detect(age, "^[0-9]*$")) |> 
+  mutate(age = parse_number(age), availability = 1) |> 
+  filter(between(age, 0, 105), age %% 1 == 0) |> 
+  pivot_wider(names_from = country, values_from = availability) |> 
+  filter(age %in% seq(5, 50, by = 5)) %>% 
+  select(where(~!any(is.na(.)))) |> 
+  pivot_longer(-age, names_to = "country", values_to = "availability") |> 
+  distinct(country) |> 
+  pull(country)
 # visual exploration -----------------------------------------------------------
 df_global |> 
   ggplot() +

@@ -23,6 +23,7 @@ gam_results <-
   select(term, print) |> 
   deframe()
 
+#plot(modelbased::estimate_relation(gam_model, length = 100, preserve_range = FALSE))
 # visualisation ----------------------------------------------------------------
 gam_plot <- 
   confint(gam_model, "s(schools_time_since_closure):age_groupaged15to24") |> 

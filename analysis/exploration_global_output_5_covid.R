@@ -62,8 +62,8 @@ days_min_closure <- 21
 days_after_closure <- 28
 ## type of school closure to investigate
 period_closure_to_keep <- c(
-  "Partially open",
-  "Academic break",
+  #"Partially open",
+  #"Academic break",
   "Closed due to COVID-19"
   )
 ## remove all records from countries 
@@ -183,124 +183,44 @@ df_global_school_age_long_euro <- df_global_school_age_long_clean |>
     who_region == "EURO"
   )
 
-# test -------------------------------------------------------------------------
-# match countries
-country_school_closure <- df_school_closure |> 
-  distinct(country) |> 
-  mutate(df_school_closure_col = row_number())
-
-country_df <- df |> 
-  distinct(country) |> 
-  mutate(df_col = row_number())
-
-country_check <- df_check |> 
-  distinct(country) |> 
-  mutate(df_check_col = row_number())
-
-match_countries <- 
-  full_join(country_df, country_school_closure, by = "country") |> 
-  filter(is.na(df_school_closure_col) | is.na(df_col))
-
-match_countries <- 
-  full_join(country_df, country_check, by = "country") |> 
-  filter(is.na(df_col) | is.na(df_check_col))
-
-# n countries
-df |> distinct(country) |> nrow()
-## integrity data Ireland: exploitable
-df_ireland <- df |> 
-  filter(country == "Ireland")
-## full length data: 27 countries
-df |> 
-  group_by(country) |> 
-  summarise(
-    full_duration = if_else(
-      min(date) < as.Date("2020-04-01") & max(date) > as.Date("2021-12-01"), 
-      "OK", 
-      "Not OK"
+# analyses ---------------------------------------------------------------------
+sink("results/exploration_global_output_5_covid.txt", append = FALSE, split = TRUE)
+system.time(
+  gam_model <- 
+    bam(
+      daily_cases ~ age_grp + 
+        s(schools_time_since_closure, by = age_grp) +
+        s(schools_time_since_closure, schools_closure_wave, country, bs = "fs"),
+      data = df_global_school_age_long_euro,
+      family = nb(), 
+      method = "fREML",
+      control = list(nthreads = parallel::detectCores())
     )
-  ) |> 
-  count(full_duration)
-# cases similarity between files: example France
-df_france <- df |> 
-  filter(country == "France" & region == "All" & sex == "b") |> 
-  group_by(date) |> 
-  summarise(cumulative_cases_cal = sum(cases))
+); summary(gam_model)
 
-df_country_check <- df |> 
-  filter(country == "Finland")
-
-# df <- df |> 
-#   filter(!country %in% countries_to_filter)
-check_length <- df_global_school_age_long_euro |> 
-  count(country, schools_closure_wave, age_grp)
-
-test <- df_global_school_age_long_euro |> 
-  filter(country == "Greece")
-
-# visual exploration -----------------------------------------------------------
-df_global |> 
-  ggplot() +
-  geom_line(aes(date, cumulative_cases_cal), na.rm = TRUE, color = "red") +  
-  geom_line(aes(date, cumulative_cases), na.rm = TRUE, color = "blue") +
-  scale_x_date(date_breaks = "months" , date_labels = "%b-%y") +
-  facet_grid(who_region ~ ., scales = "free") +
-  theme_bw() +
-  theme(legend.position = "bottom")
-
-df_global |> 
-  ggplot(aes(date, cumulative_cases_cal, group = country)) +
-  geom_line(na.rm = TRUE) +  
-  scale_x_date(date_breaks = "months" , date_labels = "%b-%y") +
-  facet_grid(who_region ~ ., scales = "free") +
-  theme_bw() +
-  theme(legend.position = "none")
-
-df_global |> 
-  filter(who_region == "EURO") |> 
-  ggplot(aes(date, cumulative_cases_cal)) +
-  geom_line(na.rm = TRUE) +  
-  scale_x_date(date_breaks = "months" , date_labels = "%b-%y") +
-  facet_grid(country ~ ., scales = "free") +
-  theme_bw() +
-  theme(
-    strip.text.y.right = element_text(angle = 0),
-    legend.position = "none"
+system.time(
+  gam_model <- 
+    bam(
+      daily_cases ~ age_grp * country +
+        s(schools_time_since_closure, by = age_grp) +
+        s(schools_time_since_closure, by = country) +
+        s(schools_time_since_closure, schools_closure_wave, country, bs = "fs"),
+      data = df_global_school_age_long_euro,
+      family = nb(), 
+      method = "fREML",
+      control = list(nthreads = parallel::detectCores())
     )
+); summary(gam_model)
 
-df_global_age |> 
-  ggplot(aes(date, daily_cases, color = country)) +
-  geom_line(na.rm = TRUE) +
-  scale_x_date(date_breaks = "months" , date_labels = "%b-%y") +
-  theme_bw() +
-  theme(legend.position = "none")
-
-df_global_age |> 
-  ggplot(aes(date, daily_cases, color = country)) +
-  geom_line(na.rm = TRUE) +
-  scale_x_date(date_breaks = "months" , date_labels = "%b-%y") +
-  facet_grid(age_grp ~ .) +
-  theme_bw() +
-  theme(legend.position = "none")
-
-df_global_school_age_long_clean |> 
-  ggplot(aes(schools_time_since_closure, daily_cases, color = age_grp, shape = factor(schools_closure_wave))) +
-  facet_wrap( ~ country) +
-  geom_line() +
-  theme_bw() +
-  theme(legend.position = "bottom")
-
-df_global_school_age_long_euro |> 
-  ggplot(aes(schools_time_since_closure, daily_cases, color = age_grp, shape = factor(schools_closure_wave))) +
-  facet_wrap( ~ country) +
-  geom_line() +
-  theme_bw() +
-  theme(legend.position = "bottom")
-
-library(geofacet)
-df_global_school_age_long_euro |> 
-  ggplot(aes(schools_time_since_closure, daily_cases, color = age_grp, shape = factor(schools_closure_wave))) +
-  facet_geo(~ country, grid = "eu_grid1", scales = "free_y") +
-  geom_line() +
-  theme_bw() +
-  theme(legend.position = "bottom")
+system.time(
+  gam_model <- 
+    bam(
+      daily_cases ~ age_grp * country +
+        s(schools_time_since_closure, by = interaction(age_grp, country)) +
+        s(schools_time_since_closure, schools_closure_wave, country, bs = "fs"),
+      data = df_global_school_age_long_euro,
+      family = nb(), 
+      method = "fREML",
+      control = list(nthreads = parallel::detectCores())
+    )
+); summary(gam_model)

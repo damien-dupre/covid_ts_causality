@@ -1,0 +1,364 @@
+   user  system elapsed 
+125.364   2.202 127.973 
+
+Family: Negative Binomial(3.012) 
+Link function: log 
+
+Formula:
+daily_cases ~ age_grp + s(schools_time_since_closure, by = age_grp) + 
+    s(schools_time_since_closure, schools_closure_wave, country, 
+        bs = "fs")
+
+Parametric coefficients:
+                  Estimate Std. Error t value             Pr(>|t|)    
+(Intercept)        2.08780    0.59713   3.496             0.000476 ***
+age_grpaged10to14  0.89520    0.03161  28.322 < 0.0000000000000002 ***
+age_grpaged15to19  1.31055    0.03131  41.855 < 0.0000000000000002 ***
+age_grpaged20to24  1.67930    0.03111  53.980 < 0.0000000000000002 ***
+age_grpaged5to9    0.43982    0.03203  13.732 < 0.0000000000000002 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Approximate significance of smooth terms:
+                                                               edf  Ref.df       F             p-value    
+s(schools_time_since_closure):age_grpaged0to4                1.000   1.000   0.029              0.8647    
+s(schools_time_since_closure):age_grpaged10to14              1.000   1.000   0.018              0.8927    
+s(schools_time_since_closure):age_grpaged15to19              1.941   2.422   1.146              0.3328    
+s(schools_time_since_closure):age_grpaged20to24              2.573   3.203   3.178              0.0207 *  
+s(schools_time_since_closure):age_grpaged5to9                1.000   1.000   0.012              0.9118    
+s(schools_time_since_closure,schools_closure_wave,country) 283.450 356.000 107.931 <0.0000000000000002 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+R-sq.(adj) =  0.842   Deviance explained = 90.6%
+fREML =   8407  Scale est. = 1         n = 4620
+   user  system elapsed 
+500.563   9.707 511.310 
+
+Family: Negative Binomial(3.828) 
+Link function: log 
+
+Formula:
+daily_cases ~ age_grp * country + s(schools_time_since_closure, 
+    by = age_grp) + s(schools_time_since_closure, by = country) + 
+    s(schools_time_since_closure, schools_closure_wave, country, 
+        bs = "fs")
+
+Parametric coefficients:
+                                     Estimate Std. Error t value             Pr(>|t|)    
+(Intercept)                           3.29463    1.00174   3.289             0.001014 ** 
+age_grpaged10to14                     1.58771    0.14277  11.121 < 0.0000000000000002 ***
+age_grpaged15to19                     1.98447    0.14243  13.933 < 0.0000000000000002 ***
+age_grpaged20to24                     2.24623    0.14227  15.788 < 0.0000000000000002 ***
+age_grpaged5to9                       0.90225    0.14378   6.275    0.000000000383459 ***
+countryBelgium                        1.14613    1.81516   0.631             0.527799    
+countryBulgaria                      -3.88053    1.44014  -2.695             0.007076 ** 
+countryCroatia                       -3.23979    1.08439  -2.988             0.002827 ** 
+countryCzechia                       -2.54268    3.35436  -0.758             0.448480    
+countryEstonia                       -5.22883    1.00759  -5.189    0.000000220768544 ***
+countryFrance                         0.23118    1.00357   0.230             0.817826    
+countryGermany                       -1.17470    1.00491  -1.169             0.242482    
+countryGreece                        -0.24635    1.36732  -0.180             0.857027    
+countryNetherlands                    1.09515    1.09632   0.999             0.317882    
+countryPortugal                      -0.06704    1.02029  -0.066             0.947613    
+countrySlovakia                      -2.46273    1.00442  -2.452             0.014250 *  
+countrySpain                          0.19282    1.89041   0.102             0.918761    
+age_grpaged10to14:countryBelgium     -0.61948    0.17297  -3.581             0.000345 ***
+age_grpaged15to19:countryBelgium     -0.82180    0.17266  -4.760    0.000002003566717 ***
+age_grpaged20to24:countryBelgium     -0.96459    0.17251  -5.591    0.000000023937628 ***
+age_grpaged5to9:countryBelgium       -0.33993    0.17388  -1.955             0.050652 .  
+age_grpaged10to14:countryBulgaria    -0.17372    0.32825  -0.529             0.596681    
+age_grpaged15to19:countryBulgaria    -0.32950    0.32383  -1.018             0.308967    
+age_grpaged20to24:countryBulgaria    -0.28059    0.31947  -0.878             0.379838    
+age_grpaged5to9:countryBulgaria      -0.15179    0.34671  -0.438             0.661552    
+age_grpaged10to14:countryCroatia     -1.02743    0.22749  -4.516    0.000006459371834 ***
+age_grpaged15to19:countryCroatia     -0.46359    0.21654  -2.141             0.032340 *  
+age_grpaged20to24:countryCroatia     -0.39981    0.21448  -1.864             0.062378 .  
+age_grpaged5to9:countryCroatia       -1.09355    0.24577  -4.449    0.000008827755957 ***
+age_grpaged10to14:countryCzechia     -1.24433    0.25111  -4.955    0.000000749862965 ***
+age_grpaged15to19:countryCzechia     -1.38074    0.24659  -5.599    0.000000022862999 ***
+age_grpaged20to24:countryCzechia     -0.74211    0.23755  -3.124             0.001796 ** 
+age_grpaged5to9:countryCzechia       -0.88653    0.25875  -3.426             0.000618 ***
+age_grpaged10to14:countryEstonia     -0.75382    0.17374  -4.339    0.000014654968450 ***
+age_grpaged15to19:countryEstonia     -0.76110    0.17233  -4.417    0.000010273796936 ***
+age_grpaged20to24:countryEstonia     -0.73672    0.17154  -4.295    0.000017873912516 ***
+age_grpaged5to9:countryEstonia       -0.47656    0.17610  -2.706             0.006832 ** 
+age_grpaged10to14:countryFrance      -0.44438    0.16245  -2.736             0.006254 ** 
+age_grpaged15to19:countryFrance      -0.28509    0.16179  -1.762             0.078123 .  
+age_grpaged20to24:countryFrance      -0.16673    0.16147  -1.033             0.301880    
+age_grpaged5to9:countryFrance        -0.31743    0.16383  -1.938             0.052740 .  
+age_grpaged10to14:countryGermany     -1.18372    0.15960  -7.417    0.000000000000144 ***
+age_grpaged15to19:countryGermany     -1.17429    0.15912  -7.380    0.000000000000190 ***
+age_grpaged20to24:countryGermany     -0.89076    0.15883  -5.608    0.000000021741981 ***
+age_grpaged5to9:countryGermany       -0.76589    0.16066  -4.767    0.000001929395262 ***
+age_grpaged10to14:countryGreece      -0.57827    0.17749  -3.258             0.001130 ** 
+age_grpaged15to19:countryGreece      -0.57780    0.17677  -3.269             0.001090 ** 
+age_grpaged20to24:countryGreece      -0.45549    0.17636  -2.583             0.009834 ** 
+age_grpaged5to9:countryGreece        -0.38375    0.17912  -2.142             0.032219 *  
+age_grpaged10to14:countryNetherlands  0.05615    0.16375   0.343             0.731703    
+age_grpaged15to19:countryNetherlands  0.21489    0.16341   1.315             0.188558    
+age_grpaged20to24:countryNetherlands  0.07524    0.16326   0.461             0.644932    
+age_grpaged5to9:countryNetherlands   -0.05829    0.16475  -0.354             0.723505    
+age_grpaged10to14:countryPortugal    -1.46994    0.17745  -8.283 < 0.0000000000000002 ***
+age_grpaged15to19:countryPortugal    -1.47796    0.17650  -8.374 < 0.0000000000000002 ***
+age_grpaged20to24:countryPortugal    -1.30963    0.17585  -7.448    0.000000000000114 ***
+age_grpaged5to9:countryPortugal      -0.95953    0.17865  -5.371    0.000000082417875 ***
+age_grpaged10to14:countrySlovakia    -0.22781    0.16529  -1.378             0.168191    
+age_grpaged15to19:countrySlovakia    -0.42555    0.16474  -2.583             0.009823 ** 
+age_grpaged20to24:countrySlovakia    -0.25507    0.16417  -1.554             0.120331    
+age_grpaged5to9:countrySlovakia       0.05052    0.16681   0.303             0.762031    
+age_grpaged10to14:countrySpain       -1.45842    0.20416  -7.144    0.000000000001063 ***
+age_grpaged15to19:countrySpain       -1.45422    0.20300  -7.163    0.000000000000922 ***
+age_grpaged20to24:countrySpain       -1.17579    0.20205  -5.819    0.000000006344904 ***
+age_grpaged5to9:countrySpain         -0.93313    0.20531  -4.545    0.000005646337233 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Approximate significance of smooth terms:
+                                                                     edf        Ref.df      F             p-value    
+s(schools_time_since_closure):age_grpaged0to4                1.000009255   1.000018210  0.000              0.9994    
+s(schools_time_since_closure):age_grpaged10to14              1.000011569   1.000022645  0.000              0.9951    
+s(schools_time_since_closure):age_grpaged15to19              2.057501020   2.566331683  1.369              0.2692    
+s(schools_time_since_closure):age_grpaged20to24              2.711096121   3.373926605  3.787              0.0077 ** 
+s(schools_time_since_closure):age_grpaged5to9                1.000011421   1.000022416  0.000              1.0000    
+s(schools_time_since_closure):countryAustria                 1.000006597   1.000006862  0.010              0.9198    
+s(schools_time_since_closure):countryBelgium                 1.000012005   1.000014483  0.049              0.8244    
+s(schools_time_since_closure):countryBulgaria                1.000010580   1.000011096  0.011              0.9149    
+s(schools_time_since_closure):countryCroatia                 1.000012791   1.000014834  0.009              0.9227    
+s(schools_time_since_closure):countryCzechia                 0.000004723   0.000005202  0.027              0.9997    
+s(schools_time_since_closure):countryEstonia                 1.000089299   1.000143794  0.003              0.9591    
+s(schools_time_since_closure):countryFrance                  1.000032191   1.000057273  0.011              0.9155    
+s(schools_time_since_closure):countryGermany                 7.932783675   8.473799653  6.321 <0.0000000000000002 ***
+s(schools_time_since_closure):countryGreece                  1.000008483   1.000009464  0.002              0.9659    
+s(schools_time_since_closure):countryNetherlands             1.000009587   1.000016890  0.004              0.9509    
+s(schools_time_since_closure):countryPortugal                1.000010479   1.000011305  0.001              0.9817    
+s(schools_time_since_closure):countrySlovakia                8.022301044   8.337426776  9.289 <0.0000000000000002 ***
+s(schools_time_since_closure):countrySpain                   1.000010009   1.000010749  0.063              0.8013    
+s(schools_time_since_closure,schools_closure_wave,country) 259.354116046 332.000000000 64.851 <0.0000000000000002 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Rank: 616/617
+R-sq.(adj) =  0.826   Deviance explained = 92.3%
+fREML = 9989.6  Scale est. = 1         n = 4620
+    user   system  elapsed 
+2015.447  122.337 2139.642 
+
+Family: Negative Binomial(3.608) 
+Link function: log 
+
+Formula:
+daily_cases ~ age_grp * country + s(schools_time_since_closure, 
+    by = interaction(age_grp, country)) + s(schools_time_since_closure, 
+    schools_closure_wave, country, bs = "fs")
+
+Parametric coefficients:
+                                     Estimate Std. Error t value             Pr(>|t|)    
+(Intercept)                           3.30011    0.84442   3.908  0.00009446751154819 ***
+age_grpaged10to14                     1.58581    0.14669  10.811 < 0.0000000000000002 ***
+age_grpaged15to19                     1.98313    0.14635  13.551 < 0.0000000000000002 ***
+age_grpaged20to24                     2.24492    0.14619  15.356 < 0.0000000000000002 ***
+age_grpaged5to9                       0.90115    0.14767   6.102  0.00000000113890703 ***
+countryBelgium                        1.09197    1.58397   0.689             0.490614    
+countryBulgaria                      -3.92283    1.22622  -3.199             0.001389 ** 
+countryCroatia                       -3.17673    0.92145  -3.448             0.000571 ***
+countryCzechia                       -2.51372    3.17435  -0.792             0.428472    
+countryEstonia                       -5.18527    0.85139  -6.090  0.00000000122678215 ***
+countryFrance                         0.22026    0.84666   0.260             0.794759    
+countryGermany                       -1.16072    0.84812  -1.369             0.171204    
+countryGreece                        -0.21510    1.16819  -0.184             0.853921    
+countryNetherlands                    1.06077    0.94752   1.120             0.262985    
+countryPortugal                      -0.07351    0.86101  -0.085             0.931964    
+countrySlovakia                      -2.43609    0.84757  -2.874             0.004071 ** 
+countrySpain                          0.18344    1.77134   0.104             0.917523    
+age_grpaged10to14:countryBelgium     -0.61369    0.17782  -3.451             0.000564 ***
+age_grpaged15to19:countryBelgium     -0.81379    0.17751  -4.584  0.00000468451182377 ***
+age_grpaged20to24:countryBelgium     -0.96238    0.17737  -5.426  0.00000006090610549 ***
+age_grpaged5to9:countryBelgium       -0.33251    0.17871  -1.861             0.062874 .  
+age_grpaged10to14:countryBulgaria    -0.11296    0.35412  -0.319             0.749748    
+age_grpaged15to19:countryBulgaria    -0.27881    0.34992  -0.797             0.425633    
+age_grpaged20to24:countryBulgaria    -0.22895    0.34515  -0.663             0.507138    
+age_grpaged5to9:countryBulgaria      -0.11593    0.37560  -0.309             0.757612    
+age_grpaged10to14:countryCroatia     -1.04813    0.23188  -4.520  0.00000635050429361 ***
+age_grpaged15to19:countryCroatia     -0.46754    0.22049  -2.120             0.034025 *  
+age_grpaged20to24:countryCroatia     -0.40435    0.21845  -1.851             0.064246 .  
+age_grpaged5to9:countryCroatia       -1.10721    0.25007  -4.428  0.00000977223209109 ***
+age_grpaged10to14:countryCzechia     -1.26826    0.26422  -4.800  0.00000164094556601 ***
+age_grpaged15to19:countryCzechia     -1.40102    0.25924  -5.404  0.00000006862423473 ***
+age_grpaged20to24:countryCzechia     -0.74557    0.24762  -3.011             0.002620 ** 
+age_grpaged5to9:countryCzechia       -0.82687    0.26815  -3.084             0.002059 ** 
+age_grpaged10to14:countryEstonia     -0.75525    0.17799  -4.243  0.00002251414852456 ***
+age_grpaged15to19:countryEstonia     -0.76755    0.17658  -4.347  0.00001414082883005 ***
+age_grpaged20to24:countryEstonia     -0.74047    0.17578  -4.212  0.00002579075175872 ***
+age_grpaged5to9:countryEstonia       -0.47757    0.18033  -2.648             0.008121 ** 
+age_grpaged10to14:countryFrance      -0.43607    0.16688  -2.613             0.009006 ** 
+age_grpaged15to19:countryFrance      -0.27562    0.16622  -1.658             0.097364 .  
+age_grpaged20to24:countryFrance      -0.15351    0.16590  -0.925             0.354846    
+age_grpaged5to9:countryFrance        -0.31271    0.16825  -1.859             0.063158 .  
+age_grpaged10to14:countryGermany     -1.17271    0.16394  -7.153  0.00000000000099371 ***
+age_grpaged15to19:countryGermany     -1.16019    0.16347  -7.097  0.00000000000148647 ***
+age_grpaged20to24:countryGermany     -0.87253    0.16319  -5.347  0.00000009429003896 ***
+age_grpaged5to9:countryGermany       -0.75964    0.16497  -4.605  0.00000425273024917 ***
+age_grpaged10to14:countryGreece      -0.57681    0.18224  -3.165             0.001561 ** 
+age_grpaged15to19:countryGreece      -0.57680    0.18153  -3.177             0.001497 ** 
+age_grpaged20to24:countryGreece      -0.45430    0.18112  -2.508             0.012170 *  
+age_grpaged5to9:countryGreece        -0.38280    0.18384  -2.082             0.037380 *  
+age_grpaged10to14:countryNetherlands  0.06104    0.16831   0.363             0.716859    
+age_grpaged15to19:countryNetherlands  0.21917    0.16797   1.305             0.192028    
+age_grpaged20to24:countryNetherlands  0.07865    0.16782   0.469             0.639335    
+age_grpaged5to9:countryNetherlands   -0.05427    0.16929  -0.321             0.748527    
+age_grpaged10to14:countryPortugal    -1.46715    0.18225  -8.050  0.00000000000000107 ***
+age_grpaged15to19:countryPortugal    -1.47438    0.18131  -8.132  0.00000000000000055 ***
+age_grpaged20to24:countryPortugal    -1.30827    0.18067  -7.241  0.00000000000052514 ***
+age_grpaged5to9:countryPortugal      -0.95570    0.18342  -5.210  0.00000019746332385 ***
+age_grpaged10to14:countrySlovakia    -0.21408    0.16940  -1.264             0.206399    
+age_grpaged15to19:countrySlovakia    -0.41638    0.16887  -2.466             0.013714 *  
+age_grpaged20to24:countrySlovakia    -0.23474    0.16831  -1.395             0.163184    
+age_grpaged5to9:countrySlovakia       0.04698    0.17095   0.275             0.783473    
+age_grpaged10to14:countrySpain       -1.45544    0.21017  -6.925  0.00000000000501925 ***
+age_grpaged15to19:countrySpain       -1.44740    0.20885  -6.930  0.00000000000483122 ***
+age_grpaged20to24:countrySpain       -1.16942    0.20783  -5.627  0.00000001953275655 ***
+age_grpaged5to9:countrySpain         -0.93398    0.21141  -4.418  0.00001021708510326 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Approximate significance of smooth terms:
+                                                                                      edf  Ref.df      F
+s(schools_time_since_closure):interaction(age_grp, country)aged0to4.Austria         1.000   1.000  0.184
+s(schools_time_since_closure):interaction(age_grp, country)aged10to14.Austria       1.000   1.000  0.227
+s(schools_time_since_closure):interaction(age_grp, country)aged15to19.Austria       1.000   1.000  0.184
+s(schools_time_since_closure):interaction(age_grp, country)aged20to24.Austria       1.000   1.000  0.156
+s(schools_time_since_closure):interaction(age_grp, country)aged5to9.Austria         1.000   1.000  0.226
+s(schools_time_since_closure):interaction(age_grp, country)aged0to4.Belgium         1.000   1.000  0.819
+s(schools_time_since_closure):interaction(age_grp, country)aged10to14.Belgium       1.000   1.000  0.464
+s(schools_time_since_closure):interaction(age_grp, country)aged15to19.Belgium       1.650   2.049  0.852
+s(schools_time_since_closure):interaction(age_grp, country)aged20to24.Belgium       2.314   2.883  2.221
+s(schools_time_since_closure):interaction(age_grp, country)aged5to9.Belgium         1.000   1.000  0.572
+s(schools_time_since_closure):interaction(age_grp, country)aged0to4.Bulgaria        1.000   1.000  0.382
+s(schools_time_since_closure):interaction(age_grp, country)aged10to14.Bulgaria      1.000   1.000  0.236
+s(schools_time_since_closure):interaction(age_grp, country)aged15to19.Bulgaria      1.000   1.000  0.297
+s(schools_time_since_closure):interaction(age_grp, country)aged20to24.Bulgaria      1.000   1.000  0.281
+s(schools_time_since_closure):interaction(age_grp, country)aged5to9.Bulgaria        1.000   1.000  0.308
+s(schools_time_since_closure):interaction(age_grp, country)aged0to4.Croatia         1.000   1.000  0.376
+s(schools_time_since_closure):interaction(age_grp, country)aged10to14.Croatia       1.000   1.000  1.401
+s(schools_time_since_closure):interaction(age_grp, country)aged15to19.Croatia       1.000   1.000  0.517
+s(schools_time_since_closure):interaction(age_grp, country)aged20to24.Croatia       1.000   1.000  0.307
+s(schools_time_since_closure):interaction(age_grp, country)aged5to9.Croatia         1.000   1.000  0.093
+s(schools_time_since_closure):interaction(age_grp, country)aged0to4.Czechia         1.000   1.000  0.001
+s(schools_time_since_closure):interaction(age_grp, country)aged10to14.Czechia       1.000   1.000  0.005
+s(schools_time_since_closure):interaction(age_grp, country)aged15to19.Czechia       1.211   1.391  0.053
+s(schools_time_since_closure):interaction(age_grp, country)aged20to24.Czechia       1.000   1.000  0.005
+s(schools_time_since_closure):interaction(age_grp, country)aged5to9.Czechia         1.635   2.034  0.537
+s(schools_time_since_closure):interaction(age_grp, country)aged0to4.Estonia         1.000   1.000  2.973
+s(schools_time_since_closure):interaction(age_grp, country)aged10to14.Estonia       1.000   1.000  4.103
+s(schools_time_since_closure):interaction(age_grp, country)aged15to19.Estonia       1.161   1.301  1.175
+s(schools_time_since_closure):interaction(age_grp, country)aged20to24.Estonia       1.494   1.832  0.929
+s(schools_time_since_closure):interaction(age_grp, country)aged5to9.Estonia         1.000   1.000  3.358
+s(schools_time_since_closure):interaction(age_grp, country)aged0to4.France          1.000   1.000 55.276
+s(schools_time_since_closure):interaction(age_grp, country)aged10to14.France        1.000   1.000 45.424
+s(schools_time_since_closure):interaction(age_grp, country)aged15to19.France        1.000   1.000 43.499
+s(schools_time_since_closure):interaction(age_grp, country)aged20to24.France        1.207   1.385 37.343
+s(schools_time_since_closure):interaction(age_grp, country)aged5to9.France          1.000   1.000 51.383
+s(schools_time_since_closure):interaction(age_grp, country)aged0to4.Germany         1.000   1.000 35.665
+s(schools_time_since_closure):interaction(age_grp, country)aged10to14.Germany       1.000   1.000 34.165
+s(schools_time_since_closure):interaction(age_grp, country)aged15to19.Germany       1.000   1.000 31.225
+s(schools_time_since_closure):interaction(age_grp, country)aged20to24.Germany       1.000   1.000 30.738
+s(schools_time_since_closure):interaction(age_grp, country)aged5to9.Germany         1.000   1.000 36.022
+s(schools_time_since_closure):interaction(age_grp, country)aged0to4.Greece          1.000   1.000  0.091
+s(schools_time_since_closure):interaction(age_grp, country)aged10to14.Greece        1.000   1.000  0.105
+s(schools_time_since_closure):interaction(age_grp, country)aged15to19.Greece        1.000   1.000  0.115
+s(schools_time_since_closure):interaction(age_grp, country)aged20to24.Greece        1.000   1.000  0.120
+s(schools_time_since_closure):interaction(age_grp, country)aged5to9.Greece          1.000   1.000  0.098
+s(schools_time_since_closure):interaction(age_grp, country)aged0to4.Netherlands     1.691   2.102  0.784
+s(schools_time_since_closure):interaction(age_grp, country)aged10to14.Netherlands   1.000   1.000  0.179
+s(schools_time_since_closure):interaction(age_grp, country)aged15to19.Netherlands   1.000   1.000  0.198
+s(schools_time_since_closure):interaction(age_grp, country)aged20to24.Netherlands   1.826   2.276  0.932
+s(schools_time_since_closure):interaction(age_grp, country)aged5to9.Netherlands     1.000   1.000  0.138
+s(schools_time_since_closure):interaction(age_grp, country)aged0to4.Portugal        1.000   1.000  0.037
+s(schools_time_since_closure):interaction(age_grp, country)aged10to14.Portugal      1.000   1.000  1.576
+s(schools_time_since_closure):interaction(age_grp, country)aged15to19.Portugal      1.000   1.000  1.188
+s(schools_time_since_closure):interaction(age_grp, country)aged20to24.Portugal      1.000   1.000  0.303
+s(schools_time_since_closure):interaction(age_grp, country)aged5to9.Portugal        1.000   1.000  0.702
+s(schools_time_since_closure):interaction(age_grp, country)aged0to4.Slovakia        1.000   1.000 20.858
+s(schools_time_since_closure):interaction(age_grp, country)aged10to14.Slovakia      1.000   1.000 45.579
+s(schools_time_since_closure):interaction(age_grp, country)aged15to19.Slovakia      1.000   1.000 77.071
+s(schools_time_since_closure):interaction(age_grp, country)aged20to24.Slovakia      1.854   2.312 40.091
+s(schools_time_since_closure):interaction(age_grp, country)aged5to9.Slovakia        1.000   1.000 13.324
+s(schools_time_since_closure):interaction(age_grp, country)aged0to4.Spain           1.000   1.000  0.346
+s(schools_time_since_closure):interaction(age_grp, country)aged10to14.Spain         1.000   1.000  0.362
+s(schools_time_since_closure):interaction(age_grp, country)aged15to19.Spain         1.000   1.000  0.347
+s(schools_time_since_closure):interaction(age_grp, country)aged20to24.Spain         1.000   1.000  0.325
+s(schools_time_since_closure):interaction(age_grp, country)aged5to9.Spain           1.000   1.000  0.361
+s(schools_time_since_closure,schools_closure_wave,country)                        261.721 332.000 61.999
+                                                                                               p-value    
+s(schools_time_since_closure):interaction(age_grp, country)aged0to4.Austria                   0.667667    
+s(schools_time_since_closure):interaction(age_grp, country)aged10to14.Austria                 0.633979    
+s(schools_time_since_closure):interaction(age_grp, country)aged15to19.Austria                 0.667650    
+s(schools_time_since_closure):interaction(age_grp, country)aged20to24.Austria                 0.693264    
+s(schools_time_since_closure):interaction(age_grp, country)aged5to9.Austria                   0.634259    
+s(schools_time_since_closure):interaction(age_grp, country)aged0to4.Belgium                   0.365401    
+s(schools_time_since_closure):interaction(age_grp, country)aged10to14.Belgium                 0.495651    
+s(schools_time_since_closure):interaction(age_grp, country)aged15to19.Belgium                 0.428435    
+s(schools_time_since_closure):interaction(age_grp, country)aged20to24.Belgium                 0.078788 .  
+s(schools_time_since_closure):interaction(age_grp, country)aged5to9.Belgium                   0.449527    
+s(schools_time_since_closure):interaction(age_grp, country)aged0to4.Bulgaria                  0.536596    
+s(schools_time_since_closure):interaction(age_grp, country)aged10to14.Bulgaria                0.627101    
+s(schools_time_since_closure):interaction(age_grp, country)aged15to19.Bulgaria                0.586050    
+s(schools_time_since_closure):interaction(age_grp, country)aged20to24.Bulgaria                0.595925    
+s(schools_time_since_closure):interaction(age_grp, country)aged5to9.Bulgaria                  0.579095    
+s(schools_time_since_closure):interaction(age_grp, country)aged0to4.Croatia                   0.540026    
+s(schools_time_since_closure):interaction(age_grp, country)aged10to14.Croatia                 0.236627    
+s(schools_time_since_closure):interaction(age_grp, country)aged15to19.Croatia                 0.472101    
+s(schools_time_since_closure):interaction(age_grp, country)aged20to24.Croatia                 0.579383    
+s(schools_time_since_closure):interaction(age_grp, country)aged5to9.Croatia                   0.760566    
+s(schools_time_since_closure):interaction(age_grp, country)aged0to4.Czechia                   0.976723    
+s(schools_time_since_closure):interaction(age_grp, country)aged10to14.Czechia                 0.942202    
+s(schools_time_since_closure):interaction(age_grp, country)aged15to19.Czechia                 0.912215    
+s(schools_time_since_closure):interaction(age_grp, country)aged20to24.Czechia                 0.941872    
+s(schools_time_since_closure):interaction(age_grp, country)aged5to9.Czechia                   0.603007    
+s(schools_time_since_closure):interaction(age_grp, country)aged0to4.Estonia                   0.084727 .  
+s(schools_time_since_closure):interaction(age_grp, country)aged10to14.Estonia                 0.042877 *  
+s(schools_time_since_closure):interaction(age_grp, country)aged15to19.Estonia                 0.227702    
+s(schools_time_since_closure):interaction(age_grp, country)aged20to24.Estonia                 0.297958    
+s(schools_time_since_closure):interaction(age_grp, country)aged5to9.Estonia                   0.066956 .  
+s(schools_time_since_closure):interaction(age_grp, country)aged0to4.France        < 0.0000000000000002 ***
+s(schools_time_since_closure):interaction(age_grp, country)aged10to14.France      < 0.0000000000000002 ***
+s(schools_time_since_closure):interaction(age_grp, country)aged15to19.France      < 0.0000000000000002 ***
+s(schools_time_since_closure):interaction(age_grp, country)aged20to24.France      < 0.0000000000000002 ***
+s(schools_time_since_closure):interaction(age_grp, country)aged5to9.France        < 0.0000000000000002 ***
+s(schools_time_since_closure):interaction(age_grp, country)aged0to4.Germany       < 0.0000000000000002 ***
+s(schools_time_since_closure):interaction(age_grp, country)aged10to14.Germany     < 0.0000000000000002 ***
+s(schools_time_since_closure):interaction(age_grp, country)aged15to19.Germany     < 0.0000000000000002 ***
+s(schools_time_since_closure):interaction(age_grp, country)aged20to24.Germany     < 0.0000000000000002 ***
+s(schools_time_since_closure):interaction(age_grp, country)aged5to9.Germany       < 0.0000000000000002 ***
+s(schools_time_since_closure):interaction(age_grp, country)aged0to4.Greece                    0.763343    
+s(schools_time_since_closure):interaction(age_grp, country)aged10to14.Greece                  0.746059    
+s(schools_time_since_closure):interaction(age_grp, country)aged15to19.Greece                  0.734929    
+s(schools_time_since_closure):interaction(age_grp, country)aged20to24.Greece                  0.729371    
+s(schools_time_since_closure):interaction(age_grp, country)aged5to9.Greece                    0.754818    
+s(schools_time_since_closure):interaction(age_grp, country)aged0to4.Netherlands               0.496655    
+s(schools_time_since_closure):interaction(age_grp, country)aged10to14.Netherlands             0.671868    
+s(schools_time_since_closure):interaction(age_grp, country)aged15to19.Netherlands             0.656217    
+s(schools_time_since_closure):interaction(age_grp, country)aged20to24.Netherlands             0.465381    
+s(schools_time_since_closure):interaction(age_grp, country)aged5to9.Netherlands               0.710240    
+s(schools_time_since_closure):interaction(age_grp, country)aged0to4.Portugal                  0.847492    
+s(schools_time_since_closure):interaction(age_grp, country)aged10to14.Portugal                0.209476    
+s(schools_time_since_closure):interaction(age_grp, country)aged15to19.Portugal                0.275817    
+s(schools_time_since_closure):interaction(age_grp, country)aged20to24.Portugal                0.581740    
+s(schools_time_since_closure):interaction(age_grp, country)aged5to9.Portugal                  0.402183    
+s(schools_time_since_closure):interaction(age_grp, country)aged0to4.Slovakia                0.00000558 ***
+s(schools_time_since_closure):interaction(age_grp, country)aged10to14.Slovakia    < 0.0000000000000002 ***
+s(schools_time_since_closure):interaction(age_grp, country)aged15to19.Slovakia    < 0.0000000000000002 ***
+s(schools_time_since_closure):interaction(age_grp, country)aged20to24.Slovakia    < 0.0000000000000002 ***
+s(schools_time_since_closure):interaction(age_grp, country)aged5to9.Slovakia                  0.000265 ***
+s(schools_time_since_closure):interaction(age_grp, country)aged0to4.Spain                     0.556587    
+s(schools_time_since_closure):interaction(age_grp, country)aged10to14.Spain                   0.547563    
+s(schools_time_since_closure):interaction(age_grp, country)aged15to19.Spain                   0.556072    
+s(schools_time_since_closure):interaction(age_grp, country)aged20to24.Spain                   0.568906    
+s(schools_time_since_closure):interaction(age_grp, country)aged5to9.Spain                     0.548223    
+s(schools_time_since_closure,schools_closure_wave,country)                        < 0.0000000000000002 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+R-sq.(adj) =   0.83   Deviance explained = 91.9%
+fREML = 9366.3  Scale est. = 1         n = 4620
