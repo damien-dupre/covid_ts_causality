@@ -1,0 +1,269 @@
+---
+title: "Data Preprocessing Report"
+output:
+  bookdown::pdf_book:
+    toc: false
+---
+
+(ref:data-collected) Disparities between countries regarding the reporting of Covid-19 cases. Each dots is a valid observation.
+(ref:final-list) List of remaining countries and the corresponding number of target periods that can be analysed from each country.
+
+```{r setup, include=FALSE}
+# libraries --------------------------------------------------------------------
+library(janitor)
+library(kableExtra)
+library(knitr)
+library(osfr)
+library(tidyverse)
+
+# options ----------------------------------------------------------------------
+set.seed(123) # Seed for random number generation
+options(scipen = 999) # disable sci number format
+opts_chunk$set(
+  cache.extra = rand_seed, 
+  cache = TRUE,
+  message = FALSE, 
+  warning = FALSE, 
+  error = FALSE,
+  echo = FALSE, 
+  fig.retina = 3
+  )
+# variables --------------------------------------------------------------------
+## keep only closure waves longer than `days_min_closure` but display only the first `days_after_closure`
+days_min_closure <- 21
+days_after_closure <- 28
+## type of school closure to investigate
+period_closure_to_keep <- c(
+  #"Partially open",
+  "Academic break",
+  "Closed due to COVID-19"
+  )
+
+```
+
+```{r data, include=FALSE, cache=TRUE}
+osf_retrieve_file("7tnfh") |>
+  osf_download(conflicts = "overwrite", progress = TRUE, verbose = TRUE)
+
+df <- "Output_5.zip" |>
+  read_csv(skip = 3, col_types = "ccccciiddd") |>
+  mutate(Date = as.Date(Date, format = "%d.%m.%Y")) |>
+  clean_names()
+
+file.remove("Output_5.zip")
+
+df_school_closure <- 
+  read_csv(
+    "https://en.unesco.org/sites/default/files/covid_impact_education_full.csv",
+    col_types = list(.default = col_character(), Date = col_date(format = "%d/%m/%Y"))) |> 
+  clean_names() |>
+  select(date, country, status) |> 
+  mutate(country = case_when(
+    country == "Bolivia (Plurinational State of)" ~ "Bolivia",  
+    country == "Central African republic" ~ "Central African Republic",
+    country == "Iran (Islamic Republic of)" ~ "Iran",
+    country == "Republic of Moldova" ~ "Moldova",
+    country == "Republic of Korea" ~ "South Korea",
+    country == "United Kingdom of Great Britain and Northern Ireland" ~ "United Kingdom",
+    country == "United States of America" ~ "USA",
+    country == "Viet Nam" ~ "Vietnam",
+    TRUE ~ country
+    )
+  )
+
+df_check <- 
+  read_csv("https://covid19.who.int/WHO-COVID-19-global-data.csv") |> 
+  clean_names() |> 
+  rename(date = date_reported) |> 
+  mutate(country = case_when(
+    country == "Bolivia (Plurinational State of)" ~ "Bolivia",  
+    country == "Iran (Islamic Republic of)" ~ "Iran",
+    country == "occupied Palestinian territory, including east Jerusalem" ~ "Palestine",
+    country == "Republic of Moldova" ~ "Moldova",
+    country == "Republic of Korea" ~ "South Korea",
+    country == "United States of America" ~ "USA",
+    country == "Venezuela (Bolivarian Republic of)" ~ "Venezuela",
+    country == "Viet Nam" ~ "Vietnam",
+    TRUE ~ country
+    )
+  )
+```
+
+```{r transformed-data}
+df_global <- df |> 
+  filter(
+    date > as.Date("2019-12-31"),
+    region == "All",
+    sex == "b"
+  )
+df_global_cases <- df_global |> 
+  drop_na(cases)
+
+df_m_and_sd <- df_global_cases |> 
+  count(country, age) |> 
+  summarise(avg = round(mean(n), 0), sd = round(sd(n), 0))
+
+df_global_daily <- df_global_cases |> 
+  group_by(country, date) |> 
+  summarise(cumulative_cases_cal = sum(cases)) |> 
+  group_by(country) |> 
+  complete(date = full_seq(date, 1)) |> 
+  mutate(
+    timeline = date - lag(date),  # check if gap between dates
+    daily_cases = round(cumulative_cases_cal - lag(cumulative_cases_cal), 0)
+  ) |> 
+  ungroup()
+
+df_global_final <- df_global_daily |> 
+  left_join(df_school_closure, by = c("date", "country")) |> 
+  group_by(country) |> 
+  fill(status) |> 
+  ungroup() |> 
+  mutate(schools_closed = if_else(status %in% period_closure_to_keep, 1, 0)) |> 
+  drop_na(status) |> 
+  left_join(df_check, by = c("date", "country"))
+
+df_global_age <- df |> 
+  filter(
+    date > as.Date("2020-03-01"),
+    region == "All",
+    sex == "b"
+  ) |> 
+  mutate(
+    age_grp = case_when(
+      age == 0  ~ "aged0to4",
+      age == 5  ~ "aged5to9",
+      age == 10 ~ "aged10to14",
+      age == 15 ~ "aged15to19",
+      age == 20 ~ "aged20to24",
+      between(age, 25, 34) ~ "aged25to34",
+      between(age, 35, 44) ~ "aged35to44",
+      between(age, 45, 54) ~ "aged45to54",
+      between(age, 55, 64) ~ "aged55to64",
+      age > 64 ~ "aged64+"
+    )
+  ) |> 
+  group_by(country, date, age_grp) |> 
+  summarise(cumulative_cases_cal = sum(cases)) |> 
+  group_by(country, age_grp) |> 
+  complete(date = full_seq(date, 1)) |> 
+  mutate(
+    timeline = date - lag(date),  # check if gap between dates
+    daily_cases = round(cumulative_cases_cal - lag(cumulative_cases_cal), 0)
+  ) |> 
+  ungroup()
+
+df_school_closure_wave <- df_global_final |> 
+  select(date, country, schools_closed) |> 
+  group_by(country) |> 
+  mutate(schools_closure_day = schools_closed - lag(schools_closed)) |> 
+  filter(schools_closure_day == 1) |> 
+  mutate(schools_closure_wave = row_number())
+
+df_global_school <- df_school_closure_wave |> 
+  full_join(df_global_final, by = c("date", "country", "schools_closed")) |> 
+  group_by(country) |> 
+  arrange(date) |> 
+  fill(schools_closure_wave, .direction = "down") |> 
+  drop_na(schools_closure_wave) |> 
+  group_by(country, schools_closure_wave) |> 
+  mutate(schools_time_since_closure = row_number()) |> 
+  ungroup()
+
+df_global_school_age <- df_global_school |> 
+  select(date, country, who_region, starts_with("schools_")) |> 
+  full_join(df_global_age, by = c("date", "country"))
+
+df_global_school_length <- df_global_school |> 
+  filter(schools_closed == 1) |> 
+  count(country, schools_closure_wave) |> 
+  rename(schools_closure_wave_n = n)
+
+negative_daily_case_wave <- df_global_school_age |> 
+  filter(daily_cases < 0) |> 
+  distinct(country, schools_closure_wave)
+
+df_global_school_age_long <- df_global_school_length |> 
+  anti_join(negative_daily_case_wave, by = c("country", "schools_closure_wave")) |> 
+  right_join(df_global_school_age, by = c("country", "schools_closure_wave")) |> 
+  filter(
+    schools_closure_wave_n >= days_min_closure,
+    schools_time_since_closure <= days_after_closure,
+    age_grp %in% c("aged0to4", "aged5to9", "aged10to14", "aged15to19", "aged20to24")
+  )
+
+missing_daily_case_wave <- df_global_school_age_long |> 
+  group_by(country, age_grp, schools_closure_wave) |> 
+  summarise(n_missing = sum(is.na(daily_cases))) |> 
+  filter(n_missing != 0) |> 
+  distinct(country, schools_closure_wave)
+
+df_global_school_age_long_clean <- df_global_school_age_long |> 
+  anti_join(missing_daily_case_wave, by = c("country", "schools_closure_wave"))
+```
+
+## The COVerAGE-DB Project 
+
+The COVerAGE-DB project (https://osf.io/mpwjq/) contains 3 data files:
+
+- the "Input" data file which consist in the accumulation of all the raw data communicated by governments
+- the "Output_5" data file which is a projection of Covid-19 cases by group of 5 years
+- the "Output_10" data file which is a projection of Covid-19 cases by group of 10 years
+
+Given the necessity to distinguish finely between the age groups, the use of the "Output_5" data file appears as the best option. Indeed, contrary to the "Input" data file in which data can be given in different age brackets according to each countries' reporting standard, the "Output_5" data file provides an homogeneous analysis of Covid-19 cases by age brackets of 5 years using spline approximations when the data for this age bracket is not available for a country.
+
+## The "Output_5" Dataset
+
+The original data consist in `r nrow(df)` observations of 10 variables (`r nrow(distinct(df,country))` distinct *country*, *region* within the country, an unique observation *code*, the *date* of the observation, the *gender* which can be male, female or both, the *age* bracket by 5 years from 0 to 100, a confirmation of the *age interval* for each bracket, the total number of *cases* so far, the total number of *deaths* and the total number of *tests* performed).
+
+However, all the data are not available for each observation. For instance, out of the `r nrow(df)` observations, `r sum(is.na(df$cases))` are missing from the *cases* variable, `r sum(is.na(df$deaths))` are missing from the *deaths* variable, and `r sum(is.na(df$tests))` are missing from the *tests* variable.
+
+After having kept observation for whole countries, including both male and female cases and removing all artifact observations recorded before December 31st, 2019, date of the first official case reported in Wuhan, China, the data from `r nrow(distinct(df_global,country))` are then available. 
+
+Among the covid numbers reported, only the total number of cases is relevant for our analysis. However, after removing the missing values in the *cases* variable `r df_global |> drop_na(cases) |> pull(country) |> n_distinct()` countries are remaining.
+
+## Disparities Between Countries
+
+Even if each of the remaining `r df_global |> drop_na(cases) |> pull(country) |> n_distinct()` countries have exploitable *cases* number reported, the data file is not homogeneous in term of the period covered and regularity in reported data (Figure \@ref(fig:data-collected)).
+
+```{r data-collected, fig.height=8, fig.width=5, fig.cap="(ref:data-collected)"}
+df_global_cases |> 
+  ggplot(aes(date, country)) +
+  geom_point(size = 0.5) +
+  scale_x_date(date_breaks = "3 months", date_labels = "%b %y") +
+  labs(x = "Date", y = "") +
+  theme_bw() +
+  theme(text = element_text(size = 10, family = "serif"))
+```
+
+Regarding the period covered by the data collected, it appears that some countries have started their data reporting very late in the pandemic and other have ended their reporting very early. In average, each country have a total of `r df_m_and_sd[["avg"]]` days reported with a standard deviation of `r df_m_and_sd[["sd"]]`. However the most important problem is the continuity in the reporting of data. Some countries are missing days even weeks without any regularity that would explain this phenomenon. As a result, many more countries will be doped out from the pre-processing.
+
+## Changes in Covid-19 Cases After School Closures
+
+Despite the data of the remaining `r df_global |> drop_na(cases) |> pull(country) |> n_distinct()` countries are not homogeneous, none of them has been dropped so far for this reason. However, the following steps in the data pre-processing will lead to significantly reduce the amount of data analysed.
+
+First, the data reported are the total number of Covid-19 cases from the start to the pandemic to a specific date, also called total cases, but the analysis needs to be done using the daily number of cases at a specific date. The *daily number of cases* at a specific date $n_x$ is calculated with the difference between the total cases at a date $t_x$ and the total cases at a date $t_{x-1}$ (i.e., lag 1). If $t_x$ or $t_{x-1}$ is missing then $n_x$ will be missing as well. This brings the amount of countries to `r df_global_daily |> drop_na(daily_cases) |> pull(country) |> n_distinct()`.
+
+Second, our aim is to evaluate the change in daily cases after school closure. Therefore, countries time series are cut in multiple Target Period from the first day of the school closure to 28 days (4 weeks) after the closure whether the schools have reopen or not. However, to be taken into account, a Target Period should include a closure for at least 21 days after the closure. As a result, `r n_distinct(df_global_school_age_long$country)` countries have at least one of the research Target Period.
+
+Finally, due to the non-linear nature of spline approximation to calculate the daily cases, the difference between $t_x$ and $t_{x-1}$ can lead to negative values. However, because negative daily cases are not plausible, if a target period contains a negative value then the entire period is removed. In addition, ensure the quality of this analysis, Target Periods with missing values are also removed.
+
+As a result, the exploitable final number of countries is `r n_distinct(df_global_school_age_long_clean$country)`, each having a different amount of target period (Table \@ref(tab:final-list)).
+
+```{r final-list}
+df_global_school_age_long_clean |> 
+  distinct(country, schools_closure_wave) |> 
+  group_by(country) |> 
+  slice_max(schools_closure_wave) |> 
+  rename(Countries = country, `Nb of Target Periods` = schools_closure_wave) |> 
+  kable(
+    caption = "(ref:final-list)", 
+    booktabs = TRUE,
+    linesep = ""
+  ) |> 
+  kable_styling(
+    font_size = 8,
+    latex_options = c("hold_position")
+  )
+```
+

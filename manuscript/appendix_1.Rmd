@@ -1,0 +1,10 @@
+# Augmented Dickey-Fuller test for stationay timeseries
+
+```{r}
+adf_res <- df_long |>
+  group_by(age_group) |>
+  summarise(
+    aTSA::adf.test(covid_changes, output = FALSE) |>
+      map_df(as_tibble)
+  )
+```

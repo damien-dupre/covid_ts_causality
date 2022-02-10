@@ -1,5 +1,5 @@
 ---
-title: Influence of School Closure on COVID-19 Contaminations in Ireland and Repercussions across Age Groups
+title: Influence of School Closure on COVID-19 Contaminations in Europe and Repercussions across Age Groups
 author:
   - name: Edgar Morgenroth
     email: edgar.morgenroth@dcu.ie
@@ -30,8 +30,13 @@ bibliography: ["bib/reference_list.bib"]
 #numbersections: true
 
 header-includes:
-  - \usepackage{booktabs}
   - \usepackage{float}
+  - \usepackage{booktabs}
+  - \usepackage{longtable}
+  - \usepackage{threeparttable}
+  - \floatplacement{figure}{H}
+  - \floatplacement{table}{H}
+  - \usepackage{caption}
 
 output:
   bookdown::pdf_book:
@@ -50,21 +55,20 @@ knit: (function(input, ...) {
   })
 ---
 
-(ref:overall) Evolution of confirmed Covid-19 cases in Ireland alongside with school closures periods in grey areas (SC).
-(ref:descriptive) Evolution of confirmed Covid-19 cases by age groups in Ireland: raw data (bars) and 7 day rolling average (lines).
+(ref:overall) Cumulative COVID-19 cases number for selected European countries since the beginning of the pandemic. Source: COVerAGE-DB [@riffe2021data].
+(ref:descriptive) Periods of schools closure since the beginning of the COVID-19 pandemic for selected European countries and their reason: regular academic break vs. closure due to government decisions. Source: @unesco2022https.
 (ref:gam) Standardized effect of the smooth term in Generalized Additive Model by age group.
-(ref:te) Matrix of Transfer Entropy coefficient and their corresponding p-value according every age group combination. Age groups on the x-axis are influencing the age groups on the y-axis ($X \rightarrow Y$). * $p < .05$, ** $p < .01$, *** $p < .001$.
+(ref:te) Matrix of Transfer Entropy coefficients according every age group combination for each of the selected European country. Age groups on the x-axis are influencing the age groups on the y-axis ($X \rightarrow Y$). The significance of each Transfer Entropy coefficient is provided in the Appendix 2.
 
 ```{r setup, include = FALSE}
 # libraries --------------------------------------------------------------------
-library(gratia)
+library(ggrepel)
 library(here)
 library(janitor)
 library(knitr)
-library(mgcv)
-library(RTransferEntropy)
+library(osfr)
+library(scales)
 library(tidyverse)
-library(zoo)
 
 # options ----------------------------------------------------------------------
 set.seed(123) # Seed for random number generation
@@ -76,111 +80,160 @@ opts_chunk$set(
   warning = FALSE, 
   error = FALSE,
   echo = FALSE, 
-  fig.retina = 3
+  fig.retina = 3,
+  dev = "ragg_png"
   )
 
-# variables --------------------------------------------------------------------
-age_order <- c("aged1to4", "aged5to14", "aged15to24", "aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65to74", "aged75to84", "aged85up")
-age_name  <- c("1 to 4",   "5 to 14",   "15 to 24",   "25 to 34",   "35 to 44",   "45 to 54",   "55 to 64",   "65 to 74",   "75 to 84",   "85 and up")
-age_color <- c("#999999",  "#E69F00",   "#56B4E9",    "#009E73",    "#F0E442",    "#0072B2",    "#D55E00",    "#CC79A7",    "#000000",    "#CAB2D6")
+# raw data ---------------------------------------------------------------------
+# osf_retrieve_file("7tnfh") |>
+#   osf_download(conflicts = "overwrite", progress = TRUE, verbose = TRUE)
+# 
+# df <- "Output_5.zip" |>
+#   read_csv(skip = 3, col_types = "ccccciiddd") |>
+#   mutate(Date = as.Date(Date, format = "%d.%m.%Y")) |>
+#   clean_names()
+# 
+# file.remove("Output_5.zip")
+# 
+# write_csv(df, here("data/df.csv"))
+# 
+# df <- read_csv(here("data/df.csv"))
+# 
+# df_school_closure <- 
+#   read_csv(
+#     "https://en.unesco.org/sites/default/files/covid_impact_education_full.csv",
+#     col_types = list(.default = col_character(), Date = col_date(format = "%d/%m/%Y"))) |> 
+#   clean_names() |>
+#   select(date, country, status) |> 
+#   mutate(country = case_when(
+#     country == "Bolivia (Plurinational State of)" ~ "Bolivia",  
+#     country == "Central African republic" ~ "Central African Republic",
+#     country == "Iran (Islamic Republic of)" ~ "Iran",
+#     country == "Republic of Moldova" ~ "Moldova",
+#     country == "Republic of Korea" ~ "South Korea",
+#     country == "United Kingdom of Great Britain and Northern Ireland" ~ "United Kingdom",
+#     country == "United States of America" ~ "USA",
+#     country == "Viet Nam" ~ "Vietnam",
+#     TRUE ~ country
+#     )
+#   )
+# 
+# df_check <- 
+#   read_csv("https://covid19.who.int/WHO-COVID-19-global-data.csv") |> 
+#   clean_names() |> 
+#   rename(date = date_reported) |> 
+#   mutate(country = case_when(
+#     country == "Bolivia (Plurinational State of)" ~ "Bolivia",  
+#     country == "Iran (Islamic Republic of)" ~ "Iran",
+#     country == "occupied Palestinian territory, including east Jerusalem" ~ "Palestine",
+#     country == "Republic of Moldova" ~ "Moldova",
+#     country == "Republic of Korea" ~ "South Korea",
+#     country == "United States of America" ~ "USA",
+#     country == "Venezuela (Bolivarian Republic of)" ~ "Venezuela",
+#     country == "Viet Nam" ~ "Vietnam",
+#     TRUE ~ country
+#     )
+#   )
+# 
+# # variables --------------------------------------------------------------------
+# ## keep only closure waves longer than `days_min_closure` but display only the first `days_after_closure`
+# days_min_closure <- 21
+# days_after_closure <- 28
+# ## type of school closure to investigate
+# period_closure_to_keep <- c(
+#   #"Partially open",
+#   "Academic break",
+#   "Closed due to COVID-19"
+#   )
+# 
+# ## countries of interest
+# countries_of_interest <- c(
+#   "Austria", "Belgium", "Bulgaria", "Croatia", "Estonia", "France", 
+#   "Germany", "Greece", "Netherlands", "Portugal", "Slovakia", "Spain"
+#   )
+# 
+# # transformed data -------------------------------------------------------------
+# df_global <- df |> 
+#   filter(
+#     country %in% countries_of_interest,
+#     date > as.Date("2020-01-01"),
+#     region == "All",
+#     sex == "b"
+#   ) |> 
+#   group_by(country, date) |> 
+#   summarise(cumulative_cases_cal = sum(cases)) |> 
+#   group_by(country) |> 
+#   complete(date = full_seq(date, 1)) |> 
+#   mutate(
+#     timeline = date - lag(date),  # check if gap between dates
+#     daily_cases = round(cumulative_cases_cal - lag(cumulative_cases_cal), 0)
+#   ) |> 
+#   ungroup() |> 
+#   left_join(df_school_closure, by = c("date", "country")) |> 
+#   group_by(country) |> 
+#   fill(status) |> 
+#   ungroup() |> 
+#   mutate(schools_closed = if_else(status %in% period_closure_to_keep, 1, 0)) |> 
+#   drop_na(status) |> 
+#   left_join(df_check, by = c("date", "country"))
+# 
+# write_csv(df_global, here("data/df_global.csv"))
+# 
+# df_global_age <- df |> 
+#   filter(
+#     country %in% countries_of_interest,
+#     date > as.Date("2020-01-01"),
+#     region == "All",
+#     sex == "b"
+#   ) |> 
+#   mutate(
+#     age_grp = case_when(
+#       age == 0  ~ "aged0to4",
+#       age == 5  ~ "aged5to9",
+#       age == 10 ~ "aged10to14",
+#       age == 15 ~ "aged15to19",
+#       age == 20 ~ "aged20to24",
+#       between(age, 25, 34) ~ "aged25to34",
+#       between(age, 35, 44) ~ "aged35to44",
+#       between(age, 45, 54) ~ "aged45to54",
+#       between(age, 55, 64) ~ "aged55to64",
+#       age > 64 ~ "aged65+"
+#     )
+#   ) |> 
+#   group_by(country, date, age_grp) |> 
+#   summarise(cumulative_cases_cal = sum(cases)) |> 
+#   group_by(country, age_grp) |> 
+#   complete(date = full_seq(date, 1)) |> 
+#   mutate(
+#     timeline = date - lag(date),  # check if gap between dates
+#     daily_cases = round(cumulative_cases_cal - lag(cumulative_cases_cal), 0),
+#     daily_changes = daily_cases - lag(daily_cases)
+#   ) |> 
+#   ungroup()
+# 
+# write_csv(df_global_age, here("data/df_global_age.csv"))
 
-# data -------------------------------------------------------------------------
-df <- 
-  read_csv(
-    here("data/age_groups.csv"), 
-    col_types = list(
-      .default = col_double(), 
-      Date = col_date(format = "%d/%m/%Y")
-    )
-  ) |> 
-  clean_names() |> 
-  rename(total_cases = total) |> 
-  arrange(date) |> 
-  mutate(
-    timeline = date - lag(date),  # check if gap between dates
-    total_changes = total_cases - lag(total_cases)
-  )
-
-df_long <- df |> 
-  select(c(date, starts_with("aged"))) |> 
-  pivot_longer(-date, names_to = "age_group", values_to = "covid_cases") |> 
-  mutate(age_group = factor(age_group, levels = age_order)) |> 
-  group_by(age_group) |> 
-  mutate(
-    covid_cases_7davg = rollmean(covid_cases, k = 7, fill = NA),
-    covid_changes = covid_cases - lag(covid_cases),
-    covid_changes_7davg = rollmean(covid_changes, k = 7, fill = NA)
-  ) |> 
-  ungroup()
-
-df_wide_changes <- df_long |> 
-  select(date, age_group, covid_changes) |> 
-  pivot_wider(names_from = age_group, values_from = covid_changes) |> 
-  drop_na()
-
-df_school <- df |> 
-  select(date, schools_closed) |> 
-  mutate(schools_closure_day = schools_closed - lag(schools_closed)) |> 
-  filter(schools_closure_day == 1) |> 
-  rowid_to_column("schools_closure_wave") |> 
-  full_join(df, by = c("date", "schools_closed")) |> 
-  arrange(date) |> 
-  fill(schools_closure_wave, .direction = "down") |> 
-  mutate(schools_closure_wave = replace_na(schools_closure_wave, 0)) |> 
-  group_by(schools_closure_wave) |> 
-  mutate(schools_time_since_closure = row_number()) |> 
-  ungroup()
-
-df_school_long <- df_school |> 
-  filter(schools_closed == 1) |> 
-  count(schools_closure_wave) |> 
-  rename(schools_closure_wave_n = n) |> 
-  right_join(df_school, by = "schools_closure_wave") |> 
-  filter(schools_closure_wave_n > 20 & schools_time_since_closure < 40) |> # keep only closure waves longer than 20 days but display only the first 39 days
-  pivot_longer(c("aged1to4", "aged5to14", "aged15to24"), names_to = "age_group", values_to = "covid_cases") |> 
-  mutate(
-    schools_closure_wave = factor(schools_closure_wave),
-    age_group = factor(age_group, levels = c("aged1to4", "aged5to14", "aged15to24"))
-  ) |> 
-  group_by(age_group) |> 
-  mutate(
-    covid_changes = covid_cases - lag(covid_cases),
-    covid_cases_7davg = rollmean(covid_cases, k = 7, fill = NA),
-    covid_changes_7davg = rollmean(covid_changes, k = 7, fill = NA)
-  ) |> 
-  ungroup()
-
-df_school_closure <- df_school |> 
-  filter(schools_closed == 1) |> 
-  count(schools_closure_wave) |> 
-  rename(schools_closure_wave_n = n) |> 
-  right_join(df_school, by = "schools_closure_wave") |>
-  filter(schools_closure_day == 1) |>
-  select(schools_closure_start_date = date, schools_closure_wave, schools_closure_wave_n) |> 
-  mutate(
-    schools_closure_end_date = schools_closure_start_date + schools_closure_wave_n,
-    schools_closure_name = glue::glue("SC {schools_closure_wave}"),
-    x_text = schools_closure_start_date + (schools_closure_end_date - schools_closure_start_date)/2
-    )
+df_global <- read_csv(here("data/df_global.csv"))
+df_global_age <- read_csv(here("data/df_global_age.csv"))
 ```
 
-```{r analyses, cache=TRUE}
-source(here("analysis/gam_analysis.R"))
-source(here("analysis/te_analysis.R"))
+```{r analyses, cache=FALSE}
+source(here("analysis/gam_analysis_europe.R"))
+source(here("analysis/te_analysis_europe.R"))
 ```
 
 Introduction
 ==========================
 
-Since the onset of Covid-19, contradicting messages are circulating about the spread of the virus in schools. Sometimes presented as a safe environment [@falk2021covid; @walger2020children], at other times designed as an aggravating factor of the pandemic [@lopez2020transmission; @meuris2021transmission], child care facilities and schools have been closed multiple times in most countries to protect the public health. However, the efficacy of school closure is still unknown and little is know about how Covid-19 Cases spread across age cohort and especially from the younger cohort being at school to older cohorts including parents, grand parents and relatives. Some evidence show that school is an influential environment where the virus is likely to spread. Once contaminated at school, a common spread believe is that the children and teenagers will then contaminate their parents. Therefore, among the political actions to stop the spread of Covid-19, the closure of primary and secondary schools was widely adopted worldwide. This research aims to investigate 1) the effect of school closure on the evolution of Covid-19 cases and 2) the temporal relationship between the rise of cases in children and teenagers with the rise of cases of older age group.
+Since the onset of COVID-19, contradicting messages are circulating about the spread of the virus in schools. Sometimes presented as a safe environment [@falk2021covid; @walger2020children], at other times designed as an aggravating factor of the pandemic [@lopez2020transmission; @meuris2021transmission], child care facilities and schools have been closed multiple times in most countries to protect the public health. However, the efficacy of school closure is still unknown and little is know about how COVID-19 Cases spread across age cohort and especially from the younger cohort being at school to older cohorts including parents, grand parents and relatives. Some evidence show that school is an influential environment where the virus is likely to spread. Once contaminated at school, a common spread believe is that the children and teenagers will then contaminate their parents. Therefore, among the political actions to stop the spread of COVID-19, the closure of primary and secondary schools was widely adopted worldwide. This research aims to investigate 1) the effect of school closure on the evolution of COVID-19 cases and 2) the temporal relationship between the rise of cases in children and teenagers with the rise of cases of older age group.
 
 ## Influence of School Closure
 
-One of the strongest assumption of government actions is that by reducing social contact will reduce the spread of the virus. Therefore, it is legitimate to believe that by closing schools, a reduction of the contaminations would be observed in the younger age groups. However, the efficiency of school closure on the reduction of Covid-19 cases is still questioned. While some research have observed that school closures contribute to limit or to reduce the growth rate of confirmed cases after implementation [@yoshiyuki2020effects; @stage2021shut], other did not observe a change in the evolution of Covid-19 cases [@iwata2020school; @chang2020modelling]. For instance, a controlled comparison between similar localities in Japan with schools closed and school open did not revealed any evidence that school closures reduced the spread of Covid-19 [@fukumoto2021no]. If the school closure had a real impact on the evolution of confirmed Covid-19 cases, it should be possible to observe a decrease or a least an inflection in the trend of its evolution among younger age groups.
+One of the strongest assumption of government actions is that by reducing social contact will reduce the spread of the virus. Therefore, it is legitimate to believe that by closing schools, a reduction of the contaminations would be observed in the younger age groups. However, the efficiency of school closure on the reduction of COVID-19 cases is still questioned. While some research have observed that school closures contribute to limit or to reduce the growth rate of confirmed cases after implementation [@yoshiyuki2020effects; @stage2021shut], other did not observe a change in the evolution of COVID-19 cases [@iwata2020school; @chang2020modelling]. For instance, a controlled comparison between similar localities in Japan with schools closed and school open did not revealed any evidence that school closures reduced the spread of COVID-19 [@fukumoto2021no]. If the school closure had a real impact on the evolution of confirmed COVID-19 cases, it should be possible to observe a decrease or a least an inflection in the trend of its evolution among younger age groups.
 
 ## Causal Relationship Between Age Groups
 
-A second implicit believe regarding the effect of school closure on the spread of Covid-19 is that school not only has an effect on to the spread of the virus in children and teenagers but also has a knock-on effect on the spread of the virus in older age groups also called Secondary Attack Rate (SAR). The contaminated children and teenagers would bring the virus back at home and, then, they will contaminate their parents and relatives. For example, a research investigating the contamination in the household network not only revealed an exceptional high rate of secondary contamination but also that these contamination happened when the school were closed [@sorianoarandes2021household]. 
+A second implicit believe regarding the effect of school closure on the spread of COVID-19 is that school not only has an effect on to the spread of the virus in children and teenagers but also has a knock-on effect on the spread of the virus in older age groups also called Secondary Attack Rate (SAR). The contaminated children and teenagers would bring the virus back at home and, then, they will contaminate their parents and relatives. For example, a research investigating the contamination in the household network not only revealed an exceptional high rate of secondary contamination but also that these contamination happened when the school were closed [@sorianoarandes2021household]. 
 
 Despite being reported in several clinical and epidemiological studies [@zhendong2020clinical; @siebach2021childhood], multiple research have shown that the SAR from children to household members was, in fact, lower than expected [@kim2021role; @ludvigsson2020children; @vanderhoek2020role; @heavey2020evidence]. However, the SAR of children and teenagers to the household member is likely to be age-dependent, with difference between infants, primary and secondary school children, and college students [@grasleguen2021reopening]. If a secondary transmission from children and teenagers to household member has a significant influence, then a temporal causality relationship between their evolution should be observed.
 
@@ -189,134 +242,149 @@ Method
 
 ## Observations
 
-The data were collected from the official daily publication of Covid-19 cases by the Irish Department of Health. They include the amount of daily cases for 10 age groups from `r format(min(df$date), "%B %d, %Y")` to `r format(max(df$date), "%B %d, %Y")`. For each day during this period, school closure either due to a government decision or a public holiday is determined.
+### COVID-19 cases per age group
+
+The number of COVID-19 cases per age group has been taken from the COVerAGE-DB project [@riffe2021data]. The COVerAGE-DB project consists in 3 data files: an "Input" data file which collects the official COVID-19 cases from 117 countries, the "Output_5" data file which is a projection of COVID-19 cases by group of 5 years, and the "Output_10" data file which is a projection of COVID-19 cases by group of 10 years. For our analyses we have used the "Output_5" which deals with the heterogeneity of countries' reporting format by using spline approximations when the data for this age bracket is not available for a country. Therefore, it allows a precise analysis between age groups under 24 while age groups of 25 and above are reduced to 10 year brackets and groups above 64 concatenated all together.
+
+In order to cross validate the data of obtained after spline approximations, a comparison with the data published by the @who2022https reveals perfect similarities.
+
+The original data consist in 14089320 observations of 10 variables (117 distinct country, region within the country, an unique observation code, the date of the observation, the gender which can be male, female or both, the age bracket by 5 years from 0 to 100, a confirmation of the age interval for each bracket, the total number of cases so far, the total number of deaths and the total number of tests performed) from `r format(min(df_global$date), "%B %d, %Y")` to `r format(max(df_global$date), "%B %d, %Y")`. 
+
+After removing countries with missing and inconstant values, only 22 are suitable for the data analyses. However, in order to focus this analysis to geographically and culturally comparable countries, only 12 European countries are kept: Austria, Belgium, Bulgaria, Croatia, Estonia, France, Germany, Greece, Netherlands, Portugal, Slovakia, and Spain.
+
+The observations are reported in terms of total number of COVID-19 cases from the start to the pandemic. Consequently, the daily number of cases at a specific date $n\prime_{t}$ is calculated with the difference between the total cases at a date $t$ and the total cases at a date $t-1$ (i.e., derivative 1). In addition the change in daily number of cases $n\prime\prime_{t}$ between $n\prime_{t}$ and $n\prime_{t-1}$ has also been calculated (i.e., derivative 2).
+
+### School closure
+
+The information regarding the school closure on a day by day basis is provided by the @unesco2022https. For each day, in each country, the status of the schools is indicated as fully open, partially open, closed due to COVID-19, or closed due to an academic break. Because it would be difficult to measure the effect of schools closure at a country level when schools are partially closed, on closures due to COVID-19, or due to an academic break are considered. Indeed, both are considered as closure at a country wide level.
 
 ## Data Analysis
 
 ### Generalised Additive Model
 
-Four periods of school closure longer that 14 days have been identified. These four periods are used to fit a Generalised Additive Model (or GAM) using the R package *mgcv* [@wood2017generalized] in order to test the hypothesis of a significant change in the evolution of cases among age groups from 1 to 4, from 5 to 14, and from 15 to 24 (Eq 1).
+The effect of school closure on the trend of daily COVID-19 cases is analysed for each country. Periods of closure longer than 21 days are compared for 28 days regardless if the schools opened or not after 21 days.
 
-By estimating the degree of smoothness of a Bayesian spline smoothing using restricted maximum likelihood estimation [@wood2011fast], GAM identifies dynamic patterns underlying the evolution of Covid-19 cases reported while taking into account the random effect of different age groups as follows:
+A Generalised Additive Model (or GAM) using the R package *mgcv* [@wood2017generalized] is fitted on the daily COVID-19 cases to test the hypothesis of a significant non-linear evolution of cases among age groups from 0 to 4, from 5 to 9, from 10 to 14, from 15 to 19, and from 20 to 24. The model also estimates the overall non-linear effect by country taking into account the interaction between age groups and countries as random intercepts and the interaction between time, countries and period of closure as random effects (Eq 1).
 
-\begin{align}
-Y_{is} = \alpha_{i} + f(X_{s}) + a_{is} + \epsilon_{is}
-\end{align}
-
-\noindent where $i$ is an age group among the 10 age groups investigated and $s$ is the date corresponding to the confirmed Covid-19 cases. $Y_{is}$ represents the confirmed Covid-19 cases assuming a negative binomial distribution for the fitting [@loader2006local]. The response variable $Y_{is}$ includes a specific intercept for each age group ($\alpha_{i}$). A smooth effect over time $f(X_{s})$ is applied to model (Eq 2) to predict the nonlinear evolution of Covid-19 cases. This smooth effect $f(X_{s})$ is built up in basic components, called the basis functions $b_{j}(X_{s})$, such that:
+By estimating the degree of smoothness of a Bayesian spline smoothing using restricted fast maximum likelihood estimation [@wood2011fast], GAM identifies dynamic patterns underlying the evolution of COVID-19 cases reported while taking into account the random effect of different age groups and countries as follows:
 
 \begin{align}
-f(X_{s})=\sum_{j=1}^{k}\beta_{j}\times b_{j}(X_{s})
+n\prime_{tgc} = \alpha_{gc} + f(closure_{tg}) + f(closure_{tc}) + a_{tcp} + \epsilon_{tgc}
 \end{align}
 
-\noindent where the regression parameters $\beta_{j}$ are estimated by penalized likelihood maximization.
+\noindent where $t$ is the date corresponding to the confirmed COVID-19 cases, $g$ is an age group among the 10 age groups investigated, $c$ is a country among the 12 European countries selected, and $p$ is a specific period of closure. $n\prime_{tgc}$ represents the confirmed COVID-19 cases assuming a negative binomial distribution for the fitting [@loader2006local]. The response variable $n\prime_{tgc}$ includes a specific intercept for each age group and each country ($\alpha_{gc}$). A smooth effect over time $f(closure_{tg})$ is applied to model for each age group and a smooth effect over time $f(closure_{tc})$ is applied to model for each country (Eq 2 and 3). These smooth effect $f(closure_{tg})$ and $f(closure_{tc})$ are built up in basic components, called the basis functions $b_{i}(X_{tg})$ and $b_{j}(X_{tg})$, such that:
 
-The model also includes the random effects term $a_{is}= Zb_{i}$ where $Z$ is a random effects matrix and $b_{i}$ is a vector of random effects described by $b_{i} \sim N(0, D)$. In this, $D$ represents a covariance matrix. The error term $\epsilon_{is}$ is assumed to be normally and independently distributed $\epsilon_{is} \sim N(0, \sigma^2)$.
+\begin{align}
+f(closure_{tg})=\sum_{i=1}^{k}\beta_{i}\times b_{i}(X_{tg})
+\\
+f(closure_{tc})=\sum_{j=1}^{k}\beta_{j}\times b_{j}(X_{tc})
+\end{align}
+
+\noindent where the regression parameters $\beta_{i}$ and $\beta_{j}$ are estimated by penalized likelihood maximization.
+
+The model also includes the random effects term $a_{tcp}= Zb_{i}$ where $Z$ is a random effects matrix and $b_{i}$ is a vector of random effects described by $b_{i} \sim N(0, D)$. In this, $D$ represents a covariance matrix. The error term $\epsilon_{tcp}$ is assumed to be normally and independently distributed $\epsilon_{tcp} \sim N(0, \sigma^2)$.
 
 ### Transfer Entropy 
 
-Transfer Entropy (TE) can be used to infer the temporal relationship between two time series $I$ and $J$. This measure indicates whether $J$ can be used to to reduce the uncertainty on the future of $I$ and, consequently, that $J$ causes $I$ [@schreiber2000measuring]. As such, Granger causality is a special case of TE applied to times series that are jointly Gaussian distributed [@barnett2009granger]. Therefore, TE is a more robust analysis of times series especially when applied to the impact of age cohort in pandemic transmission [@kissler2020symbolic].
+Transfer Entropy (TE) can be used to infer the temporal relationship between two time series $X$ and $Y$. This measure indicates whether $X$ can be used to to reduce the uncertainty on the future of $Y$ and, consequently, that $X$ causes $Y$ [@schreiber2000measuring]. As such, Granger causality is a special case of TE applied to times series that are jointly Gaussian distributed [@barnett2009granger]. Therefore, TE is a more robust analysis of times series especially when applied to the impact of age cohort in pandemic transmission [@kissler2020symbolic].
 
-The influence of the evolution in Covid-19 cases across all age groups is evaluated using Shannon's transfer entropy is given by:
+The influence of the evolution in COVID-19 cases across all age groups is evaluated using Shannon's transfer entropy is given by:
   
 \begin{align}
-  T_{X \rightarrow Y}(k,l) = \sum_{x,y} p\left(x_{t+1}, x_t^{(k)}, y_t^{(l)}\right) \cdot log \left(\frac{p\left(x_{t+1}| x_t^{(k)}, y_t^{(l)}\right)}{p\left(x_{t+1}|x_t^{(k)}\right)}\right),
+  T_{X \rightarrow Y}(k,l) = \sum_{x,y} p\left(x_{t+1}, x_t^{(k)}, y_t^{(l)}\right) log \left(\frac{p\left(x_{t+1}| x_t^{(k)}, y_t^{(l)}\right)}{p\left(x_{t+1}|x_t^{(k)}\right)}\right)
 \end{align}
 
-\noindent where $T_{X\rightarrow Y}$ consequently measures the influence of the change dynamic from an age group $X$ to another age group $Y$ (Eq 3). 
+\noindent where $T_{X\rightarrow Y}$ consequently measures the influence of the change dynamic from an age group $X$ to another age group $Y$ for every country (Eq 4). 
 
-In order to observe how increase in daily numbers reported from a specific age group affects the other age groups, the day-by-day difference in Covid-19 confirmed cases (i.e., differences with a lag 1) is calculated. The use of day-by-day difference in Covid-19 confirmed cases satisfies the requirement of stationary for the calculation of Shannon's Transfer Entropy [@shannon1948mathematical]. The Transfer Entropy analysis of younger age groups daily changes in Covid-19 cases on older age groups is done using the R package *RTransferEntropy* [@behrendt2019rtransferentropy].
+The day-by-day difference in COVID-19 confirmed cases $n\prime\prime_t$ is used to satisfy the stationary requirement for the calculation of Shannon's Transfer Entropy [@shannon1948mathematical]. The Transfer Entropy analysis acrross all age group is done using the R package *RTransferEntropy* [@behrendt2019rtransferentropy].
 
 Results
 ===================
 
-Overall, the trend of confirmed Covid-19 cases in Ireland is similar to those of other European countries (Figure \@ref(fig:overall)). Indeed it is possible to observe a significant increase corresponding to each of the 4 waves of transmission (March-April 2020, December 2020-January 2021, September-October 2021 and November-December 2021). 
+Overall, the trend of confirmed COVID-19 cases follows similar patterns across the selected European countries with scales respecting the size of population in these countries (Figure \@ref(fig:overall)). Indeed, the bigger the country, the higher the total number of COVID-19 cases.
 
-```{r overall, fig.width=4.5, fig.height=3, fig.cap="(ref:overall)", fig.pos = "!h"}
-overall_plot <-
-  ggplot() +
-  geom_rect(data = df_school_closure, aes(xmin = schools_closure_start_date, xmax = schools_closure_end_date, ymin = -Inf, ymax = Inf), alpha = 0.25) +
-  geom_text(data = df_school_closure, aes(label = schools_closure_name, x = x_text, y = Inf), vjust = 2, family = "serif", fontface = "bold", size = 3) +
-  geom_line(data = df, aes(date, total_cases), na.rm = TRUE) +
-  scale_x_date(date_breaks = "3 months", date_labels = "%b %y") +
-  labs(
-    x = "Date", 
-    y = "Covid-19 Cases in Ireland",
-    fill = "Schools"
+```{r overall, fig.height=3, out.width="\\textwidth", fig.cap="(ref:overall)"}
+overall_plot <- df_global |> 
+  mutate(
+    country = fct_rev(country)
+  ) |> 
+  ggplot(aes(date, cumulative_cases_cal, group = country)) +
+  geom_line(na.rm = TRUE, color = "gray40", alpha = 0.4) +
+  geom_text_repel(
+    data = df_global |>
+      group_by(country) |>
+      slice_max(cumulative_cases_cal, with_ties = FALSE),
+    aes(label = country),
+    hjust = 0,
+    direction = "y",
+    segment.color = NA,
+    seed = 123,
+    size = 3,
+    force = 0.5,
+    family = "serif"
+  ) +
+  scale_x_date(
+    "Date", 
+    date_breaks = "3 months", 
+    date_labels = "%b %y", 
+    limits = c(as.Date("2020-02-01"), as.Date("2022-05-01"))
+  ) +
+  scale_y_continuous(
+    "Total COVID-19 Cases (Million)", 
+    labels = unit_format(unit = "M", scale = 1e-6)
   ) +
   theme_bw() +
   theme(
-    legend.position = "bottom",
-    text = element_text(size = 10, family = "serif"),
-    axis.text = element_text(size = 10),
-    panel.background = element_rect(colour = "black", size = 0.1)
+    legend.position = "none",
+    text = element_text(size = 10, family = "serif")
   )
 
 overall_plot
 ```
 
-The evolution of Covid-19 cases reveals some similarities across all age groups. However, the influence of each waves on the each groups has also some particularities (Figure \@ref(fig:descriptive)). For example, the first wave was more important among the oldest age groups whereas the third wave was more important among the youngest age groups.
+The evolution of COVID-19 cases reveals some similarities across all age groups. However, the influence of each waves on the each groups has also some particularities (Figure \@ref(fig:descriptive)). For example, the first wave was more important among the oldest age groups whereas the third wave was more important among the youngest age groups.
 
-```{r descriptive, fig.width=4.5, fig.height=7, fig.cap="(ref:descriptive)"}
-descriptive_plot <- df_long |> 
-  ggplot() +
-  geom_rect(data = df_school_closure, aes(xmin = schools_closure_start_date, xmax = schools_closure_end_date, ymin = -Inf, ymax = Inf), alpha = 0.25) +
-  geom_col(aes(date, covid_cases), na.rm = TRUE) +
-  geom_line(aes(date, covid_cases_7davg, color = age_group), na.rm = TRUE) +
+```{r descriptive, fig.height=3, out.width="\\textwidth", fig.cap="(ref:descriptive)"}
+descriptive_plot <- df_global |> 
+  filter(schools_closed == 1) |> 
+  mutate(
+    status = status |> 
+      str_remove("Closed due to ") |> 
+      fct_rev(),
+    country = country |> 
+      fct_rev()
+  ) |> 
+  ggplot(aes(date, country, color = status)) +
+  geom_point(na.rm = TRUE) +
   scale_x_date("Date", date_breaks = "3 months", date_labels = "%b %y") +
-  scale_y_continuous("Confirmed Covid-19 Cases in Ireland") +
-  scale_color_manual(labels = age_name, values = age_color) +
-  facet_grid(
-    age_group ~ ., 
-    scales = "free",
-    labeller = as_labeller(
-      c(
-        aged1to4 = "1 to 4",
-        aged5to14 = "5 to 14",
-        aged15to24 = "15 to 24", 
-        aged25to34 = "25 to 34", 
-        aged35to44 = "35 to 44", 
-        aged45to54 = "45 to 54", 
-        aged55to64 = "55 to 64", 
-        aged65to74 = "65 to 74", 
-        aged75to84 = "75 to 84", 
-        aged85up = "85 and up"
-        )
-      )
-  ) +
+  scale_y_discrete("Selected European Countries") +
+  scale_colour_manual("Schools Closure Reason", values = c("gray10", "gray60")) +
   theme_bw() +
   theme(
-    legend.position = "none",
-    strip.background = element_blank(),
-    strip.placement = "outside",
-    text = element_text(size = 10, family = "serif"),
-    axis.text = element_text(size = 10),
-    panel.background = element_rect(colour = "black", size = 0.1)
+    legend.position = "bottom",
+    text = element_text(size = 10, family = "serif")
   )
 
 descriptive_plot
 ```
 
-In order to evaluate the shape of the trend in the numbers of Covid-19 cases reported after the three school closure longer than 14 consecutive days, a GAM was fitted taking into account numbers for 1 to 4, 5 to 14, and 15 to 24 year old. The obtained results satisfy the requirements to fit this model which explains `r scales::percent(gam_summary$dev.expl, accuracy = 0.1)` of the deviance in Covid-19 cases. These results show no significant change in the evolution of cases for 1 to 4 year old (`r gam_results["s(date):1to4"]`) as well as for 5 to 14 year old (`r gam_results["s(date):5to14"]`). However, the smooth term of the GAM is significant for 15 to 24 year old (`r gam_results["s(date):15to24"]`), which indicates that the evolution of cases is not linear and, therefore, the school closure had a significant impact on the evolution of cases (Figure \@ref(fig:gam)).
+In order to evaluate the shape of the trend in the numbers of COVID-19 cases reported after the three school closure longer than 21 consecutive days, a GAM was fitted taking into account numbers for 0 to 4, 5 to 9, 10 to 14, 15 to 19, and 20 to 24 year old across all the selected European countries. The obtained results satisfy the requirements to fit this model which explains `r percent(gam_summary$dev.expl, accuracy = 0.1)` of the deviance in COVID-19 cases. 
 
-```{r gam, fig.width=4.5, fig.height=3, fig.cap="(ref:gam)"}
-gam_plot
+Overall, the results did not revealed a main effect of school closure at a country level for most of the selected European countries (Austria: `r gam_results["Austria"]`; Belgium: `r gam_results["Belgium"]`; Bulgaria: `r gam_results["Bulgaria"]`; Croatia: `r gam_results["Croatia"]`; Estonia: `r gam_results["Estonia"]`; France: `r gam_results["France"]`; Greece: `r gam_results["Greece"]`; Netherlands: `r gam_results["Netherlands"]`; Portugal: `r gam_results["Portugal"]`; Spain: `r gam_results["Spain"]`) except for Germany (`r gam_results["Germany"]`) and for Slovakia (`r gam_results["Slovakia"]`).
+
+When looking at the difference between age groups, results show no significant change in the evolution of cases until 19 year old (0 to 4: `r gam_results["0to4"]`; 5 to 9: `r gam_results["5to9"]`; 10 to 14: `r gam_results["10to14"]`; 15 to 19: `r gam_results["15to19"]`). However, the smooth term of the GAM is significant for 20 to 24 year old (`r gam_results["20to24"]`), which indicates that the evolution of cases is not linear and, therefore, the school closure had a significant impact on the evolution of cases (Figure \@ref(fig:gam)).
+
+```{r gam, fig.height=3, out.width="\\textwidth", fig.cap="(ref:gam)"}
+gam_plot_age
 ```
 
-Before the Transfer Entropy analysis, an Augmented Dickey-Fuller has been applied on each age group in order to insure that the daily changes in Covid-19 cases are stationary. 
+Before the Transfer Entropy analysis, an Augmented Dickey-Fuller has been applied on each age group in order to insure that the daily changes in COVID-19 cases are stationary (see Appendix 1). 
 
-```{r}
-# adf_res <- df_long |> 
-#   group_by(age_group) |> 
-#   summarise(
-#     aTSA::adf.test(covid_changes, output = FALSE) |> 
-#       map_df(as_tibble)
-#   )
-```
+The results of the Transfer Entropy calculations between age groups for each of the 12 selected European countries are reported Figure \@ref(fig:te). The first observation is the absence of symmetry between influencing age groups (i.e., $X$) and influenced age groups (i.e., $Y$). Indeed, the change in COVID-19 cases in some age groups are influenced by other age groups but they are not reciprocally influencing these age groups. 
 
-The results of the Transfer Entropy calculations between age groups are reported Figure \@ref(fig:te). The first observation is the absence of symmetry between influencing age groups (i.e., $X$) and influenced age groups (i.e., $Y$). Indeed, the change in Covid-19 cases in some age groups are influenced by other age groups but they are not reciprocally influencing these age groups. This is the case of 15 to 24 years old who appears to be contaminated by all age groups until 84 but there is no significant support that they are contaminating groups older than 34 which should include their parents and relatives.
+Additionally, to highlight differences and similarities between countries, a grid has been added to Figure \@ref(fig:te): the upper left quadrant indicates how younger age cohorts are influencing older age cohorts, the bottom right quadrant indicates how older age cohorts are influencing younger age cohorts, finally lower left and and upper right are indicating how younger or older age cohorts are influencing themselves. By analysing these quadrant it is possible to identify similar patterns across multiple countries. Indeed, it appears that Austria, Germany and the Netherlands have significantly higher TE coefficients in the upper left quadrant of the matrix, which indicate that the daily changes in COVID-19 cases number in younger cohorts is predicting the the daily changes in COVID-19 cases number in older cohorts. Alternatively, it appears that Austria, the Netherlands, Portugal and Spain have significantly higher TE coefficients in the lower right quadrant of the matrix, which indicate that the daily changes in COVID-19 cases number in older cohorts is predicting the the daily changes in COVID-19 cases number in younger cohorts.
 
-```{r te, fig.width=4.5, fig.height=4.5, fig.cap="(ref:te)", fig.pos = "!h"}
+```{r te, fig.height=8, out.width="\\textwidth", fig.cap="(ref:te)"}
 te_plot
 ```
 
@@ -325,7 +393,7 @@ Discussion & Conclusion
 
 Knowledge about the transmission of the virus significantly improved with the amount of studies performed, especially in the case of how the virus behaves with children. From the early analyses showing that the virus was instantness in children [@li2020role], the results has changed to more nuanced position which states that the spread of the virus in children is moderate.
 
-This indicate mix results, while the school closure was ineffective in child care settings and primary school, the closure of secondary schools and colleges had an impact on Covid-19 transmission. This impact is probably responsible for the absence of reciprocity in the transmission of 15 to 24 age group. By drastically reducing their social contacts in secondary schools and colleges, this cohort has more been the target of Covid-19 contaminations rather than the vector of Covid-19.
+This indicate mix results, while the school closure was ineffective in pre-primary, primary and secondary levels (i.e., ISCED 0 to 3), the closure of tertiary levels (i.e., ISCED 5 to 8) had an impact on COVID-19 transmission. However, different pattern emerges according the selected European countries. Some have shown asymmetric patterns of influence between age groups while other did.
 
 References {#references .unnumbered}
 ==========
