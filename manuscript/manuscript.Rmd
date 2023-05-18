@@ -23,7 +23,7 @@ footnote:
 abstract: |
   This paper presents a comprehensive analysis of COVID-19 case trends and the influence of age groups in selected European countries. The study examines the relationship between population size and the total number of confirmed cases, revealing that larger countries tend to have higher case numbers. The impact of different waves on age groups is investigated, with the first wave affecting older age groups and the third wave primarily impacting the youngest age groups. The study also evaluates the effects of school closures on COVID-19 cases using a Generalized Additive Model (GAM). The findings demonstrate a decreasing non-linear effect of school closure across all countries studied. Moreover, the analysis of age groups reveals distinct patterns, with the 0 to 4 age group experiencing a downward trend after school closure, while age groups 5 to 14 exhibit a significant increase in cases. Age groups 15 to 24 show a surge immediately after closure, followed by a decline. Additionally, Transfer Entropy calculations highlight asymmetry in age group influences, indicating that changes in COVID-19 cases in certain age groups predict changes in other age groups but not vice versa. The study also identifies consistent patterns across countries, such as the predictive influence of younger cohorts on older cohorts in Austria, Germany, and the Netherlands. Conversely, Portugal and Spain show a predictive influence of older cohorts on younger cohorts. These findings contribute to a better understanding of COVID-19 dynamics in European countries and provide insights for public health strategies and interventions.
 keywords: COVID-19, School Closures, Causality, Generalised Additive Model, Transfer Entropy
-bibliography: "bibliography"
+bibliography: "bibliography.bib"
 header-includes:
   - \usepackage{float}
   - \usepackage{booktabs}
@@ -39,6 +39,15 @@ output:
     keep_tex: false
   bookdown::word_document2:
     default
+knit: (function(input, ...) {
+    rmarkdown::render(
+      input,
+      output_dir = here::here("output"),
+      output_file = c(glue::glue("{xfun::sans_ext(input)}.pdf"), glue::glue("{xfun::sans_ext(input)}.docx")),
+      output_format = "all",
+      envir = globalenv()
+    )
+  })
 ---
 
 (ref:overall) Cumulative COVID-19 cases number for selected European countries since the beginning of the pandemic. Source: COVerAGE-DB [@riffe2021data].
@@ -62,7 +71,7 @@ set.seed(123) # Seed for random number generation
 options(scipen = 999) # disable sci number format
 opts_chunk$set(
   cache.extra = rand_seed, 
-  cache = TRUE,
+  cache = FALSE,
   message = FALSE, 
   warning = FALSE, 
   error = FALSE,
@@ -392,7 +401,7 @@ Moreover, the paper includes Transfer Entropy calculations between age groups fo
 
 Furthermore, the quadrant analysis reveals similar patterns across multiple countries. Austria, Germany, and the Netherlands exhibit significantly higher TE coefficients in the upper left quadrant, indicating that changes in COVID-19 cases in younger cohorts predict the changes in older cohorts. On the other hand, Austria, the Netherlands, Portugal, and Spain show higher TE coefficients in the lower right quadrant, indicating that changes in COVID-19 cases in older cohorts predict the changes in younger cohorts. 
 
-In conclusion, this study sheds light on the trends and patterns of confirmed COVID-19 cases in selected European countries, with a particular focus on the influence of age groups and school closures. As it is the case for lockdowns [@alfano2020efficacy; @molefi2021impact], this finding suggests that prolonged school closures can contribute to mitigating the spread of the virus, particularly in the context of decreasing case numbers over time. However, it is crucial to consider the specific dynamics of different age groups, as the impact of school closures varies among them. The study reveals important insights that can contribute to our understanding of the dynamics of the pandemic and inform public health strategies.
+In conclusion, this study sheds light on the trends and patterns of confirmed COVID-19 cases in selected European countries, with a particular focus on the influence of age groups and school closures. It suggests that like lockdowns [@alfano2020efficacy; @molefi2021impact], prolonged school closures can contribute to mitigating the spread of the virus, particularly in the context of decreasing case numbers over time. However, it is crucial to consider the specific dynamics of different age groups, as the impact of school closures varies among them. The study reveals important insights that can contribute to our understanding of the dynamics of the pandemic and inform public health strategies.
 
 Data Availability
 ===================
