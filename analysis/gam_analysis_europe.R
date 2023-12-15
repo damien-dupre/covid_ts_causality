@@ -153,6 +153,46 @@ gam_plot_age <- gam_df |>
     text = element_text(size = 10, family = "serif")
   )
 
+## original visualisation
+# gam_plot_country <- gam_df |>
+#   filter(by == "country") |>
+#   mutate(
+#     smooth = smooth |>
+#       str_remove("s\\(schools_time_since_closure\\):country")
+#   ) |>
+#   ggplot(aes(x = schools_time_since_closure, y = est, group = smooth)) +
+#   geom_line(color = "gray40", alpha = 0.4) +
+#   geom_text_repel(
+#     data = gam_df |>
+#       group_by(country) |>
+#       slice_max(schools_time_since_closure, with_ties = FALSE),
+#     aes(label = country),
+#     hjust = 0,
+#     direction = "y",
+#     segment.color = NA,
+#     seed = 123,
+#     size = 4,
+#     force = 0.5,
+#     family = "serif"
+#   ) +
+#   scale_x_continuous(
+#     "Day Since Closure",
+#     breaks = seq(0, 28, by = 7),
+#     limits = c(0, 31)
+#   ) +
+#   scale_y_continuous(
+#     "Standardized Effect"
+#   ) +
+#   scale_color_discrete(
+#     "Country"
+#   ) +
+#   theme_bw() +
+#   theme(
+#     legend.position = "none",
+#     text = element_text(size = 10, family = "serif")
+#   )
+
+# regular facets
 gam_plot_country <- gam_df |>
   filter(by == "country") |>
   mutate(
@@ -160,20 +200,8 @@ gam_plot_country <- gam_df |>
       str_remove("s\\(schools_time_since_closure\\):country")
   ) |>
   ggplot(aes(x = schools_time_since_closure, y = est, group = smooth)) +
-  geom_line(color = "gray40", alpha = 0.4) +
-  geom_text_repel(
-    data = gam_df |>
-      group_by(country) |>
-      slice_max(schools_time_since_closure, with_ties = FALSE),
-    aes(label = country),
-    hjust = 0,
-    direction = "y",
-    segment.color = NA,
-    seed = 123,
-    size = 4,
-    force = 0.5,
-    family = "serif"
-  ) +
+  geom_line() +
+  facet_wrap(~country) +
   scale_x_continuous(
     "Day Since Closure",
     breaks = seq(0, 28, by = 7),
@@ -182,12 +210,112 @@ gam_plot_country <- gam_df |>
   scale_y_continuous(
     "Standardized Effect"
   ) +
-  scale_color_discrete(
-    "Country"
-  ) +
-  theme_bw() +
+  theme_minimal() +
   theme(
     legend.position = "none",
-    text = element_text(size = 10, family = "serif")
+    text = element_text(size = 10, family = "serif"),
+    panel.border = element_rect(color = "gray 50", fill = NA)
   )
 
+# # geofacet
+# countries_of_interest <- c(
+#   "Austria", "Belgium", "Bulgaria", "Croatia", "Estonia", "France",
+#   "Germany", "Greece", "Netherlands", "Portugal", "Slovakia", "Spain"
+#   )
+# library(geofacet)
+# my_eu_grid <- eu_grid1 |> 
+#   subset(name %in% countries_of_interest)
+# 
+# gam_df |>
+#   filter(by == "country") |>
+#   mutate(
+#     smooth = smooth |>
+#       str_remove("s\\(schools_time_since_closure\\):country")
+#   ) |>
+#   ggplot(aes(x = schools_time_since_closure, y = est, group = smooth)) +
+#   geom_line() +
+#   facet_geo(~ country, grid = my_eu_grid,scales = 'free', move_axes = TRUE) +
+#   scale_x_continuous("Day Since Closure", breaks = seq(0, 28, by = 7)) +
+#   scale_y_continuous("Standardized Effect") +
+#   theme_minimal() +
+#   theme(
+#     legend.position = "none",
+#     text = element_text(size = 10, family = "serif"),
+#     panel.border = element_rect(color = "gray 50", fill = NA)
+#   )
+# 
+# # map arrow
+# library(patchwork)
+# map_eu <- map_data("world", region = countries_of_interest)
+# 
+# countries_lines <- tribble(
+#   ~x,  ~xend, ~y,  ~yend,
+#   14.5, 0, 47.5, 30,
+#   4.4, -15, 50.5, 60,
+#   25.5, 30, 42.7, 42,
+#   15.2, 15, 45.1, 30,
+#   25, 30, 58.6, 60,
+#   2.2, -15, 46.2, 51,
+#   10.5, 15, 51.2, 60,
+#   21.8, 30, 39.1, 30,
+#   5.3, 0, 52.1, 60,
+#   -8.2, -15, 39.4, 42,
+#   19.7, 30, 48.7, 51,
+#   -3.7, -15, 40.5, 30
+# )
+# 
+# map <- ggplot(map_eu, aes(x = long, y = lat)) +
+#   geom_polygon(aes(group = group), fill = "white", color = "black") +
+#   geom_segment(data = countries_lines, aes(x = x, xend = xend, y = y , yend = yend), color = "grey50", inherit.aes = FALSE) +
+#   coord_fixed(1.2) +
+#   scale_x_continuous(limits = c(-30, 45)) +
+#   scale_y_continuous(limits = c(22, 68)) +
+#   theme_void()
+# 
+# chart <- function(countrytofilter){
+#   gam_df |>
+#     filter(country == countrytofilter) |>
+#     ggplot(aes(x = schools_time_since_closure, y = est, group = smooth)) +
+#     geom_line() +
+#     scale_x_continuous(
+#       "Day Since Closure",
+#       breaks = seq(0, 28, by = 7),
+#       limits = c(0, 31)
+#     ) +
+#     scale_y_continuous(
+#       "Standardized Effect"
+#     ) +
+#     theme_minimal() +
+#     theme(
+#       legend.position = "none",
+#       text = element_text(size = 6, family = "serif"),
+#       panel.border = element_rect(color = "gray 50", fill = NA)
+#     )
+# }
+# 
+# Austria <- chart("Austria")
+# Belgium <- chart("Belgium")
+# Bulgaria <- chart("Bulgaria")
+# Croatia <- chart("Croatia")
+# Estonia <- chart("Estonia")
+# France <- chart("France")
+# Germany <- chart("Germany")
+# Greece <- chart("Greece")
+# Netherlands <- chart("Netherlands")
+# Portugal <- chart("Portugal")
+# Slovakia <- chart("Slovakia")
+# Spain <- chart("Spain")
+# 
+# map + 
+#   inset_element(Spain,0.1,0,0.3,0.2) + 
+#   inset_element(Austria,0.3,0,0.5,0.2) + 
+#   inset_element(Croatia,0.5,0,0.7,0.2) + 
+#   inset_element(Greece,0.7,0,0.9,0.2) +
+#   inset_element(Belgium,0.1,0.8,0.3,1) + 
+#   inset_element(Netherlands,0.3,0.8,0.5,1) + 
+#   inset_element(Germany,0.5,0.8,0.7,1) + 
+#   inset_element(Estonia,0.7,0.8,0.9,1) + 
+#   inset_element(France,0,0.5,0.2,0.7) + 
+#   inset_element(Portugal,0,0.3,0.2,0.5) + 
+#   inset_element(Slovakia,0.8,0.5,1,0.7) + 
+#   inset_element(Bulgaria,0.8,0.3,1,0.5)

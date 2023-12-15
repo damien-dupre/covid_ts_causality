@@ -1,10 +1,148 @@
-# Augmented Dickey-Fuller test for stationay timeseries
+---
+title: "Appendix 1: Dickey-Fuller test for stationay timeseries"
+toc: false
+
+output:
+  bookdown::pdf_book
+  
+header-includes:
+  - \usepackage{float}
+  - \usepackage{booktabs}
+  - \usepackage{longtable}
+  - \usepackage{threeparttable}
+  - \floatplacement{figure}{H}
+  - \floatplacement{table}{H}
+  - \usepackage{caption}
+---
+
+Test for the null hypothesis of a unit root of a univarate time series (equivalently, non-stationary time series).
+
+The Augmented Dickey-Fuller test incorporates three types of linear regression models. The first type is a linear model with no drift and linear trend with respect to time. The second type is a linear model with drift but no linear trend. The third type is a linear model with both drift and linear trend.
+
+The p.value is calculated by interpolating the test statistics from the corresponding critical values tables (Fuller, 1996) for each type of linear models with given sample size. 
+
+```{r setup, include = FALSE}
+# libraries --------------------------------------------------------------------
+library(here)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+
+# options ----------------------------------------------------------------------
+set.seed(123) # Seed for random number generation
+options(scipen = 999) # disable sci number format
+opts_chunk$set(
+  cache.extra = rand_seed, 
+  cache = FALSE,
+  message = FALSE, 
+  warning = FALSE, 
+  error = FALSE,
+  echo = FALSE, 
+  fig.retina = 3,
+  dev = "ragg_png"
+  )
+```
+
 
 ```{r}
-adf_res <- df_long |>
-  group_by(age_group) |>
-  summarise(
-    aTSA::adf.test(covid_changes, output = FALSE) |>
-      map_df(as_tibble)
-  )
+df_global_age <- read_csv(here("data/df_global_age.csv"))
+
+adf_res_type1 <- df_global_age |>
+  group_by(age_grp, country) |>
+  group_modify(~ aTSA::adf.test(.x$daily_changes, output = FALSE, nlag = 2) |>
+                 bind_rows() |> 
+                 pluck("type1") |> 
+                 as_tibble()
+  ) |> 
+  rename(ADF_type1 = ADF, p.value_type1 = p.value)
+
+adf_res_type2 <- df_global_age |>
+  group_by(age_grp, country) |>
+  group_modify(~ aTSA::adf.test(.x$daily_changes, output = FALSE, nlag = 2) |>
+                 bind_rows() |> 
+                 pluck("type2") |> 
+                 as_tibble()
+  ) |> 
+  rename(ADF_type2 = ADF, p.value_type2 = p.value)
+
+adf_res_type3 <- df_global_age |>
+  group_by(age_grp, country) |>
+  group_modify(~ aTSA::adf.test(.x$daily_changes, output = FALSE, nlag = 2) |>
+                 bind_rows() |> 
+                 pluck("type3") |> 
+                 as_tibble()
+  ) |> 
+  rename(ADF_type3 = ADF, p.value_type3 = p.value)
+
+adf_res <- adf_res_type1 |> 
+  full_join(adf_res_type2) |> 
+  full_join(adf_res_type3)
+```
+
+```{r}
+adf_res |>
+  filter(age_grp %in% c("aged0to4", "aged5to9")) |> 
+  kbl(
+    caption = "Dickey-Fuller test for all combinaisons of countries and age groups investigated",
+    col.names = c("Age Group", "Country", "Lag", "ADF", "p", "ADF", "p", "ADF", "p")
+  ) |> 
+  kable_classic(full_width = F) |> 
+  add_header_above(c(" " = 3, "Type 1" = 2, "Type 2" = 2, "type 3" = 2)) |>
+  collapse_rows(columns = 1:2, valign = "middle")
+```
+
+\newpage
+
+```{r}
+adf_res |>
+  filter(age_grp %in% c("aged10to14", "aged15to19")) |> 
+  kbl(
+    caption = "Dickey-Fuller test for all combinaisons of countries and age groups investigated",
+    col.names = c("Age Group", "Country", "Lag", "ADF", "p", "ADF", "p", "ADF", "p")
+  ) |> 
+  kable_classic(full_width = F) |> 
+  add_header_above(c(" " = 3, "Type 1" = 2, "Type 2" = 2, "type 3" = 2)) |>
+  collapse_rows(columns = 1:2, valign = "middle")
+```
+
+\newpage
+
+```{r}
+adf_res |>
+  filter(age_grp %in% c("aged20to24", "aged25to34")) |> 
+  kbl(
+    caption = "Dickey-Fuller test for all combinaisons of countries and age groups investigated",
+    col.names = c("Age Group", "Country", "Lag", "ADF", "p", "ADF", "p", "ADF", "p")
+  ) |> 
+  kable_classic(full_width = F) |> 
+  add_header_above(c(" " = 3, "Type 1" = 2, "Type 2" = 2, "type 3" = 2)) |>
+  collapse_rows(columns = 1:2, valign = "middle")
+```
+
+\newpage
+
+```{r}
+adf_res |>
+  filter(age_grp %in% c("aged35to44", "aged45to54")) |> 
+  kbl(
+    caption = "Dickey-Fuller test for all combinaisons of countries and age groups investigated",
+    col.names = c("Age Group", "Country", "Lag", "ADF", "p", "ADF", "p", "ADF", "p")
+  ) |> 
+  kable_classic(full_width = F) |> 
+  add_header_above(c(" " = 3, "Type 1" = 2, "Type 2" = 2, "type 3" = 2)) |>
+  collapse_rows(columns = 1:2, valign = "middle")
+```
+
+\newpage
+
+```{r}
+adf_res |>
+  filter(age_grp %in% c("aged55to64", "aged65+")) |> 
+  kbl(
+    caption = "Dickey-Fuller test for all combinaisons of countries and age groups investigated",
+    col.names = c("Age Group", "Country", "Lag", "ADF", "p", "ADF", "p", "ADF", "p")
+  ) |> 
+  kable_classic(full_width = F) |> 
+  add_header_above(c(" " = 3, "Type 1" = 2, "Type 2" = 2, "type 3" = 2)) |>
+  collapse_rows(columns = 1:2, valign = "middle")
 ```
