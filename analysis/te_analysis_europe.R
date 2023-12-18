@@ -65,9 +65,9 @@ countries_of_interest <- c(
 # 
 # te_results <- bind_rows(te_results_XY,te_results_YX)
 # 
-# write_csv(te_results, here("results/te_results.csv"))
+# write_csv(te_results, here("data/te_results.csv"))
 
-te_results <- read_csv(here("results/te_results.csv"))
+te_results <- read_csv(here("data/te_results.csv"))
 
 te_plot <- te_results |> 
   mutate(

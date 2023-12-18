@@ -1,0 +1,371 @@
+---
+title: "Appendix 2: Significance of Transfer Entropy coefficients"
+toc: false
+
+output:
+  bookdown::pdf_book
+  
+header-includes:
+  - \usepackage{float}
+  - \usepackage{booktabs}
+  - \usepackage{longtable}
+  - \usepackage{threeparttable}
+  - \floatplacement{figure}{H}
+  - \floatplacement{table}{H}
+  - \usepackage{caption}
+---
+
+Results for each permutation of age groups from each country. Tables include transfer entropy estimates, the effective transfer entropy estimates, standard errors and p-values based on bootstrap replications of the Markov chains under the null hypothesis of statistical independence.
+
+```{r setup, include = FALSE}
+# libraries --------------------------------------------------------------------
+library(here)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+
+# options ----------------------------------------------------------------------
+set.seed(123) # Seed for random number generation
+options(scipen = 999) # disable sci number format
+opts_chunk$set(
+  cache.extra = rand_seed, 
+  cache = FALSE,
+  message = FALSE, 
+  warning = FALSE, 
+  error = FALSE,
+  echo = FALSE, 
+  fig.retina = 3,
+  dev = "ragg_png"
+  )
+
+# variables --------------------------------------------------------------------
+age_order <- c(
+  "aged0to4", "aged5to9", "aged10to14", "aged15to19", "aged20to24",
+  "aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65+"
+)
+
+# data -------------------------------------------------------------------------
+te_results <- read_csv(here("data/te_results.csv")) |> 
+    mutate(
+      X = factor(X, levels = age_order),
+      Y = factor(Y, levels = age_order)
+    )
+```
+
+```{r}
+te_results |>
+  filter(X == "aged0to4") |> 
+  filter(Y %in% c("aged0to4", "aged5to9", "aged10to14", "aged15to19", "aged20to24")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged0to4") |> 
+  filter(Y %in% c("aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65+")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged5to9") |> 
+  filter(Y %in% c("aged0to4", "aged5to9", "aged10to14", "aged15to19", "aged20to24")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged5to9") |> 
+  filter(Y %in% c("aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65+")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+```{r}
+te_results |>
+  filter(X == "aged10to14") |> 
+  filter(Y %in% c("aged0to4", "aged5to9", "aged10to14", "aged15to19", "aged20to24")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged10to14") |> 
+  filter(Y %in% c("aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65+")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged15to19") |> 
+  filter(Y %in% c("aged0to4", "aged5to9", "aged10to14", "aged15to19", "aged20to24")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged15to19") |> 
+  filter(Y %in% c("aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65+")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged20to24") |> 
+  filter(Y %in% c("aged0to4", "aged5to9", "aged10to14", "aged15to19", "aged20to24")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged20to24") |> 
+  filter(Y %in% c("aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65+")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged25to34") |> 
+  filter(Y %in% c("aged0to4", "aged5to9", "aged10to14", "aged15to19", "aged20to24")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged25to34") |> 
+  filter(Y %in% c("aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65+")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged35to44") |> 
+  filter(Y %in% c("aged0to4", "aged5to9", "aged10to14", "aged15to19", "aged20to24")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged35to44") |> 
+  filter(Y %in% c("aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65+")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged45to54") |> 
+  filter(Y %in% c("aged0to4", "aged5to9", "aged10to14", "aged15to19", "aged20to24")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged45to54") |> 
+  filter(Y %in% c("aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65+")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged55to64") |> 
+  filter(Y %in% c("aged0to4", "aged5to9", "aged10to14", "aged15to19", "aged20to24")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged55to64") |> 
+  filter(Y %in% c("aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65+")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged65+") |> 
+  filter(Y %in% c("aged0to4", "aged5to9", "aged10to14", "aged15to19", "aged20to24")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged65+") |> 
+  filter(Y %in% c("aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65+")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
