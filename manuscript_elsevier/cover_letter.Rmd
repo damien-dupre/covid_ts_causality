@@ -1,0 +1,46 @@
+---
+title: "Submission to Social Science & Medicine"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  error = FALSE, 
+  echo = FALSE)
+journal <- "Social Science & Medicine"
+```
+
+Dear editor of `r journal`,
+
+Please find enclosed our manuscript to be considered for publication entitled “Examining the Impact of School Closures on COVID-19 Infections in Europe and their Effects on Different Age Cohorts”.
+
+This research endeavours to contribute valuable insights into the dynamics of COVID-19 in European countries, specifically focusing on the influence of school closures on different age groups. Our study employs a meticulous analysis of COVID-19 cases and their trends across selected European nations. Utilising a Generalized Additive Model (GAM) and Transfer Entropy (TE), our study seeks to unravel the multifaceted impact of school closures on the overall case numbers and, more importantly, within specific age cohorts.
+
+The central findings of our research underscore a nuanced narrative regarding the effectiveness of school closures. Contrary to expectations, our analysis reveals a decreasing non-linear effect of school closure on the total COVID-19 case numbers across the studied countries. A particularly noteworthy revelation is the inconsistent impact on different age groups. While the 0 to 4 pre-school age group consistently exhibits a downward trend in infections, the school-going age groups of 5 to 14 show a significant increase in cases. Age groups 15 to 24, on the other hand, experience a surge immediately after closure, followed by a subsequent decline.
+
+Moreover, our study employs Transfer Entropy calculations to highlight the asymmetry in age group influences, revealing that changes in COVID-19 cases in certain age groups predict changes in other age groups, but not vice versa. This unique contribution sheds light on the intricate dynamics of COVID-19 spread among various age cohorts, providing a deeper understanding of the virus's behaviour and offering critical insights for public health strategies and interventions.
+
+The meticulous methodology and robust analysis presented in our manuscript make a compelling case for its inclusion in Social Science & Medicine. We believe that our findings have the potential to significantly contribute to the existing body of knowledge on COVID-19 dynamics in European countries and provide actionable insights for policymakers and public health professionals.
+
+All authors disclose any actual or potential conflict of interest including any financial, personal or other relationships with other people or organizations that could inappropriately influence, or be perceived to influence, their work. 
+
+This manuscript has not been published elsewhere, accepted for publication elsewhere or under editorial review for publication elsewhere. My coauthors and I have complied with the ethical guidelines in the treatment of the data and preparation of the manuscript. We had no prior discussions with an Editorial Board Member about the work described in the manuscript.
+
+The list of authors:
+
+* Damien Dupré (corresponding author and main investigator of the study)
+  * Dublin City University
+  * damien.dupre@dcu.ie
+* Edgar Morgenroth
+  * Dublin City University
+  * edgar.morgenroth@dcu.ie
+
+All future correspondence can be directed to me at the e-mail address provided in this submission. If you have any questions or concerns pertaining to this manuscript, please do not hesitate to contact me. Thank you for your time and consideration, and we look forward to hearing back from you. 
+
+We look forward to the opportunity to share our research with the wider academic community through the esteemed platform of Social Science & Medicine. Thank you for considering our submission, and we are optimistic about the positive impact our study can have on the discourse surrounding COVID-19 and public health strategies.
+
+Best regards, 
+
+Damien Dupré

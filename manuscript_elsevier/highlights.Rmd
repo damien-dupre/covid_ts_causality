@@ -1,0 +1,23 @@
+---
+title: "Submission to Social Science & Medicine"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  error = FALSE, 
+  echo = FALSE)
+journal <- "Social Science & Medicine"
+```
+
+The research paper, titled "Examining the Impact of School Closures on COVID-19 Infections in Europe and their Effects on Different Age Cohorts," analyzes COVID-19 trends in various age groups across selected European countries. The study employs a Generalized Additive Model (GAM) to evaluate the effects of school closures on COVID-19 cases and utilizes Transfer Entropy calculations to assess asymmetry in age group influences.
+
+The findings reveal a decreasing non-linear effect of school closure on the total COVID-19 case numbers across all studied countries. Notably, a consistent downward trend in infections is observed in the 0 to 4 pre-school age group following school closures. In contrast, the school-going age groups (5 to 14) exhibit a significant increase in cases, while age groups 15 to 24 show a surge immediately after closure, followed by a decline. Transfer Entropy analysis indicates that changes in COVID-19 cases in certain age groups predict changes in others but not vice versa, highlighting the complexity of intergenerational interactions.
+
+The paper discusses the broader context of the impact of school closures on child development, mental health, nutrition, and education, referencing conflicting opinions on their effectiveness in controlling COVID-19 spread. It explores the belief that school closures not only influence the spread among children but also have a knock-on effect on older age groups (Secondary Attack Rate), considering the age-dependent nature of secondary transmission.
+
+The estimation methodology, involving Generalized Additive Models (GAM) and Transfer Entropy methods, reflects the paper's commitment to robust analysis. Leveraging data from the COVerAGE-DB project and school closure information from the UNESCO global education coalition adds a layer of credibility to the research, ensuring a solid foundation for its findings.
+
+The paper concludes that, while overall COVID-19 cases decrease after school closures, school-going age groups exhibit an increase, emphasizing the need to consider intergenerational interactions in designing effective control measures. In summary, this research provides valuable insights into the intricate dynamics of COVID-19 transmission in different age groups and the nuanced effects of school closures in European countries.

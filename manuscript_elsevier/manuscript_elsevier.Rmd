@@ -1,18 +1,18 @@
 ---
 title: Examining the Impact of School Closures on COVID-19 Infections in Europe and their Effects on Different Age Cohorts
-author:
-  - name: Damien Dupré
-    email: damien.dupre@dcu.ie
-    affiliation: Business School, Dublin City University
-    correspondingauthor: true
-  - name: Edgar Morgenroth
-    email: edgar.morgenroth@dcu.ie
-    affiliation: Business School, Dublin City University
-address:
-  - code: Business School, Dublin City University
-    organization: Business School, Dublin City University
-    city: Dublin
-    country: Ireland
+# author:
+#   - name: Damien Dupré
+#     email: damien.dupre@dcu.ie
+#     affiliation: Business School, Dublin City University
+#     correspondingauthor: true
+#   - name: Edgar Morgenroth
+#     email: edgar.morgenroth@dcu.ie
+#     affiliation: Business School, Dublin City University
+# address:
+#   - code: Business School, Dublin City University
+#     organization: Business School, Dublin City University
+#     city: Dublin
+#     country: Ireland
 abstract: |
   This paper analyzes the trends of COVID-19 cases in different age groups in selected European countries, assessing to what extent school closures helped reduce case numbers, how school closures affected case numbers in different age groups, and how COVID-19 spread between age groups. The study also evaluates the effects of school closures on COVID-19 cases using a Generalized Additive Model (GAM). The findings demonstrate a decreasing non-linear effect of school closure on the total COVID-19 case number across all countries studied. However, the analysis of age groups only reveals a consistent downward trend in infections in the 0 to 4 pre-school age group, while the school-going age groups 5 to 14 exhibit a significant increase in cases. Age groups 15 to 24 show a surge immediately after closure, followed by a decline. Transfer Entropy calculations highlight asymmetry in age group influences, indicating that changes in COVID-19 cases in certain age groups predict changes in other age groups but not vice versa. These findings contribute to a better understanding of COVID-19 dynamics in European countries and provide insights for public health strategies and interventions.
 keywords: 
@@ -53,6 +53,7 @@ library(ggrepel)
 library(here)
 library(janitor)
 library(knitr)
+library(kableExtra)
 library(osfr)
 library(scales)
 library(tidyverse)
@@ -385,4 +386,457 @@ In conclusion, this study sheds light on the trends and patterns of confirmed CO
 All data extracted from the COVerAGE-DB project and from the UNESCO global education coalition that are used to produce these results are fully available here https://github.com/damien-dupre/covid_ts_causality. The repository also includes the R code that were used to produce these results.
 
 # References {-}
+
+<div id="refs"></div>
+
+\newpage
+
+# Appendix 1: Dickey-Fuller test for stationay timeseries {-} 
+
+Test for the null hypothesis of a unit root of a univarate time series (equivalently, non-stationary time series).
+
+The Augmented Dickey-Fuller test incorporates three types of linear regression models. The first type is a linear model with no drift and linear trend with respect to time. The second type is a linear model with drift but no linear trend. The third type is a linear model with both drift and linear trend.
+
+The p.value is calculated by interpolating the test statistics from the corresponding critical values tables (Fuller, 1996) for each type of linear models with given sample size. 
+
+```{r}
+adf_res_type1 <- df_global_age |>
+  group_by(age_grp, country) |>
+  group_modify(~ aTSA::adf.test(.x$daily_changes, output = FALSE, nlag = 2) |>
+                 bind_rows() |> 
+                 pluck("type1") |> 
+                 as_tibble()
+  ) |> 
+  rename(ADF_type1 = ADF, p.value_type1 = p.value)
+
+adf_res_type2 <- df_global_age |>
+  group_by(age_grp, country) |>
+  group_modify(~ aTSA::adf.test(.x$daily_changes, output = FALSE, nlag = 2) |>
+                 bind_rows() |> 
+                 pluck("type2") |> 
+                 as_tibble()
+  ) |> 
+  rename(ADF_type2 = ADF, p.value_type2 = p.value)
+
+adf_res_type3 <- df_global_age |>
+  group_by(age_grp, country) |>
+  group_modify(~ aTSA::adf.test(.x$daily_changes, output = FALSE, nlag = 2) |>
+                 bind_rows() |> 
+                 pluck("type3") |> 
+                 as_tibble()
+  ) |> 
+  rename(ADF_type3 = ADF, p.value_type3 = p.value)
+
+adf_res <- adf_res_type1 |> 
+  full_join(adf_res_type2) |> 
+  full_join(adf_res_type3)
+```
+
+\newpage
+
+```{r}
+adf_res |>
+  filter(age_grp %in% c("aged0to4", "aged5to9")) |> 
+  kbl(
+    caption = "Dickey-Fuller test for all combinaisons of countries and age groups investigated",
+    col.names = c("Age Group", "Country", "Lag", "ADF", "p", "ADF", "p", "ADF", "p")
+  ) |> 
+  kable_classic(full_width = F) |> 
+  add_header_above(c(" " = 3, "Type 1" = 2, "Type 2" = 2, "type 3" = 2)) |>
+  collapse_rows(columns = 1:2, valign = "middle")
+```
+
+\newpage
+
+```{r}
+adf_res |>
+  filter(age_grp %in% c("aged10to14", "aged15to19")) |> 
+  kbl(
+    caption = "Dickey-Fuller test for all combinaisons of countries and age groups investigated",
+    col.names = c("Age Group", "Country", "Lag", "ADF", "p", "ADF", "p", "ADF", "p")
+  ) |> 
+  kable_classic(full_width = F) |> 
+  add_header_above(c(" " = 3, "Type 1" = 2, "Type 2" = 2, "type 3" = 2)) |>
+  collapse_rows(columns = 1:2, valign = "middle")
+```
+
+\newpage
+
+```{r}
+adf_res |>
+  filter(age_grp %in% c("aged20to24", "aged25to34")) |> 
+  kbl(
+    caption = "Dickey-Fuller test for all combinaisons of countries and age groups investigated",
+    col.names = c("Age Group", "Country", "Lag", "ADF", "p", "ADF", "p", "ADF", "p")
+  ) |> 
+  kable_classic(full_width = F) |> 
+  add_header_above(c(" " = 3, "Type 1" = 2, "Type 2" = 2, "type 3" = 2)) |>
+  collapse_rows(columns = 1:2, valign = "middle")
+```
+
+\newpage
+
+```{r}
+adf_res |>
+  filter(age_grp %in% c("aged35to44", "aged45to54")) |> 
+  kbl(
+    caption = "Dickey-Fuller test for all combinaisons of countries and age groups investigated",
+    col.names = c("Age Group", "Country", "Lag", "ADF", "p", "ADF", "p", "ADF", "p")
+  ) |> 
+  kable_classic(full_width = F) |> 
+  add_header_above(c(" " = 3, "Type 1" = 2, "Type 2" = 2, "type 3" = 2)) |>
+  collapse_rows(columns = 1:2, valign = "middle")
+```
+
+\newpage
+
+```{r}
+adf_res |>
+  filter(age_grp %in% c("aged55to64", "aged65+")) |> 
+  kbl(
+    caption = "Dickey-Fuller test for all combinaisons of countries and age groups investigated",
+    col.names = c("Age Group", "Country", "Lag", "ADF", "p", "ADF", "p", "ADF", "p")
+  ) |> 
+  kable_classic(full_width = F) |> 
+  add_header_above(c(" " = 3, "Type 1" = 2, "Type 2" = 2, "type 3" = 2)) |>
+  collapse_rows(columns = 1:2, valign = "middle")
+```
+
+\newpage
+
+# Appendix 2: Significance of Transfer Entropy coefficients
+
+Results for each permutation of age groups from each country. Tables include transfer entropy estimates, the effective transfer entropy estimates, standard errors and p-values based on bootstrap replications of the Markov chains under the null hypothesis of statistical independence.
+
+```{r}
+# variables --------------------------------------------------------------------
+age_order <- c(
+  "aged0to4", "aged5to9", "aged10to14", "aged15to19", "aged20to24",
+  "aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65+"
+)
+
+# data -------------------------------------------------------------------------
+te_results <- read_csv(here("data/te_results.csv")) |> 
+    mutate(
+      X = factor(X, levels = age_order),
+      Y = factor(Y, levels = age_order)
+    )
+```
+
+```{r}
+te_results |>
+  filter(X == "aged0to4") |> 
+  filter(Y %in% c("aged0to4", "aged5to9", "aged10to14", "aged15to19", "aged20to24")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged0to4") |> 
+  filter(Y %in% c("aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65+")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged5to9") |> 
+  filter(Y %in% c("aged0to4", "aged5to9", "aged10to14", "aged15to19", "aged20to24")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged5to9") |> 
+  filter(Y %in% c("aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65+")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+```{r}
+te_results |>
+  filter(X == "aged10to14") |> 
+  filter(Y %in% c("aged0to4", "aged5to9", "aged10to14", "aged15to19", "aged20to24")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged10to14") |> 
+  filter(Y %in% c("aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65+")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged15to19") |> 
+  filter(Y %in% c("aged0to4", "aged5to9", "aged10to14", "aged15to19", "aged20to24")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged15to19") |> 
+  filter(Y %in% c("aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65+")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged20to24") |> 
+  filter(Y %in% c("aged0to4", "aged5to9", "aged10to14", "aged15to19", "aged20to24")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged20to24") |> 
+  filter(Y %in% c("aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65+")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged25to34") |> 
+  filter(Y %in% c("aged0to4", "aged5to9", "aged10to14", "aged15to19", "aged20to24")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged25to34") |> 
+  filter(Y %in% c("aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65+")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged35to44") |> 
+  filter(Y %in% c("aged0to4", "aged5to9", "aged10to14", "aged15to19", "aged20to24")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged35to44") |> 
+  filter(Y %in% c("aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65+")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged45to54") |> 
+  filter(Y %in% c("aged0to4", "aged5to9", "aged10to14", "aged15to19", "aged20to24")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged45to54") |> 
+  filter(Y %in% c("aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65+")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged55to64") |> 
+  filter(Y %in% c("aged0to4", "aged5to9", "aged10to14", "aged15to19", "aged20to24")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged55to64") |> 
+  filter(Y %in% c("aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65+")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged65+") |> 
+  filter(Y %in% c("aged0to4", "aged5to9", "aged10to14", "aged15to19", "aged20to24")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
+
+\newpage
+
+```{r}
+te_results |>
+  filter(X == "aged65+") |> 
+  filter(Y %in% c("aged25to34", "aged35to44", "aged45to54", "aged55to64", "aged65+")) |> 
+  arrange(Y) |> 
+  kbl(
+    caption = "Significance of Transfer Entropy coefficients",
+    digits = 2
+  ) |> 
+  kable_classic(full_width = F) |> 
+  collapse_rows(columns = 1:2, valign = "middle") |> 
+  kable_styling(font_size = 7)
+```
 
