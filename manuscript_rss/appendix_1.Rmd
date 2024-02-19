@@ -15,12 +15,6 @@ header-includes:
   - \usepackage{caption}
 ---
 
-Test for the null hypothesis of a unit root of a univarate time series (equivalently, non-stationary time series).
-
-The Augmented Dickey-Fuller test incorporates three types of linear regression models. The first type is a linear model with no drift and linear trend with respect to time. The second type is a linear model with drift but no linear trend. The third type is a linear model with both drift and linear trend.
-
-The p.value is calculated by interpolating the test statistics from the corresponding critical values tables (Fuller, 1996) for each type of linear models with given sample size. 
-
 ```{r setup, include = FALSE}
 # libraries --------------------------------------------------------------------
 library(here)
@@ -43,6 +37,11 @@ opts_chunk$set(
   )
 ```
 
+Test for the null hypothesis of a unit root of a univarate time series (equivalently, non-stationary time series).
+
+The Augmented Dickey-Fuller test incorporates three types of linear regression models. The first type is a linear model with no drift and linear trend with respect to time. The second type is a linear model with drift but no linear trend. The third type is a linear model with both drift and linear trend.
+
+The p.value is calculated by interpolating the test statistics from the corresponding critical values tables (Fuller, 1996) for each type of linear models with given sample size. 
 
 ```{r}
 df_global_age <- read_csv(here("data/df_global_age.csv"))
@@ -78,6 +77,8 @@ adf_res <- adf_res_type1 |>
   full_join(adf_res_type2) |> 
   full_join(adf_res_type3)
 ```
+
+\newpage
 
 ```{r}
 adf_res |>

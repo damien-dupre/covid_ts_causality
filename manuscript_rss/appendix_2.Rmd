@@ -37,7 +37,9 @@ opts_chunk$set(
   fig.retina = 3,
   dev = "ragg_png"
   )
+```
 
+```{r}
 # variables --------------------------------------------------------------------
 age_order <- c(
   "aged0to4", "aged5to9", "aged10to14", "aged15to19", "aged20to24",
@@ -49,7 +51,8 @@ te_results <- read_csv(here("data/te_results.csv")) |>
     mutate(
       X = factor(X, levels = age_order),
       Y = factor(Y, levels = age_order)
-    )
+    ) |> 
+  select(-direction)
 ```
 
 ```{r}
@@ -368,4 +371,3 @@ te_results |>
   collapse_rows(columns = 1:2, valign = "middle") |> 
   kable_styling(font_size = 7)
 ```
-

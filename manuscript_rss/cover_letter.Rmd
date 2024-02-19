@@ -1,5 +1,5 @@
 ---
-title: "Submission to Social Science & Medicine"
+title: "Submission to the Journal of the Royal Statistical Society, Series C (Applied Statistics) "
 output: pdf_document
 ---
 
@@ -9,7 +9,7 @@ knitr::opts_chunk$set(
   warning = FALSE, 
   error = FALSE, 
   echo = FALSE)
-journal <- "Social Science & Medicine"
+journal <- "Journal of the Royal Statistical Society, Series C (Applied Statistics)"
 ```
 
 Dear editor of `r journal`,
