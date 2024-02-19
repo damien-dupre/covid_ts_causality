@@ -31,11 +31,16 @@ This manuscript has not been published elsewhere, accepted for publication elsew
 The list of authors:
 
 * Damien Dupré (corresponding author and main investigator of the study)
-  * Dublin City University
-  * damien.dupre@dcu.ie
+  * affiliation: Business School, Dublin City University
+  * city: Dublin
+  * country: Ireland
+  * email: damien.dupre@dcu.ie
+
 * Edgar Morgenroth
-  * Dublin City University
-  * edgar.morgenroth@dcu.ie
+  * affiliation: Business School, Dublin City University
+  * city: Dublin
+  * country: Ireland
+  * email: edgar.morgenroth@dcu.ie
 
 All future correspondence can be directed to me at the e-mail address provided in this submission. If you have any questions or concerns pertaining to this manuscript, please do not hesitate to contact me. Thank you for your time and consideration, and we look forward to hearing back from you. 
 
