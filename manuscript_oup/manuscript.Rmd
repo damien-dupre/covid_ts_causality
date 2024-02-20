@@ -30,7 +30,7 @@ header-includes:
 output:
   bookdown::pdf_book:
     template: oup-authoring-template.tex
-    keep_tex: false
+    keep_tex: true
 ---
 
 
