@@ -1,43 +1,23 @@
 ---
 title: "Examining the Impact of School Closures on COVID-19 Infections in Europe and their Effects on Different Age Cohorts"
+journal_title: "Journal of the Royal Statistical Society, Series C (Applied Statistics)"
 short_title: "Impact of School Closures on COVID-19 by Age Cohorts"
-short_author: "Author 1 et. al."
-authors: 
-- name: "Author 1"
-  affiliation: "Address"
-  city: "City"
-  country: "Country"
-  email: "email1\\@example.com"
-- name: "Author 2"
-  affiliation: "Address2"
-  city: "City2"
-  country: "Country2"
-  email: "email2\\@example.com"
-# short_author: "Dupré & Morgenroth"
-# authors:
-# - name: "Damien Dupré"
-#   affiliation: "Business School, Dublin City University"
-#   city: "Dublin"
-#   country: "Ireland"
-#   email: "damien.dupre\\@dcu.ie"
-#   footnote: 1
-# - name: "Edgar Morgenroth"
-#   affiliation: "Business School, Dublin City University"
-#   city: "Dublin"
-#   country: "Ireland"
-#   email: "edgar.morgenroth\\@dcu.ie"
-#   footnote: 2
-# footnote:
-#   - code: 1
-#     text: "Corresponding Author"
-#   - code: 2
-#     text: "Equal contribution"
+short_author: "Dupré & Morgenroth"
+authors_1_name: "Damien Dupré"
+authors_1_ORCID: "0000-0001-8610-1045"
+authors_2_name: "Edgar Morgenroth"
+authors_2_ORCID: "0000-0002-9442-0561"
+authors_affiliation: "Business School, Dublin City University"
+authors_city: "Dublin"
+authors_country: "Ireland"
+corresponding_email: "damien.dupre\\@dcu.ie"
 abstract: |
   This paper provides a thorough analysis of COVID-19 case trends in selected European countries, focusing on the influence of different age groups. It explores the relationship between population size and confirmed case numbers, suggesting that larger countries tend to have higher case figures. The study investigates how various waves of the pandemic affect different age demographics, with older age groups being most affected by the initial wave and younger age groups more impacted by subsequent waves.
   Using a Generalised Additive Model (GAM), the research assesses the impact of school closures on COVID-19 cases, revealing a decreasing non-linear effect across all countries examined. Following school closures, distinct trends emerge among age groups: ages 0 to 4 experience a decrease, ages 5 to 14 see an increase, and ages 15 to 24 initially surge then decline. Transfer Entropy calculations uncover imbalances in age group influences, with certain age groups predicting changes in others.
   Consistent patterns across countries are identified, such as younger cohorts influencing older cohorts in Austria, Germany, and the Netherlands, while Portugal and Spain show the opposite trend. These findings deepen our understanding of COVID-19 dynamics in Europe, providing valuable insights for targeted public health strategies and interventions.
 keywords: COVID-19, School Closures, Causality, Generalised Additive Model, Transfer Entropy
 bibliography: "bibliography.bib"
+csl: elsevier-harvard.csl
 header-includes:
   - \usepackage{float}
   - \usepackage{booktabs}
@@ -49,19 +29,8 @@ header-includes:
 
 output:
   bookdown::pdf_book:
-    base_format: rticles::rss_article
+    template: oup-authoring-template.tex
     keep_tex: false
-  bookdown::word_document2:
-    default
-knit: (function(input, ...) {
-    rmarkdown::render(
-      input,
-      output_dir = here::here("output"),
-      output_file = c(glue::glue("{xfun::sans_ext(input)}.pdf"), glue::glue("{xfun::sans_ext(input)}.docx")),
-      output_format = "all",
-      envir = globalenv()
-    )
-  })
 ---
 
 
@@ -381,19 +350,19 @@ Overall, the results revealed a decreasing non-linear effect of school closure a
 gam_plot_country
 ```
 
-Considering all countries, the analysis of age groups reveals distinct patterns (Figure \@ref(fig:age)). For the 0 to 4 age group, i.e., the pre-school group, there was a downward trend during the initial two weeks following school closure, followed by flattening off (`r gam_results["0to4"]`). In contrast, for the age group ranging from 5 to 14, a substantial increase in cases after 14 days of school closure is found (5 to 9 age group: `r gam_results["5to9"]` and 10 to 14 age group: `r gam_results["10to14"]`). For age groups between 15 and 24, there is a notable surge immediately after school closure, followed by a decrease after 14 days (15 to 19 age group: `r gam_results["15to19"]` and 20 to 24 age group: `r gam_results["20to24"]`). Thus, while the total case number declined following school closures, among younger age groups only the pre-school age group had a consistent reduction in cases, while for other age groups, there was even an increase in cases following school closures.
-
 ```{r age, fig.height=3, out.width="\\textwidth", fig.cap="(ref:age)"}
 gam_plot_age
 ```
 
+```{r te, fig.height=8, out.width="\\textwidth", fig.cap="(ref:te)", fig.pos = 'H'}
+te_plot
+```
+
+Considering all countries, the analysis of age groups reveals distinct patterns (Figure \@ref(fig:age)). For the 0 to 4 age group, i.e., the pre-school group, there was a downward trend during the initial two weeks following school closure, followed by flattening off (`r gam_results["0to4"]`). In contrast, for the age group ranging from 5 to 14, a substantial increase in cases after 14 days of school closure is found (5 to 9 age group: `r gam_results["5to9"]` and 10 to 14 age group: `r gam_results["10to14"]`). For age groups between 15 and 24, there is a notable surge immediately after school closure, followed by a decrease after 14 days (15 to 19 age group: `r gam_results["15to19"]` and 20 to 24 age group: `r gam_results["20to24"]`). Thus, while the total case number declined following school closures, among younger age groups only the pre-school age group had a consistent reduction in cases, while for other age groups, there was even an increase in cases following school closures.
+
 Given that school closures were not only aimed at reducing COVID-19 cases among school-going children but also age groups, it is important to test the degree to which there was transmission across age groups, which is done using transfer entropy analysis. Before this analysis is carried out, an Augmented Dickey-Fuller has been applied to each age group to ensure that the daily changes in COVID-19 cases are stationary (see Appendix 1).
 
 The results of the transfer entropy calculations between age groups for each of the 12 selected European countries are reported in Figure \@ref(fig:te). The absence of symmetry between influencing age groups (i.e., $ag\,x$) and influenced age groups (i.e., $ag\,y$) is found. Indeed, the change in COVID-19 cases in some age groups is influenced by other age groups, but they are not reciprocally influencing these age groups. Figure \@ref(fig:te) shows how different age cohorts influence the COVID-19 case numbers of all age groups across countries. The upper left quadrant indicates how younger age cohorts are influencing older age cohorts, the bottom right quadrant indicates how older age cohorts are influencing younger age cohorts, finally, the lower left and upper right indicate how younger or older age cohorts are influencing themselves. By analyzing these quadrants, it is possible to identify similar patterns across multiple countries. Indeed, it appears that Austria, Germany, and The Netherlands have significantly higher $T$ coefficients in the upper left quadrant of the matrix, which indicates that the daily changes in COVID-19 cases number in younger cohorts are predicting the daily changes in COVID-19 cases number in older cohorts. Alternatively, it appears that Austria, the Netherlands, Portugal, and Spain have significantly higher $T$ coefficients in the lower right quadrant of the matrix, which indicates that the daily changes in COVID-19 cases number in older cohorts are predicting the daily changes in COVID-19 cases number in younger cohorts.
-
-```{r te, fig.height=8, out.width="\\textwidth", fig.cap="(ref:te)"}
-te_plot
-```
 
 # Discussion & Conclusion
 
@@ -411,7 +380,7 @@ All data extracted from the COVerAGE-DB project and from the UNESCO global educa
 
 # References {-}
 
-<div id="refs"></div>
+<!-- <div id="refs"></div> -->
 
 <!-- \newpage -->
 
