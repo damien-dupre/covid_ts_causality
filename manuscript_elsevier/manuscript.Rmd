@@ -14,7 +14,15 @@ title: Examining the Impact of School Closures on COVID-19 Infections in Europe 
 #     city: Dublin
 #     country: Ireland
 abstract: |
-  This paper analyzes the trends of COVID-19 cases in different age groups in selected European countries, assessing to what extent school closures helped reduce case numbers, how school closures affected case numbers in different age groups, and how COVID-19 spread between age groups. The study also evaluates the effects of school closures on COVID-19 cases using a Generalized Additive Model (GAM). The findings demonstrate a decreasing non-linear effect of school closure on the total COVID-19 case number across all countries studied. However, the analysis of age groups only reveals a consistent downward trend in infections in the 0 to 4 pre-school age group, while the school-going age groups 5 to 14 exhibit a significant increase in cases. Age groups 15 to 24 show a surge immediately after closure, followed by a decline. Transfer Entropy calculations highlight asymmetry in age group influences, indicating that changes in COVID-19 cases in certain age groups predict changes in other age groups but not vice versa. These findings contribute to a better understanding of COVID-19 dynamics in European countries and provide insights for public health strategies and interventions.
+  *Objectives:* This paper analyzes the trends of COVID-19 cases in different age groups in selected European countries, assessing to what extent school closures helped reduce case numbers, how school closures affected case numbers in different age groups, and how COVID-19 spread between age groups.
+  
+  *Study Design:* A longitudinal study was conducted to observe changes in COVID-19 cases during school closures. 
+  
+  *Methods:* A Generalized Additive Model is performed to compare trends from twelve European countries across five age groups. Then, Transfer Entropy calculations are used to evaluate the impact of younger cohorts on older cohorts.
+  
+  *Results:* The findings demonstrate a decreasing non-linear effect of school closure on the total COVID-19 case number across all countries studied. However, the analysis of age groups only reveals a consistent downward trend in infections in the 0 to 4 pre-school age group, while the school-going age groups 5 to 14 exhibit a significant increase in cases. Age groups 15 to 24 show a surge immediately after closure, followed by a decline. Transfer Entropy calculations highlight asymmetry in age group influences, indicating that changes in COVID-19 cases in certain age groups predict changes in other age groups but not vice versa. 
+  
+  *Conclusions:* These findings contribute to a better understanding of COVID-19 dynamics in European countries and provide insights for public health strategies and interventions.
 keywords: 
   - COVID-19
   - School Closures
@@ -23,7 +31,7 @@ journal: "Public Health"
 date: "`r Sys.Date()`"
 classoption: preprint, 3p
 linenumbers: false
-numbersections: true
+numbersections: false
 bibliography: bibliography.bib
 # biblio-style: elsarticle-num
 csl: https://www.zotero.org/styles/elsevier-with-titles
@@ -215,29 +223,31 @@ source(here("analysis/te_analysis_europe.R"))
 
 A wide range of non-pharmaceutical interventions (NPI) were enacted to control the spread of COVID-19, especially before the availability of effective vaccines. Due to their social mixing patterns, children have been identified as an age group that can drive the spread of respiratory infections such as influenza [@moser2018estimating], and school closures were found to be effective in mitigating the spread of influenza H1N1 in Japan in 2009 [@kawano2015substantial]. It is therefore not surprising that school closures were one of the NPIs that were introduced in many countries to stop the spread of COVID-19. They were used particularly during the initial wave of the pandemic and during subsequent waves when case numbers were high.
 
-Recently, a body of literature has shown various negative consequences on child development and health due to school closures. School closures have been found to have negatively affected child mental health [@moulin2022longitudinal], nutrition/obesity [@sugimoto2023temporal], and education [@lerkkanen2023reading]. Some governments are now questioning their decisions to close schools [@de2021determines]. For example, the German health minister Karl Lauterbach, in an interview with one of Germany’s publicly funded television stations, admitted that “in retrospect it had been wrong to keep schools and childcare closed for so long” [@ard2023lauterbach].
-
-Even if school closures had negative consequences for children, they might nevertheless have been effective at stopping the spread of COVID-19. However, analysis on the effectiveness of school closures on the spread of COVID-19 remains inconclusive. @alfano2022effects in a study of a panel of European countries found that school closures were associated with a reduced COVID-19 incidence. In contrast, @walsh2021school in a review of 40 studies covering 150 countries concluded that the effectiveness of school closures was uncertain, with 60% having identified no impact and pointing to the potential for the analysis to be affected by confounding factors and collinearity. The latter shortcomings suggest that it is hard to draw firm inferences, as even a positive result may not imply causality.
-
-This paper investigates the dynamics of COVID-19 across age groups and how this was affected by school closures. This allows us to identify the effect of school closure on the evolution of COVID-19 cases in other age groups and particularly on older and more vulnerable age groups, including parents, grandparents, and relatives about which little is known.
-
-We identify the relationship between the school closures and case numbers in different age groups using Generalized Additive Models (GAM), which are more flexible than conventional Vector Autoregressions, given that they allow for non-linear relationships between variables. Furthermore, compared to other methods such as Vector Autoregression, GAM can handle fixed and random smooth effects without making strict assumptions about linearity. Then, using the transfer entropy method, we evaluate the impact of case number changes between age groups in order to identify if school closure has secondary repercussions in the household. Transfer entropy can adapt to changes in the underlying system dynamics over time. It does not assume stationarity and can capture evolving causal relationships, making it suitable for studying dynamic systems and non-stationary processes such as COVID-19 contaminations.
-
-## Influence of School Closure 
+Recently, a body of literature has shown various negative consequences on child development and health due to school closures. School closures have been found to have negatively affected child mental health [@moulin2022longitudinal], nutrition/obesity [@sugimoto2023temporal], and education [@lerkkanen2023reading]. Some governments are now questioning their decisions to close schools [@de2021determines]. For example, the German health minister Karl Lauterbach, in an interview with one of Germany’s publicly funded television stations, admitted that “in retrospect it had been wrong to keep schools and childcare closed for so long” [@ard2023lauterbach]. Even if school closures had negative consequences for children, they might nevertheless have been effective at stopping the spread of COVID-19. However, analysis on the effectiveness of school closures on the spread of COVID-19 remains inconclusive. @alfano2022effects in a study of a panel of European countries found that school closures were associated with a reduced COVID-19 incidence. In contrast, @walsh2021school in a review of 40 studies covering 150 countries concluded that the effectiveness of school closures was uncertain, with 60% having identified no impact and pointing to the potential for the analysis to be affected by confounding factors and collinearity. The latter shortcomings suggest that it is hard to draw firm inferences, as even a positive result may not imply causality.
 
 Once it was clear that COVID-19 spreads from person to person, it was natural that governments were advised to enact measures to reduce social contact in order to reduce the spread of the virus. Therefore, it is legitimate to believe that by closing schools, a reduction of the contaminations would be observed in the younger age groups. However, the efficiency of school closure on the reduction of COVID-19 cases is still questioned [@bayham2020impact; @esposito2021comprehensive]. While some research has found that school closures contribute to limit or to reduce the growth rate of confirmed cases after implementation [@stage2021shut; @yoshiyuki2020effects], others did not observe a change in the evolution of COVID-19 cases [@chang2020modelling; @iwata2020school]. For instance, a controlled comparison between similar localities in Japan with schools closed and schools open did not reveal any evidence that school closures reduced the spread of COVID-19 [@fukumoto2021no]. If the school closure had a real impact on the evolution of confirmed COVID-19 cases, it should be possible to observe a decrease or at least an inflection in the trend of its evolution among younger age groups.
 
-## Causal Relationship Between Age Groups 
-
-A second implicit belief regarding the effect of school closure on the spread of COVID-19 is that school not only influences the spread of the virus among children and teenagers but also has a knock-on effect on the spread of the virus in older age groups, also called Secondary Attack Rate (SAR). The contaminated children and teenagers would bring the virus back home and would pass the virus on to their parents and relatives. For example, research investigating the contamination in the household network not only revealed an exceptionally high rate of secondary contamination but also that this contamination happened when the schools were closed [@sorianoarandes2021household].
-
-Despite being reported in several clinical and epidemiological studies [@siebach2021childhood; @zhendong2020clinical], multiple research have shown that the SAR from children to household members was lower than expected [@heavey2020evidence; @vanderhoek2020role; @kim2021role; @ludvigsson2020children]. However, the SAR of children and teenagers to the household member is likely to be age-dependent, with differences between infants, primary and secondary school children, and college students [@grasleguen2021reopening]. If a secondary transmission from children and teenagers to household member has a significant influence, then a temporal causality relationship between their evolution should be observed.
+A second implicit belief regarding the effect of school closure on the spread of COVID-19 is that school not only influences the spread of the virus among children and teenagers but also has a knock-on effect on the spread of the virus in older age groups, also called Secondary Attack Rate (SAR). The contaminated children and teenagers would bring the virus back home and would pass the virus on to their parents and relatives. For example, research investigating the contamination in the household network not only revealed an exceptionally high rate of secondary contamination but also that this contamination happened when the schools were closed [@sorianoarandes2021household]. Despite being reported in several clinical and epidemiological studies [@siebach2021childhood; @zhendong2020clinical], multiple research have shown that the SAR from children to household members was lower than expected [@heavey2020evidence; @vanderhoek2020role; @kim2021role; @ludvigsson2020children]. However, the SAR of children and teenagers to the household member is likely to be age-dependent, with differences between infants, primary and secondary school children, and college students [@grasleguen2021reopening]. If a secondary transmission from children and teenagers to household member has a significant influence, then a temporal causality relationship between their evolution should be observed.
 
 To evaluate the impact of school closure on COVID-19 cases across different age groups, we first performed a non-linear time series regression to analyze the relationship between school closures and the number of COVID-19 cases in various age groups. In a second analysis, the transfer entropy method is employed to assess the influence of changes in case numbers between age groups, aiming to determine if school closures have secondary effects within households.
 
-# Estimation Methodology 
+# Methods
 
-## Generalized Additive Model 
+## Study design
+
+A longitudinal study was conducted to observe changes in COVID-19 cases during school closures. Changes in COVID-19 from five age groups from the first to the 28th day of school closure are compared across 12 countries. Then, a causality analysis evaluate the impact of changes in these younger groups on older age groups.
+
+## Data collection
+
+Data on COVID-19 case counts by age group have been obtained from the COVerAGE-DB project [@riffe2021data]. The COVerAGE-DB which collect numbers for every countries by groups of 5 or 10 years if available. In addition, spline approximations are used to deals with the heterogeneity of countries’ reporting formats by using when the data for this age bracket is not available for a country. 
+
+To identify the impact of school closures on the number of cases, information regarding the school closures on a day-by-day basis is required, and this is taken from the “UNESCO global education coalition” (2022). For each day, in each country, the status of the schools is indicated as fully open, partially open, closed due to COVID-19, or closed due to an academic break. Because it would be difficult to measure the effect of school closures at a country level when schools are partially closed, only closures due to COVID-19 or due to an academic break are considered. Indeed, both are considered as closure at a country-wide level. Note that periods of closure longer than 21 days are compared for 28 days, regardless of whether the schools opened or not after 21 days. Any COVID-19 case numbers beyond the 28-day period are not relevant for evaluating the impact of school closures.
+
+## Data validation
+
+In order to cross-validate the data obtained after spline approximations, a comparison with the data published by the @who2022https reveals perfect similarities. The original data consist of 14,089,320 observations of 10 variables (117 distinct countries, region within the country, a unique observation code, the date of the observation, the gender, which can be male, female, or both, the age bracket by 5 years from 0 to 100, a confirmation of the age interval for each bracket, the total number of cases so far, the total number of deaths, and the total number of tests performed) from `r format(min(df_global$date), "%B %d, %Y")` to `r format(max(df_global$date), "%B %d, %Y")`. After removing countries with missing and inconsistent values, only 22 are suitable for data analyses. However, to focus this analysis on geographically and culturally comparable countries, only 12 European countries are kept: Austria, Belgium, Bulgaria, Croatia, Estonia, France, Germany, Greece, Netherlands, Portugal, Slovakia, and Spain. The observations are reported in terms of the total number of COVID-19 cases per day from the start of the pandemic. The daily number of cases at a specific date $n\prime_{t}$ is calculated with the difference between the total cases at a date $t$ and the total cases at a date $t-1$ (i.e., derivative 1). In addition, the change in the daily number of cases $n\prime\prime_{t}$ between $n\prime_{t}$ and $n\prime_{t-1}$ has also been calculated (i.e., derivative 2).
+
+## Generalized additive model 
 
 The effect of school closure on the trend of daily COVID-19 cases is analyzed using a Generalized Additive Model (GAM). GAM is a flexible modeling approach that estimates non-linear relationships between variables. Compared to other methods such as Vector Autoregression, GAM can handle fixed and random smooth effects without making strict assumptions about linearity.
 
@@ -254,7 +264,7 @@ By estimating the degree of smoothness of a Bayesian spline smoothing using rest
 
 \noindent where $n\prime_t$ represents the confirmed COVID-19 cases, assuming a Poisson distribution for the fitting [@loader2006local], and $t$ is the date corresponding to the confirmed COVID-19 cases. The response variable includes a specific random effect taking into account variation within waves of school closure, countries, and age groups. The terms $f_1$ to $f_3$ are smooth functions of the time since closure, the time since closure for each country, and the time since closure for each age group. The restricted maximum likelihood (REML) was used to avoid overfitting while estimating smoothing parameters. In order to accurately account for the autocorrelation arising from the time series data, the residuals are modeled using an AR1 error model. By incorporating the autoregressive component, the AR1 model acknowledges the dependence of each residual on its previous value, thus providing a comprehensive representation of the data’s temporal dynamics.
 
-## Transfer Entropy
+## Transfer entropy
 
 Transfer entropy ($T$) can be used to infer the temporal relationship between two time series $X$ and $Y$. This measure indicates whether changes in COVID-19 cases within a certain age group $X$ can be used to reduce the uncertainty on the future COVID-19 cases within another age group $Y$. If it does, $T$ is considered evidence of a causal effect from the age group $X$ to the age group $Y$ [@schreiber2000measuring]. As such, Granger causality is a special case of transfer entropy applied to time series that are jointly Gaussian distributed [@barnett2009granger]. Therefore, transfer entropy is a more robust analysis of time series, especially when applied to the impact of age cohorts on pandemic transmission [@kissler2020symbolic].
 
@@ -268,18 +278,6 @@ The influence of the evolution in COVID-19 cases across all age groups is evalua
 \noindent where $T_{ag\,x \rightarrow\,ag\,y}$ consequently measures the influence of the change dynamic from an age group $X$ (or $ag\,x$) to another age group $Y$ (or $ag\,y$) for every country (Eq 2). 
 
 The day-by-day difference in COVID-19 confirmed cases $n\prime\prime_t$ is used to satisfy the stationary requirement for the calculation of Shannon’s Transfer Entropy [@shannon1948mathematical; @behrendt2019rtransferentropy].
-
-# Data
-
-## COVID-19 cases per age group
-
-For the analysis, data on COVID case counts by age group are required. The number of COVID-19 cases per age group has been taken from the COVerAGE-DB project [@riffe2021data]. The COVerAGE-DB project consists of 3 data files: an “Input” data file that collects the official COVID-19 cases from 117 countries, the “Output_5” data file, which is a projection of COVID-19 cases by a group of 5 years, and the “Output_10” data file, which is a projection of COVID-19 cases by a group of 10 years. For our analyses, we have used the “Output_5,” which deals with the heterogeneity of countries’ reporting formats by using spline approximations when the data for this age bracket is not available for a country. Therefore, it allows a precise analysis between age groups under 24, while age groups of 25 and above are reduced to 10-year brackets, and groups above 64 are concatenated all together.
-
-In order to cross-validate the data obtained after spline approximations, a comparison with the data published by the @who2022https reveals perfect similarities. The original data consist of 14,089,320 observations of 10 variables (117 distinct countries, region within the country, a unique observation code, the date of the observation, the gender, which can be male, female, or both, the age bracket by 5 years from 0 to 100, a confirmation of the age interval for each bracket, the total number of cases so far, the total number of deaths, and the total number of tests performed) from `r format(min(df_global$date), "%B %d, %Y")` to `r format(max(df_global$date), "%B %d, %Y")`. After removing countries with missing and inconsistent values, only 22 are suitable for data analyses. However, to focus this analysis on geographically and culturally comparable countries, only 12 European countries are kept: Austria, Belgium, Bulgaria, Croatia, Estonia, France, Germany, Greece, Netherlands, Portugal, Slovakia, and Spain. The observations are reported in terms of the total number of COVID-19 cases per day from the start of the pandemic. The daily number of cases at a specific date $n\prime_{t}$ is calculated with the difference between the total cases at a date $t$ and the total cases at a date $t-1$ (i.e., derivative 1). In addition, the change in the daily number of cases $n\prime\prime_{t}$ between $n\prime_{t}$ and $n\prime_{t-1}$ has also been calculated (i.e., derivative 2).
-
-## School closure
-
-To identify the impact of school closures on the number of cases, information regarding the school closures on a day-by-day basis is required, and this is taken from the “UNESCO global education coalition” (2022). For each day, in each country, the status of the schools is indicated as fully open, partially open, closed due to COVID-19, or closed due to an academic break. Because it would be difficult to measure the effect of school closures at a country level when schools are partially closed, only closures due to COVID-19 or due to an academic break are considered. Indeed, both are considered as closure at a country-wide level. Note that periods of closure longer than 21 days are compared for 28 days, regardless of whether the schools opened or not after 21 days. Any COVID-19 case numbers beyond the 28-day period are not relevant for evaluating the impact of school closures.
     
 # Results
 
@@ -372,7 +370,7 @@ Given that school closures were not only aimed at reducing COVID-19 cases among 
 
 The results of the transfer entropy calculations between age groups for each of the 12 selected European countries are reported in Figure \@ref(fig:te). The absence of symmetry between influencing age groups (i.e., $ag\,x$) and influenced age groups (i.e., $ag\,y$) is found. Indeed, the change in COVID-19 cases in some age groups is influenced by other age groups, but they are not reciprocally influencing these age groups. Figure \@ref(fig:te) shows how different age cohorts influence the COVID-19 case numbers of all age groups across countries. The upper left quadrant indicates how younger age cohorts are influencing older age cohorts, the bottom right quadrant indicates how older age cohorts are influencing younger age cohorts, finally, the lower left and upper right indicate how younger or older age cohorts are influencing themselves. By analyzing these quadrants, it is possible to identify similar patterns across multiple countries. Indeed, it appears that Austria, Germany, and The Netherlands have significantly higher $T$ coefficients in the upper left quadrant of the matrix, which indicates that the daily changes in COVID-19 cases number in younger cohorts are predicting the daily changes in COVID-19 cases number in older cohorts. Alternatively, it appears that Austria, the Netherlands, Portugal, and Spain have significantly higher $T$ coefficients in the lower right quadrant of the matrix, which indicates that the daily changes in COVID-19 cases number in older cohorts are predicting the daily changes in COVID-19 cases number in younger cohorts.
 
-# Discussion & Conclusion
+# Discussion
 
 Knowledge about the transmission of the virus significantly improved over time as more studies have been published. While an early study found that children did not play an important role in the transmission of the virus [@li2020role], more recent results give a more nuanced position, stating that the spread of the virus in children is moderate. This study, using robust statistical methods, considered the effect of school closures on COVID-19 cases across age groups. While there are commonalities in the evolution of COVID-19 cases across all European countries that were included in our data, school closures exhibit distinct impacts on different age groups. Notably, the analysis shows that the 0 to 4 age group experiences a downward trend in COVID-19 cases during the initial two weeks following school closure, followed by stabilization. In contrast, age groups ranging from 5 to 14 exhibit a substantial increase in cases after 14 days of school closure. Additionally, age groups between 15 and 24 demonstrate a notable surge immediately after school closure, followed by a decrease after 14 days. Thus, the results do not support the hypothesis that school closures were effective. These results partially replicate observations from @alfano2022effects while providing a clearer picture of the structure of the effect of school closure.
 
@@ -382,9 +380,23 @@ Furthermore, the quadrant analysis reveals similar patterns across multiple coun
 
 In conclusion, this study sheds light on the trends and patterns of confirmed COVID-19 cases in selected European countries, with a particular focus on the influence of age groups and school closures. While a reduction in overall COVID-19 cases was found during school closures, which might suggest that like lockdowns [@alfano2020efficacy; @molefi2021impact], prolonged school closures could contribute to mitigating the spread of the virus, the results for the school-going age groups suggest that this is not the case.
 
-# Data Availability
+# Author statements
 
-All data extracted from the COVerAGE-DB project and from the UNESCO global education coalition that are used to produce these results are fully available here https://github.com/damien-dupre/covid_ts_causality. The repository also includes the R code that were used to produce these results.
+## Ethical approval
+
+This study is a longitudinal analysis on available data; thus, it does not require ethical approval.
+
+## Funding
+
+None declared.
+
+## Competing interests
+
+None declared.
+
+## Data Availability
+
+The data can be accessed from the COVerAGE-DB OSF repository (https://osf.io/mpwjq/) and from the UNESCO servers (https://en.unesco.org/file/unesco-data-school-closures-february-2020-june-2022csv-zip). All preprocessing, analyses and code used to build the submitted paper are available at https://github.com/damien-dupre/covid_ts_causality.
 
 # References {-}
 
