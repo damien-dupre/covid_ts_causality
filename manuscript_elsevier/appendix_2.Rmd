@@ -64,7 +64,7 @@ te_results |>
     caption = "Significance of Transfer Entropy coefficients",
     digits = 2
   ) |> 
-  kable_classic(full_width = F) |> 
+  kable_classic(full_width = TRUE) |> 
   collapse_rows(columns = 1:2, valign = "middle") |> 
   kable_styling(font_size = 7)
 ```
@@ -80,7 +80,7 @@ te_results |>
     caption = "Significance of Transfer Entropy coefficients",
     digits = 2
   ) |> 
-  kable_classic(full_width = F) |> 
+  kable_classic(full_width = TRUE) |> 
   collapse_rows(columns = 1:2, valign = "middle") |> 
   kable_styling(font_size = 7)
 ```
@@ -96,7 +96,7 @@ te_results |>
     caption = "Significance of Transfer Entropy coefficients",
     digits = 2
   ) |> 
-  kable_classic(full_width = F) |> 
+  kable_classic(full_width = TRUE) |> 
   collapse_rows(columns = 1:2, valign = "middle") |> 
   kable_styling(font_size = 7)
 ```
@@ -112,7 +112,7 @@ te_results |>
     caption = "Significance of Transfer Entropy coefficients",
     digits = 2
   ) |> 
-  kable_classic(full_width = F) |> 
+  kable_classic(full_width = TRUE) |> 
   collapse_rows(columns = 1:2, valign = "middle") |> 
   kable_styling(font_size = 7)
 ```
@@ -127,7 +127,7 @@ te_results |>
     caption = "Significance of Transfer Entropy coefficients",
     digits = 2
   ) |> 
-  kable_classic(full_width = F) |> 
+  kable_classic(full_width = TRUE) |> 
   collapse_rows(columns = 1:2, valign = "middle") |> 
   kable_styling(font_size = 7)
 ```
@@ -143,7 +143,7 @@ te_results |>
     caption = "Significance of Transfer Entropy coefficients",
     digits = 2
   ) |> 
-  kable_classic(full_width = F) |> 
+  kable_classic(full_width = TRUE) |> 
   collapse_rows(columns = 1:2, valign = "middle") |> 
   kable_styling(font_size = 7)
 ```
@@ -159,7 +159,7 @@ te_results |>
     caption = "Significance of Transfer Entropy coefficients",
     digits = 2
   ) |> 
-  kable_classic(full_width = F) |> 
+  kable_classic(full_width = TRUE) |> 
   collapse_rows(columns = 1:2, valign = "middle") |> 
   kable_styling(font_size = 7)
 ```
@@ -175,7 +175,7 @@ te_results |>
     caption = "Significance of Transfer Entropy coefficients",
     digits = 2
   ) |> 
-  kable_classic(full_width = F) |> 
+  kable_classic(full_width = TRUE) |> 
   collapse_rows(columns = 1:2, valign = "middle") |> 
   kable_styling(font_size = 7)
 ```
@@ -191,7 +191,7 @@ te_results |>
     caption = "Significance of Transfer Entropy coefficients",
     digits = 2
   ) |> 
-  kable_classic(full_width = F) |> 
+  kable_classic(full_width = TRUE) |> 
   collapse_rows(columns = 1:2, valign = "middle") |> 
   kable_styling(font_size = 7)
 ```
@@ -207,7 +207,7 @@ te_results |>
     caption = "Significance of Transfer Entropy coefficients",
     digits = 2
   ) |> 
-  kable_classic(full_width = F) |> 
+  kable_classic(full_width = TRUE) |> 
   collapse_rows(columns = 1:2, valign = "middle") |> 
   kable_styling(font_size = 7)
 ```
@@ -223,7 +223,7 @@ te_results |>
     caption = "Significance of Transfer Entropy coefficients",
     digits = 2
   ) |> 
-  kable_classic(full_width = F) |> 
+  kable_classic(full_width = TRUE) |> 
   collapse_rows(columns = 1:2, valign = "middle") |> 
   kable_styling(font_size = 7)
 ```
@@ -239,7 +239,7 @@ te_results |>
     caption = "Significance of Transfer Entropy coefficients",
     digits = 2
   ) |> 
-  kable_classic(full_width = F) |> 
+  kable_classic(full_width = TRUE) |> 
   collapse_rows(columns = 1:2, valign = "middle") |> 
   kable_styling(font_size = 7)
 ```
@@ -255,7 +255,7 @@ te_results |>
     caption = "Significance of Transfer Entropy coefficients",
     digits = 2
   ) |> 
-  kable_classic(full_width = F) |> 
+  kable_classic(full_width = TRUE) |> 
   collapse_rows(columns = 1:2, valign = "middle") |> 
   kable_styling(font_size = 7)
 ```
@@ -271,7 +271,7 @@ te_results |>
     caption = "Significance of Transfer Entropy coefficients",
     digits = 2
   ) |> 
-  kable_classic(full_width = F) |> 
+  kable_classic(full_width = TRUE) |> 
   collapse_rows(columns = 1:2, valign = "middle") |> 
   kable_styling(font_size = 7)
 ```
@@ -287,7 +287,7 @@ te_results |>
     caption = "Significance of Transfer Entropy coefficients",
     digits = 2
   ) |> 
-  kable_classic(full_width = F) |> 
+  kable_classic(full_width = TRUE) |> 
   collapse_rows(columns = 1:2, valign = "middle") |> 
   kable_styling(font_size = 7)
 ```
@@ -303,7 +303,7 @@ te_results |>
     caption = "Significance of Transfer Entropy coefficients",
     digits = 2
   ) |> 
-  kable_classic(full_width = F) |> 
+  kable_classic(full_width = TRUE) |> 
   collapse_rows(columns = 1:2, valign = "middle") |> 
   kable_styling(font_size = 7)
 ```
@@ -319,7 +319,7 @@ te_results |>
     caption = "Significance of Transfer Entropy coefficients",
     digits = 2
   ) |> 
-  kable_classic(full_width = F) |> 
+  kable_classic(full_width = TRUE) |> 
   collapse_rows(columns = 1:2, valign = "middle") |> 
   kable_styling(font_size = 7)
 ```
@@ -335,7 +335,7 @@ te_results |>
     caption = "Significance of Transfer Entropy coefficients",
     digits = 2
   ) |> 
-  kable_classic(full_width = F) |> 
+  kable_classic(full_width = TRUE) |> 
   collapse_rows(columns = 1:2, valign = "middle") |> 
   kable_styling(font_size = 7)
 ```
@@ -351,7 +351,7 @@ te_results |>
     caption = "Significance of Transfer Entropy coefficients",
     digits = 2
   ) |> 
-  kable_classic(full_width = F) |> 
+  kable_classic(full_width = TRUE) |> 
   collapse_rows(columns = 1:2, valign = "middle") |> 
   kable_styling(font_size = 7)
 ```
@@ -367,7 +367,7 @@ te_results |>
     caption = "Significance of Transfer Entropy coefficients",
     digits = 2
   ) |> 
-  kable_classic(full_width = F) |> 
+  kable_classic(full_width = TRUE) |> 
   collapse_rows(columns = 1:2, valign = "middle") |> 
   kable_styling(font_size = 7)
 ```

@@ -1,5 +1,5 @@
 ---
-title: "Submission to the Journal of the Royal Statistical Society, Series C (Applied Statistics) "
+title: "Submission to Public Health Journal"
 output: pdf_document
 ---
 
@@ -9,7 +9,7 @@ knitr::opts_chunk$set(
   warning = FALSE, 
   error = FALSE, 
   echo = FALSE)
-journal <- "Journal of the Royal Statistical Society, Series C (Applied Statistics)"
+journal <- "Public Health Journal"
 ```
 
 Dear editor of `r journal`,
@@ -27,6 +27,8 @@ The meticulous methodology and robust analysis presented in our manuscript make 
 All authors disclose any actual or potential conflict of interest including any financial, personal or other relationships with other people or organizations that could inappropriately influence, or be perceived to influence, their work. 
 
 This manuscript has not been published elsewhere, accepted for publication elsewhere or under editorial review for publication elsewhere. My coauthors and I have complied with the ethical guidelines in the treatment of the data and preparation of the manuscript. We had no prior discussions with an Editorial Board Member about the work described in the manuscript.
+
+All data and codes are in open access. The data can be accessed from the COVerAGE-DB OSF repository (https://osf.io/mpwjq/) and from the UNESCO servers (https://en.unesco.org/file/unesco-data-school-closures-february-2020-june-2022csv-zip). All preprocessing, analyses and code used to build the submitted paper are available at https://github.com/damien-dupre/covid_ts_causality.
 
 The list of authors:
 

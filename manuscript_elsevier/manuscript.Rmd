@@ -1,23 +1,37 @@
 ---
-title: "Examining the Impact of School Closures on COVID-19 Infections in Europe and their Effects on Different Age Cohorts"
-journal_title: "Journal of the Royal Statistical Society, Series C (Applied Statistics)"
-short_title: "Impact of School Closures on COVID-19 by Age Cohorts"
-short_author: "Dupré & Morgenroth"
-authors_1_name: "Damien Dupré"
-authors_1_ORCID: "0000-0001-8610-1045"
-authors_2_name: "Edgar Morgenroth"
-authors_2_ORCID: "0000-0002-9442-0561"
-authors_affiliation: "Business School, Dublin City University"
-authors_city: "Dublin"
-authors_country: "Ireland"
-corresponding_email: "damien.dupre\\@dcu.ie"
+title: Examining the Impact of School Closures on COVID-19 Infections in Europe and their Effects on Different Age Cohorts
+# author:
+#   - name: Damien Dupré
+#     email: damien.dupre@dcu.ie
+#     affiliation: Business School, Dublin City University
+#     correspondingauthor: true
+#   - name: Edgar Morgenroth
+#     email: edgar.morgenroth@dcu.ie
+#     affiliation: Business School, Dublin City University
+# address:
+#   - code: Business School, Dublin City University
+#     organization: Business School, Dublin City University
+#     city: Dublin
+#     country: Ireland
 abstract: |
-  This paper provides a thorough analysis of COVID-19 case trends in selected European countries, focusing on the influence of different age groups. It explores the relationship between population size and confirmed case numbers, suggesting that larger countries tend to have higher case figures. The study investigates how various waves of the pandemic affect different age demographics, with older age groups being most affected by the initial wave and younger age groups more impacted by subsequent waves.
-  Using a Generalised Additive Model (GAM), the research assesses the impact of school closures on COVID-19 cases, revealing a decreasing non-linear effect across all countries examined. Following school closures, distinct trends emerge among age groups: ages 0 to 4 experience a decrease, ages 5 to 14 see an increase, and ages 15 to 24 initially surge then decline. Transfer Entropy calculations uncover imbalances in age group influences, with certain age groups predicting changes in others.
-  Consistent patterns across countries are identified, such as younger cohorts influencing older cohorts in Austria, Germany, and the Netherlands, while Portugal and Spain show the opposite trend. These findings deepen our understanding of COVID-19 dynamics in Europe, providing valuable insights for targeted public health strategies and interventions.
-keywords: COVID-19, School Closures, Causality, Generalised Additive Model, Transfer Entropy
-bibliography: "bibliography.bib"
-csl: elsevier-harvard.csl
+  This paper analyzes the trends of COVID-19 cases in different age groups in selected European countries, assessing to what extent school closures helped reduce case numbers, how school closures affected case numbers in different age groups, and how COVID-19 spread between age groups. The study also evaluates the effects of school closures on COVID-19 cases using a Generalized Additive Model (GAM). The findings demonstrate a decreasing non-linear effect of school closure on the total COVID-19 case number across all countries studied. However, the analysis of age groups only reveals a consistent downward trend in infections in the 0 to 4 pre-school age group, while the school-going age groups 5 to 14 exhibit a significant increase in cases. Age groups 15 to 24 show a surge immediately after closure, followed by a decline. Transfer Entropy calculations highlight asymmetry in age group influences, indicating that changes in COVID-19 cases in certain age groups predict changes in other age groups but not vice versa. These findings contribute to a better understanding of COVID-19 dynamics in European countries and provide insights for public health strategies and interventions.
+keywords: 
+  - COVID-19
+  - School Closures
+  - Intergenerational Transmission.
+journal: "Public Health"
+date: "`r Sys.Date()`"
+classoption: preprint, 3p
+linenumbers: false
+numbersections: true
+bibliography: bibliography.bib
+# biblio-style: elsarticle-num
+csl: https://www.zotero.org/styles/elsevier-with-titles
+output:
+  bookdown::pdf_book:
+    base_format: rticles::elsevier_article
+    keep_tex: false
+    citation_package: default
 header-includes:
   - \usepackage{float}
   - \usepackage{booktabs}
@@ -26,13 +40,7 @@ header-includes:
   - \floatplacement{figure}{H}
   - \floatplacement{table}{H}
   - \usepackage{caption}
-
-output:
-  bookdown::pdf_book:
-    template: oup-authoring-template.tex
-    keep_tex: true
 ---
-
 
 (ref:overall) Cumulative COVID-19 cases number for selected European countries since the beginning of the pandemic. Source: COVerAGE-DB [@riffe2021data].
 (ref:descriptive) Periods of school closure since the beginning of the COVID-19 pandemic for selected European countries and their reason: regular academic break vs. closure due to government decisions. Source: @unesco2022https.
@@ -346,7 +354,7 @@ As outlined above, to evaluate the shape of the trend in the numbers of COVID-19
 
 Overall, the results revealed a decreasing non-linear effect of school closure at a country level for the selected European countries (Austria: `r gam_results["Austria"]`; Belgium: `r gam_results["Belgium"]`; Bulgaria: `r gam_results["Bulgaria"]`; Croatia: `r gam_results["Croatia"]`; Estonia: `r gam_results["Estonia"]`; France: `r gam_results["France"]`; Germany (`r gam_results["Germany"]`); Greece: `r gam_results["Greece"]`; The Netherlands: `r gam_results["Netherlands"]`; Portugal: `r gam_results["Portugal"]`; Slovakia (`r gam_results["Slovakia"]`; Spain: `r gam_results["Spain"]`, see Figure \@ref(fig:age)).
 
-```{r country, fig.height=5, out.width="\\textwidth", fig.cap="(ref:country)"}
+```{r country, fig.height=3, out.width="\\textwidth", fig.cap="(ref:country)"}
 gam_plot_country
 ```
 
