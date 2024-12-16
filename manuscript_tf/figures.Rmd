@@ -1,0 +1,273 @@
+---
+title: |
+  Figures
+output: 
+  bookdown::pdf_book:
+    toc: false
+bibliography: bibliography.bib
+header-includes:
+  - \usepackage{float}
+  - \usepackage{booktabs}
+  - \usepackage{longtable}
+  - \usepackage{threeparttable}
+  - \floatplacement{figure}{H}
+  - \floatplacement{table}{H}
+  - \usepackage{caption}
+  - \usepackage{hyperref}
+  - \usepackage[utf8]{inputenc}
+  - \def\tightlist{}
+---
+
+(ref:overall) Cumulative COVID-19 cases number for selected European countries since the beginning of the pandemic. Source: COVerAGE-DB [@riffe2021data].
+(ref:descriptive) Periods of school closure since the beginning of the COVID-19 pandemic for selected European countries and their reason: regular academic break versus closure due to government decisions. Source: @unesco2022https.
+(ref:country) Standardized effect of the smooth term in Generalized Additive Model by country. Standardized effects are reported to compare the shape of the curve between countries.
+(ref:age) Standardized effect of the smooth term in Generalized Additive Model by age group. Standardized effects are reported to compare the shape of the curve between age groups.
+(ref:te) Matrix of Transfer Entropy coefficients according to every age group combination for each of the selected European country. Age groups on the x-axis are influencing the age groups on the y-axis ($ag\,x \rightarrow\,ag\,y$). The significance of each Transfer Entropy coefficient is provided in Appendix 2.
+
+\newpage
+
+```{r setup, include = FALSE}
+# libraries --------------------------------------------------------------------
+library(ggrepel)
+library(here)
+library(janitor)
+library(knitr)
+library(kableExtra)
+library(osfr)
+library(scales)
+library(tidyverse)
+
+# options ----------------------------------------------------------------------
+set.seed(123) # Seed for random number generation
+options(scipen = 999) # disable sci number format
+opts_chunk$set(
+  cache.extra = rand_seed, 
+  cache = FALSE,
+  message = FALSE, 
+  warning = FALSE, 
+  error = FALSE,
+  echo = FALSE, 
+  fig.retina = 3,
+  dev = "ragg_png"
+  )
+
+# raw data ---------------------------------------------------------------------
+# osf_retrieve_file("7tnfh") |>
+#   osf_download(conflicts = "overwrite", progress = TRUE, verbose = TRUE)
+# 
+# df <- "Output_5.zip" |>
+#   read_csv(skip = 3, col_types = "ccccciiddd") |>
+#   mutate(Date = as.Date(Date, format = "%d.%m.%Y")) |>
+#   clean_names()
+# 
+# file.remove("Output_5.zip")
+# 
+# write_csv(df, here("data/df.csv"))
+# 
+# df <- read_csv(here("data/df.csv"))
+# 
+# df_school_closure <- 
+#   read_csv(
+#     "https://en.unesco.org/sites/default/files/covid_impact_education_full.csv",
+#     col_types = list(.default = col_character(), Date = col_date(format = "%d/%m/%Y"))) |> 
+#   clean_names() |>
+#   select(date, country, status) |> 
+#   mutate(country = case_when(
+#     country == "Bolivia (Plurinational State of)" ~ "Bolivia",  
+#     country == "Central African republic" ~ "Central African Republic",
+#     country == "Iran (Islamic Republic of)" ~ "Iran",
+#     country == "Republic of Moldova" ~ "Moldova",
+#     country == "Republic of Korea" ~ "South Korea",
+#     country == "United Kingdom of Great Britain and Northern Ireland" ~ "United Kingdom",
+#     country == "United States of America" ~ "USA",
+#     country == "Viet Nam" ~ "Vietnam",
+#     TRUE ~ country
+#     )
+#   )
+# 
+# df_check <- 
+#   read_csv("https://covid19.who.int/WHO-COVID-19-global-data.csv") |> 
+#   clean_names() |> 
+#   rename(date = date_reported) |> 
+#   mutate(country = case_when(
+#     country == "Bolivia (Plurinational State of)" ~ "Bolivia",  
+#     country == "Iran (Islamic Republic of)" ~ "Iran",
+#     country == "occupied Palestinian territory, including east Jerusalem" ~ "Palestine",
+#     country == "Republic of Moldova" ~ "Moldova",
+#     country == "Republic of Korea" ~ "South Korea",
+#     country == "United States of America" ~ "USA",
+#     country == "Venezuela (Bolivarian Republic of)" ~ "Venezuela",
+#     country == "Viet Nam" ~ "Vietnam",
+#     TRUE ~ country
+#     )
+#   )
+# 
+# # variables --------------------------------------------------------------------
+# ## keep only closure waves longer than `days_min_closure` but display only the first `days_after_closure`
+# days_min_closure <- 21
+# days_after_closure <- 28
+# ## type of school closure to investigate
+# period_closure_to_keep <- c(
+#   #"Partially open",
+#   "Academic break",
+#   "Closed due to COVID-19"
+#   )
+# 
+# ## countries of interest
+# countries_of_interest <- c(
+#   "Austria", "Belgium", "Bulgaria", "Croatia", "Estonia", "France", 
+#   "Germany", "Greece", "Netherlands", "Portugal", "Slovakia", "Spain"
+#   )
+# 
+# # transformed data -------------------------------------------------------------
+# df_global <- df |> 
+#   filter(
+#     country %in% countries_of_interest,
+#     date > as.Date("2020-01-01"),
+#     region == "All",
+#     sex == "b"
+#   ) |> 
+#   group_by(country, date) |> 
+#   summarise(cumulative_cases_cal = sum(cases)) |> 
+#   group_by(country) |> 
+#   complete(date = full_seq(date, 1)) |> 
+#   mutate(
+#     timeline = date - lag(date),  # check if gap between dates
+#     daily_cases = round(cumulative_cases_cal - lag(cumulative_cases_cal), 0)
+#   ) |> 
+#   ungroup() |> 
+#   left_join(df_school_closure, by = c("date", "country")) |> 
+#   group_by(country) |> 
+#   fill(status) |> 
+#   ungroup() |> 
+#   mutate(schools_closed = if_else(status %in% period_closure_to_keep, 1, 0)) |> 
+#   drop_na(status) |> 
+#   left_join(df_check, by = c("date", "country"))
+# 
+# write_csv(df_global, here("data/df_global.csv"))
+# 
+# df_global_age <- df |> 
+#   filter(
+#     country %in% countries_of_interest,
+#     date > as.Date("2020-01-01"),
+#     region == "All",
+#     sex == "b"
+#   ) |> 
+#   mutate(
+#     age_grp = case_when(
+#       age == 0  ~ "aged0to4",
+#       age == 5  ~ "aged5to9",
+#       age == 10 ~ "aged10to14",
+#       age == 15 ~ "aged15to19",
+#       age == 20 ~ "aged20to24",
+#       between(age, 25, 34) ~ "aged25to34",
+#       between(age, 35, 44) ~ "aged35to44",
+#       between(age, 45, 54) ~ "aged45to54",
+#       between(age, 55, 64) ~ "aged55to64",
+#       age > 64 ~ "aged65+"
+#     )
+#   ) |> 
+#   group_by(country, date, age_grp) |> 
+#   summarise(cumulative_cases_cal = sum(cases)) |> 
+#   group_by(country, age_grp) |> 
+#   complete(date = full_seq(date, 1)) |> 
+#   mutate(
+#     timeline = date - lag(date),  # check if gap between dates
+#     daily_cases = round(cumulative_cases_cal - lag(cumulative_cases_cal), 0),
+#     daily_changes = daily_cases - lag(daily_cases)
+#   ) |> 
+#   ungroup()
+# 
+# write_csv(df_global_age, here("data/df_global_age.csv"))
+
+df_global <- read_csv(here("data/df_global.csv"))
+df_global_age <- read_csv(here("data/df_global_age.csv"))
+```
+
+```{r analyses, cache=FALSE}
+source(here("analysis/gam_analysis_europe.R"))
+source(here("analysis/te_analysis_europe.R"))
+```
+
+```{r overall, fig.height=3, out.width="\\textwidth", fig.cap="(ref:overall)"}
+overall_plot <- df_global |> 
+  mutate(
+    country = fct_rev(country)
+  ) |> 
+  ggplot(aes(date, cumulative_cases_cal, group = country)) +
+  geom_line(na.rm = TRUE, color = "gray40", alpha = 0.4) +
+  geom_text_repel(
+    data = df_global |>
+      group_by(country) |>
+      slice_max(cumulative_cases_cal, with_ties = FALSE),
+    aes(label = country),
+    hjust = 0,
+    direction = "y",
+    segment.color = NA,
+    seed = 123,
+    size = 2,
+    force = 0.5,
+    family = "serif"
+  ) +
+  scale_x_date(
+    "Date", 
+    date_breaks = "3 months", 
+    date_labels = "%b %y", 
+    limits = c(as.Date("2020-02-01"), as.Date("2022-05-01"))
+  ) +
+  scale_y_continuous(
+    "Total COVID-19 Cases (Million)", 
+    labels = unit_format(unit = "M", scale = 1e-6)
+  ) +
+  theme_bw() +
+  theme(
+    legend.position = "none",
+    text = element_text(size = 10, family = "serif")
+  )
+
+overall_plot
+```
+
+\newpage
+
+```{r descriptive, fig.height=3, out.width="\\textwidth", fig.cap="(ref:descriptive)"}
+descriptive_plot <- df_global |> 
+  filter(schools_closed == 1) |> 
+  mutate(
+    status = status |> 
+      str_remove("Closed due to ") |> 
+      fct_rev(),
+    country = country |> 
+      fct_rev()
+  ) |> 
+  ggplot(aes(date, country, color = status)) +
+  geom_point(na.rm = TRUE) +
+  scale_x_date("Date", date_breaks = "3 months", date_labels = "%b %y") +
+  scale_y_discrete("Selected European Countries") +
+  scale_colour_manual("Schools Closure Reason", values = c("gray10", "gray60")) +
+  theme_bw() +
+  theme(
+    legend.position = "bottom",
+    text = element_text(size = 10, family = "serif")
+  )
+
+descriptive_plot
+```
+
+\newpage
+
+```{r country, fig.height=3, out.width="\\textwidth", fig.cap="(ref:country)"}
+gam_plot_country
+```
+
+\newpage
+
+```{r age, fig.height=3, out.width="\\textwidth", fig.cap="(ref:age)"}
+gam_plot_age
+```
+
+\newpage
+
+```{r te, fig.height=8, out.width="\\textwidth", fig.cap="(ref:te)", fig.pos = 'H'}
+te_plot
+```

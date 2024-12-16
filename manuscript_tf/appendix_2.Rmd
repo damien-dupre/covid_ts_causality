@@ -3,7 +3,8 @@ title: "Appendix 2: Significance of Transfer Entropy coefficients"
 toc: false
 
 output:
-  bookdown::pdf_book
+  bookdown::pdf_book:
+    keep_tex: true
   
 header-includes:
   - \usepackage{float}

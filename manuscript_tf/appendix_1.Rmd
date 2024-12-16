@@ -3,7 +3,8 @@ title: "Appendix 1: Dickey-Fuller test for stationay timeseries"
 toc: false
 
 output:
-  bookdown::pdf_book
+  bookdown::pdf_book:
+    keep_tex: true
   
 header-includes:
   - \usepackage{float}

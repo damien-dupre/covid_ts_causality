@@ -1,0 +1,667 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{threeparttable}
+\floatplacement{figure}{H}
+\floatplacement{table}{H}
+\usepackage{caption}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Appendix 1: Dickey-Fuller test for stationay timeseries},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Appendix 1: Dickey-Fuller test for stationay timeseries}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+Test for the null hypothesis of a unit root of a univarate time series (equivalently, non-stationary time series).
+
+The Augmented Dickey-Fuller test incorporates three types of linear regression models. The first type is a linear model with no drift and linear trend with respect to time. The second type is a linear model with drift but no linear trend. The third type is a linear model with both drift and linear trend.
+
+The p.value is calculated by interpolating the test statistics from the corresponding critical values tables (Fuller, 1996) for each type of linear models with given sample size.
+
+\newpage
+
+\begin{table}
+\centering
+\caption{\label{tab:unnamed-chunk-2}Dickey-Fuller test for all combinaisons of countries and age groups investigated}
+\centering
+\begin{tabular}[t]{l|l|r|r|r|r|r|r|r}
+\hline
+\multicolumn{3}{c|}{ } & \multicolumn{2}{c|}{Type 1} & \multicolumn{2}{c|}{Type 2} & \multicolumn{2}{c}{type 3} \\
+\cline{4-5} \cline{6-7} \cline{8-9}
+Age Group & Country & Lag & ADF & p & ADF & p & ADF & p\\
+\hline
+ &  & 0 & -25.46901 & 0.01 & -25.58061 & 0.01 & -25.88188 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Austria} & 1 & -13.87015 & 0.01 & -13.97061 & 0.01 & -14.23441 & 0.01\\
+\cline{2-9}
+ &  & 0 & -33.31891 & 0.01 & -33.29395 & 0.01 & -33.26725 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Belgium} & 1 & -33.58767 & 0.01 & -33.57252 & 0.01 & -33.55777 & 0.01\\
+\cline{2-9}
+ &  & 0 & -25.41057 & 0.01 & -25.43406 & 0.01 & -25.53535 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Bulgaria} & 1 & -26.34241 & 0.01 & -26.42894 & 0.01 & -26.71033 & 0.01\\
+\cline{2-9}
+ &  & 0 & -25.90297 & 0.01 & -25.87847 & 0.01 & -25.85121 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Croatia} & 1 & -28.80962 & 0.01 & -28.78335 & 0.01 & -28.75526 & 0.01\\
+\cline{2-9}
+ &  & 0 & -40.75158 & 0.01 & -40.72820 & 0.01 & -40.70408 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Estonia} & 1 & -25.51579 & 0.01 & -25.50579 & 0.01 & -25.49484 & 0.01\\
+\cline{2-9}
+ &  & 0 & -36.48598 & 0.01 & -36.47320 & 0.01 & -36.47817 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash France} & 1 & -33.59053 & 0.01 & -33.59255 & 0.01 & -33.62146 & 0.01\\
+\cline{2-9}
+ &  & 0 & -20.19366 & 0.01 & -20.19346 & 0.01 & -20.20860 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Germany} & 1 & -31.02686 & 0.01 & -31.04228 & 0.01 & -31.09637 & 0.01\\
+\cline{2-9}
+ &  & 0 & -26.98960 & 0.01 & -27.00660 & 0.01 & -27.04534 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Greece} & 1 & -21.70470 & 0.01 & -21.77268 & 0.01 & -21.88349 & 0.01\\
+\cline{2-9}
+ &  & 0 & -19.16865 & 0.01 & -19.15469 & 0.01 & -19.14425 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Netherlands} & 1 & -15.58574 & 0.01 & -15.57327 & 0.01 & -15.56148 & 0.01\\
+\cline{2-9}
+ &  & 0 & -30.11342 & 0.01 & -30.08952 & 0.01 & -30.06471 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Portugal} & 1 & -22.34262 & 0.01 & -22.32508 & 0.01 & -22.30657 & 0.01\\
+\cline{2-9}
+ &  & 0 & -29.44357 & 0.01 & -29.43000 & 0.01 & -29.42300 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Slovakia} & 1 & -25.63377 & 0.01 & -25.62373 & 0.01 & -25.61724 & 0.01\\
+\cline{2-9}
+ &  & 0 & -23.81364 & 0.01 & -23.79230 & 0.01 & -23.76395 & 0.01\\
+\cline{3-9}
+\multirow{-24}{*}[5.5\dimexpr\aboverulesep+\belowrulesep+\cmidrulewidth]{\raggedright\arraybackslash aged0to4} & \multirow{-2}{*}{\raggedright\arraybackslash Spain} & 1 & -19.82069 & 0.01 & -19.80145 & 0.01 & -19.77177 & 0.01\\
+\cline{1-9}
+ &  & 0 & -21.54388 & 0.01 & -21.57538 & 0.01 & -21.67496 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Austria} & 1 & -20.61992 & 0.01 & -20.67341 & 0.01 & -20.82247 & 0.01\\
+\cline{2-9}
+ &  & 0 & -33.25112 & 0.01 & -33.22573 & 0.01 & -33.19716 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Belgium} & 1 & -36.68723 & 0.01 & -36.70185 & 0.01 & -36.75839 & 0.01\\
+\cline{2-9}
+ &  & 0 & -26.02449 & 0.01 & -26.04399 & 0.01 & -26.13152 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Bulgaria} & 1 & -27.47929 & 0.01 & -27.56497 & 0.01 & -27.83684 & 0.01\\
+\cline{2-9}
+ &  & 0 & -27.89732 & 0.01 & -27.87007 & 0.01 & -27.83651 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Croatia} & 1 & -25.40031 & 0.01 & -25.37741 & 0.01 & -25.35096 & 0.01\\
+\cline{2-9}
+ &  & 0 & -33.43070 & 0.01 & -33.41835 & 0.01 & -33.41130 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Estonia} & 1 & -30.34129 & 0.01 & -30.36434 & 0.01 & -30.41924 & 0.01\\
+\cline{2-9}
+ &  & 0 & -37.28814 & 0.01 & -37.27181 & 0.01 & -37.26653 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash France} & 1 & -32.96499 & 0.01 & -32.96107 & 0.01 & -32.97158 & 0.01\\
+\cline{2-9}
+ &  & 0 & -19.92909 & 0.01 & -19.92463 & 0.01 & -19.93032 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Germany} & 1 & -32.23008 & 0.01 & -32.23253 & 0.01 & -32.25944 & 0.01\\
+\cline{2-9}
+ &  & 0 & -25.32609 & 0.01 & -25.34748 & 0.01 & -25.39062 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Greece} & 1 & -21.40068 & 0.01 & -21.47793 & 0.01 & -21.59879 & 0.01\\
+\cline{2-9}
+ &  & 0 & -19.78334 & 0.01 & -19.76893 & 0.01 & -19.75776 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Netherlands} & 1 & -15.19935 & 0.01 & -15.18658 & 0.01 & -15.17357 & 0.01\\
+\cline{2-9}
+ &  & 0 & -25.13555 & 0.01 & -25.11552 & 0.01 & -25.09511 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Portugal} & 1 & -22.32416 & 0.01 & -22.30651 & 0.01 & -22.28878 & 0.01\\
+\cline{2-9}
+ &  & 0 & -29.89597 & 0.01 & -29.88136 & 0.01 & -29.87183 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Slovakia} & 1 & -23.53317 & 0.01 & -23.52321 & 0.01 & -23.51548 & 0.01\\
+\cline{2-9}
+ &  & 0 & -23.76281 & 0.01 & -23.74257 & 0.01 & -23.71796 & 0.01\\
+\cline{3-9}
+\multirow{-24}{*}[5.5\dimexpr\aboverulesep+\belowrulesep+\cmidrulewidth]{\raggedright\arraybackslash aged5to9} & \multirow{-2}{*}{\raggedright\arraybackslash Spain} & 1 & -19.95167 & 0.01 & -19.93347 & 0.01 & -19.90809 & 0.01\\
+\hline
+\end{tabular}
+\end{table}
+
+\newpage
+
+\begin{table}
+\centering
+\caption{\label{tab:unnamed-chunk-3}Dickey-Fuller test for all combinaisons of countries and age groups investigated}
+\centering
+\begin{tabular}[t]{l|l|r|r|r|r|r|r|r}
+\hline
+\multicolumn{3}{c|}{ } & \multicolumn{2}{c|}{Type 1} & \multicolumn{2}{c|}{Type 2} & \multicolumn{2}{c}{type 3} \\
+\cline{4-5} \cline{6-7} \cline{8-9}
+Age Group & Country & Lag & ADF & p & ADF & p & ADF & p\\
+\hline
+ &  & 0 & -22.61957 & 0.01 & -22.63609 & 0.01 & -22.69723 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Austria} & 1 & -22.68791 & 0.01 & -22.72218 & 0.01 & -22.82152 & 0.01\\
+\cline{2-9}
+ &  & 0 & -32.98990 & 0.01 & -32.96448 & 0.01 & -32.93529 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Belgium} & 1 & -38.54384 & 0.01 & -38.58620 & 0.01 & -38.71505 & 0.01\\
+\cline{2-9}
+ &  & 0 & -26.46013 & 0.01 & -26.47255 & 0.01 & -26.53673 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Bulgaria} & 1 & -28.43140 & 0.01 & -28.50437 & 0.01 & -28.72967 & 0.01\\
+\cline{2-9}
+ &  & 0 & -26.89860 & 0.01 & -26.87214 & 0.01 & -26.83968 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Croatia} & 1 & -25.68226 & 0.01 & -25.65879 & 0.01 & -25.63223 & 0.01\\
+\cline{2-9}
+ &  & 0 & -37.13532 & 0.01 & -37.12178 & 0.01 & -37.11395 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Estonia} & 1 & -26.12759 & 0.01 & -26.13688 & 0.01 & -26.16216 & 0.01\\
+\cline{2-9}
+ &  & 0 & -37.36690 & 0.01 & -37.34574 & 0.01 & -37.32820 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash France} & 1 & -32.38576 & 0.01 & -32.37354 & 0.01 & -32.36410 & 0.01\\
+\cline{2-9}
+ &  & 0 & -19.97324 & 0.01 & -19.96673 & 0.01 & -19.96752 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Germany} & 1 & -32.11049 & 0.01 & -32.10736 & 0.01 & -32.12140 & 0.01\\
+\cline{2-9}
+ &  & 0 & -24.94338 & 0.01 & -24.96588 & 0.01 & -25.00663 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Greece} & 1 & -21.33311 & 0.01 & -21.41290 & 0.01 & -21.53080 & 0.01\\
+\cline{2-9}
+ &  & 0 & -20.57509 & 0.01 & -20.56011 & 0.01 & -20.54855 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Netherlands} & 1 & -14.89595 & 0.01 & -14.88303 & 0.01 & -14.87012 & 0.01\\
+\cline{2-9}
+ &  & 0 & -26.26261 & 0.01 & -26.24149 & 0.01 & -26.22070 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Portugal} & 1 & -22.26367 & 0.01 & -22.24587 & 0.01 & -22.22892 & 0.01\\
+\cline{2-9}
+ &  & 0 & -27.31686 & 0.01 & -27.30284 & 0.01 & -27.29238 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Slovakia} & 1 & -23.60532 & 0.01 & -23.59421 & 0.01 & -23.58407 & 0.01\\
+\cline{2-9}
+ &  & 0 & -23.70292 & 0.01 & -23.68395 & 0.01 & -23.66335 & 0.01\\
+\cline{3-9}
+\multirow{-24}{*}[5.5\dimexpr\aboverulesep+\belowrulesep+\cmidrulewidth]{\raggedright\arraybackslash aged10to14} & \multirow{-2}{*}{\raggedright\arraybackslash Spain} & 1 & -20.47416 & 0.01 & -20.45707 & 0.01 & -20.43656 & 0.01\\
+\cline{1-9}
+ &  & 0 & -22.61218 & 0.01 & -22.64128 & 0.01 & -22.72471 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Austria} & 1 & -19.76615 & 0.01 & -19.81285 & 0.01 & -19.92867 & 0.01\\
+\cline{2-9}
+ &  & 0 & -31.93535 & 0.01 & -31.91066 & 0.01 & -31.88238 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Belgium} & 1 & -35.13137 & 0.01 & -35.14193 & 0.01 & -35.18536 & 0.01\\
+\cline{2-9}
+ &  & 0 & -26.02569 & 0.01 & -26.02584 & 0.01 & -26.05264 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Bulgaria} & 1 & -28.15562 & 0.01 & -28.19169 & 0.01 & -28.30490 & 0.01\\
+\cline{2-9}
+ &  & 0 & -25.19955 & 0.01 & -25.17549 & 0.01 & -25.14874 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Croatia} & 1 & -23.78106 & 0.01 & -23.75915 & 0.01 & -23.73656 & 0.01\\
+\cline{2-9}
+ &  & 0 & -33.28189 & 0.01 & -33.26323 & 0.01 & -33.24443 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Estonia} & 1 & -29.86464 & 0.01 & -29.86246 & 0.01 & -29.86576 & 0.01\\
+\cline{2-9}
+ &  & 0 & -36.17298 & 0.01 & -36.14894 & 0.01 & -36.12475 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash France} & 1 & -31.54208 & 0.01 & -31.52390 & 0.01 & -31.50360 & 0.01\\
+\cline{2-9}
+ &  & 0 & -19.75929 & 0.01 & -19.75173 & 0.01 & -19.74904 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Germany} & 1 & -32.24588 & 0.01 & -32.24133 & 0.01 & -32.24994 & 0.01\\
+\cline{2-9}
+ &  & 0 & -27.47896 & 0.01 & -27.49491 & 0.01 & -27.52322 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Greece} & 1 & -21.55707 & 0.01 & -21.62323 & 0.01 & -21.71318 & 0.01\\
+\cline{2-9}
+ &  & 0 & -20.12459 & 0.01 & -20.10994 & 0.01 & -20.09944 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Netherlands} & 1 & -14.31479 & 0.01 & -14.30284 & 0.01 & -14.29344 & 0.01\\
+\cline{2-9}
+ &  & 0 & -24.82402 & 0.01 & -24.80398 & 0.01 & -24.78460 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Portugal} & 1 & -22.80105 & 0.01 & -22.78271 & 0.01 & -22.76594 & 0.01\\
+\cline{2-9}
+ &  & 0 & -28.81175 & 0.01 & -28.79995 & 0.01 & -28.79539 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Slovakia} & 1 & -24.09113 & 0.01 & -24.08355 & 0.01 & -24.08029 & 0.01\\
+\cline{2-9}
+ &  & 0 & -23.43205 & 0.01 & -23.41423 & 0.01 & -23.39663 & 0.01\\
+\cline{3-9}
+\multirow{-24}{*}[5.5\dimexpr\aboverulesep+\belowrulesep+\cmidrulewidth]{\raggedright\arraybackslash aged15to19} & \multirow{-2}{*}{\raggedright\arraybackslash Spain} & 1 & -21.49339 & 0.01 & -21.47679 & 0.01 & -21.45968 & 0.01\\
+\hline
+\end{tabular}
+\end{table}
+
+\newpage
+
+\begin{table}
+\centering
+\caption{\label{tab:unnamed-chunk-4}Dickey-Fuller test for all combinaisons of countries and age groups investigated}
+\centering
+\begin{tabular}[t]{l|l|r|r|r|r|r|r|r}
+\hline
+\multicolumn{3}{c|}{ } & \multicolumn{2}{c|}{Type 1} & \multicolumn{2}{c|}{Type 2} & \multicolumn{2}{c}{type 3} \\
+\cline{4-5} \cline{6-7} \cline{8-9}
+Age Group & Country & Lag & ADF & p & ADF & p & ADF & p\\
+\hline
+ &  & 0 & -22.85220 & 0.01 & -22.87959 & 0.01 & -22.95437 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Austria} & 1 & -17.48765 & 0.01 & -17.52480 & 0.01 & -17.61397 & 0.01\\
+\cline{2-9}
+ &  & 0 & -28.20166 & 0.01 & -28.18003 & 0.01 & -28.15663 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Belgium} & 1 & -28.65855 & 0.01 & -28.63994 & 0.01 & -28.61526 & 0.01\\
+\cline{2-9}
+ &  & 0 & -24.58541 & 0.01 & -24.57401 & 0.01 & -24.56951 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Bulgaria} & 1 & -26.46795 & 0.01 & -26.46704 & 0.01 & -26.48281 & 0.01\\
+\cline{2-9}
+ &  & 0 & -26.66833 & 0.01 & -26.64399 & 0.01 & -26.61886 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Croatia} & 1 & -25.05651 & 0.01 & -25.03391 & 0.01 & -25.01156 & 0.01\\
+\cline{2-9}
+ &  & 0 & -29.20594 & 0.01 & -29.18648 & 0.01 & -29.16586 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Estonia} & 1 & -22.51914 & 0.01 & -22.50552 & 0.01 & -22.48962 & 0.01\\
+\cline{2-9}
+ &  & 0 & -34.80071 & 0.01 & -34.77668 & 0.01 & -34.75186 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash France} & 1 & -29.98333 & 0.01 & -29.96429 & 0.01 & -29.94263 & 0.01\\
+\cline{2-9}
+ &  & 0 & -19.37891 & 0.01 & -19.37070 & 0.01 & -19.36505 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Germany} & 1 & -31.63201 & 0.01 & -31.62778 & 0.01 & -31.63325 & 0.01\\
+\cline{2-9}
+ &  & 0 & -29.81534 & 0.01 & -29.82139 & 0.01 & -29.83172 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Greece} & 1 & -22.22276 & 0.01 & -22.27433 & 0.01 & -22.33511 & 0.01\\
+\cline{2-9}
+ &  & 0 & -17.44562 & 0.01 & -17.43292 & 0.01 & -17.42368 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Netherlands} & 1 & -14.55030 & 0.01 & -14.53943 & 0.01 & -14.53184 & 0.01\\
+\cline{2-9}
+ &  & 0 & -25.99105 & 0.01 & -25.97001 & 0.01 & -25.94977 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Portugal} & 1 & -22.77225 & 0.01 & -22.75385 & 0.01 & -22.73714 & 0.01\\
+\cline{2-9}
+ &  & 0 & -29.26995 & 0.01 & -29.25127 & 0.01 & -29.23211 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Slovakia} & 1 & -25.40930 & 0.01 & -25.39378 & 0.01 & -25.37614 & 0.01\\
+\cline{2-9}
+ &  & 0 & -22.89085 & 0.01 & -22.87383 & 0.01 & -22.85753 & 0.01\\
+\cline{3-9}
+\multirow{-24}{*}[5.5\dimexpr\aboverulesep+\belowrulesep+\cmidrulewidth]{\raggedright\arraybackslash aged20to24} & \multirow{-2}{*}{\raggedright\arraybackslash Spain} & 1 & -22.19895 & 0.01 & -22.18234 & 0.01 & -22.16641 & 0.01\\
+\cline{1-9}
+ &  & 0 & -23.74523 & 0.01 & -23.79496 & 0.01 & -23.92186 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Austria} & 1 & -16.61550 & 0.01 & -16.67648 & 0.01 & -16.81961 & 0.01\\
+\cline{2-9}
+ &  & 0 & -28.88558 & 0.01 & -28.86373 & 0.01 & -28.84072 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Belgium} & 1 & -28.22446 & 0.01 & -28.20493 & 0.01 & -28.17930 & 0.01\\
+\cline{2-9}
+ &  & 0 & -24.57834 & 0.01 & -24.56570 & 0.01 & -24.55778 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Bulgaria} & 1 & -27.09133 & 0.01 & -27.08607 & 0.01 & -27.09078 & 0.01\\
+\cline{2-9}
+ &  & 0 & -26.23029 & 0.01 & -26.20594 & 0.01 & -26.17996 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Croatia} & 1 & -25.75608 & 0.01 & -25.73268 & 0.01 & -25.70910 & 0.01\\
+\cline{2-9}
+ &  & 0 & -28.77335 & 0.01 & -28.75585 & 0.01 & -28.73645 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Estonia} & 1 & -24.58799 & 0.01 & -24.57656 & 0.01 & -24.56213 & 0.01\\
+\cline{2-9}
+ &  & 0 & -35.51084 & 0.01 & -35.48804 & 0.01 & -35.46553 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash France} & 1 & -30.44296 & 0.01 & -30.42639 & 0.01 & -30.40808 & 0.01\\
+\cline{2-9}
+ &  & 0 & -19.27746 & 0.01 & -19.26829 & 0.01 & -19.25990 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Germany} & 1 & -29.49673 & 0.01 & -29.49096 & 0.01 & -29.49066 & 0.01\\
+\cline{2-9}
+ &  & 0 & -24.77998 & 0.01 & -24.78005 & 0.01 & -24.77680 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Greece} & 1 & -21.10222 & 0.01 & -21.13765 & 0.01 & -21.16844 & 0.01\\
+\cline{2-9}
+ &  & 0 & -20.52818 & 0.01 & -20.51323 & 0.01 & -20.50432 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Netherlands} & 1 & -15.53928 & 0.01 & -15.52765 & 0.01 & -15.52219 & 0.01\\
+\cline{2-9}
+ &  & 0 & -28.25149 & 0.01 & -28.22851 & 0.01 & -28.20685 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Portugal} & 1 & -21.35443 & 0.01 & -21.33705 & 0.01 & -21.32160 & 0.01\\
+\cline{2-9}
+ &  & 0 & -29.68478 & 0.01 & -29.66561 & 0.01 & -29.64592 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Slovakia} & 1 & -25.90336 & 0.01 & -25.88735 & 0.01 & -25.86934 & 0.01\\
+\cline{2-9}
+ &  & 0 & -23.82350 & 0.01 & -23.80553 & 0.01 & -23.78766 & 0.01\\
+\cline{3-9}
+\multirow{-24}{*}[5.5\dimexpr\aboverulesep+\belowrulesep+\cmidrulewidth]{\raggedright\arraybackslash aged25to34} & \multirow{-2}{*}{\raggedright\arraybackslash Spain} & 1 & -22.31504 & 0.01 & -22.29810 & 0.01 & -22.28098 & 0.01\\
+\hline
+\end{tabular}
+\end{table}
+
+\newpage
+
+\begin{table}
+\centering
+\caption{\label{tab:unnamed-chunk-5}Dickey-Fuller test for all combinaisons of countries and age groups investigated}
+\centering
+\begin{tabular}[t]{l|l|r|r|r|r|r|r|r}
+\hline
+\multicolumn{3}{c|}{ } & \multicolumn{2}{c|}{Type 1} & \multicolumn{2}{c|}{Type 2} & \multicolumn{2}{c}{type 3} \\
+\cline{4-5} \cline{6-7} \cline{8-9}
+Age Group & Country & Lag & ADF & p & ADF & p & ADF & p\\
+\hline
+ &  & 0 & -23.24782 & 0.01 & -23.31507 & 0.01 & -23.48124 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Austria} & 1 & -13.82942 & 0.01 & -13.90169 & 0.01 & -14.06966 & 0.01\\
+\cline{2-9}
+ &  & 0 & -32.51783 & 0.01 & -32.49328 & 0.01 & -32.46670 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Belgium} & 1 & -31.48194 & 0.01 & -31.46630 & 0.01 & -31.44708 & 0.01\\
+\cline{2-9}
+ &  & 0 & -25.95560 & 0.01 & -25.94511 & 0.01 & -25.94326 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Bulgaria} & 1 & -28.62688 & 0.01 & -28.63158 & 0.01 & -28.65941 & 0.01\\
+\cline{2-9}
+ &  & 0 & -26.11347 & 0.01 & -26.08872 & 0.01 & -26.06140 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Croatia} & 1 & -25.34969 & 0.01 & -25.32649 & 0.01 & -25.30277 & 0.01\\
+\cline{2-9}
+ &  & 0 & -33.25926 & 0.01 & -33.23933 & 0.01 & -33.21663 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Estonia} & 1 & -25.89984 & 0.01 & -25.88929 & 0.01 & -25.87393 & 0.01\\
+\cline{2-9}
+ &  & 0 & -37.25978 & 0.01 & -37.23701 & 0.01 & -37.21596 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash France} & 1 & -32.02548 & 0.01 & -32.01062 & 0.01 & -31.99610 & 0.01\\
+\cline{2-9}
+ &  & 0 & -19.85580 & 0.01 & -19.84675 & 0.01 & -19.83919 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Germany} & 1 & -31.03429 & 0.01 & -31.02810 & 0.01 & -31.02773 & 0.01\\
+\cline{2-9}
+ &  & 0 & -33.28781 & 0.01 & -33.25769 & 0.01 & -33.22350 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Greece} & 1 & -22.73173 & 0.01 & -22.72427 & 0.01 & -22.71021 & 0.01\\
+\cline{2-9}
+ &  & 0 & -22.31996 & 0.01 & -22.30371 & 0.01 & -22.29641 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Netherlands} & 1 & -16.07321 & 0.01 & -16.06066 & 0.01 & -16.05651 & 0.01\\
+\cline{2-9}
+ &  & 0 & -24.60454 & 0.01 & -24.58454 & 0.01 & -24.56555 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Portugal} & 1 & -22.11824 & 0.01 & -22.10025 & 0.01 & -22.08424 & 0.01\\
+\cline{2-9}
+ &  & 0 & -29.07595 & 0.01 & -29.05677 & 0.01 & -29.03696 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Slovakia} & 1 & -25.55354 & 0.01 & -25.53717 & 0.01 & -25.51884 & 0.01\\
+\cline{2-9}
+ &  & 0 & -25.67271 & 0.01 & -25.65276 & 0.01 & -25.63138 & 0.01\\
+\cline{3-9}
+\multirow{-24}{*}[5.5\dimexpr\aboverulesep+\belowrulesep+\cmidrulewidth]{\raggedright\arraybackslash aged35to44} & \multirow{-2}{*}{\raggedright\arraybackslash Spain} & 1 & -22.12000 & 0.01 & -22.10253 & 0.01 & -22.08267 & 0.01\\
+\cline{1-9}
+ &  & 0 & -25.45883 & 0.01 & -25.50321 & 0.01 & -25.60841 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Austria} & 1 & -17.39227 & 0.01 & -17.44713 & 0.01 & -17.56533 & 0.01\\
+\cline{2-9}
+ &  & 0 & -32.37898 & 0.01 & -32.35487 & 0.01 & -32.32995 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Belgium} & 1 & -31.44070 & 0.01 & -31.42022 & 0.01 & -31.39409 & 0.01\\
+\cline{2-9}
+ &  & 0 & -26.10965 & 0.01 & -26.09460 & 0.01 & -26.08303 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Bulgaria} & 1 & -29.96033 & 0.01 & -29.95570 & 0.01 & -29.96336 & 0.01\\
+\cline{2-9}
+ &  & 0 & -25.32764 & 0.01 & -25.30385 & 0.01 & -25.27830 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Croatia} & 1 & -26.37184 & 0.01 & -26.34774 & 0.01 & -26.32378 & 0.01\\
+\cline{2-9}
+ &  & 0 & -32.60264 & 0.01 & -32.58119 & 0.01 & -32.55754 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Estonia} & 1 & -27.79024 & 0.01 & -27.77606 & 0.01 & -27.75677 & 0.01\\
+\cline{2-9}
+ &  & 0 & -36.68444 & 0.01 & -36.65959 & 0.01 & -36.63465 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash France} & 1 & -32.36117 & 0.01 & -32.34208 & 0.01 & -32.32121 & 0.01\\
+\cline{2-9}
+ &  & 0 & -20.45620 & 0.01 & -20.44612 & 0.01 & -20.43756 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Germany} & 1 & -31.49783 & 0.01 & -31.48710 & 0.01 & -31.47980 & 0.01\\
+\cline{2-9}
+ &  & 0 & -28.53677 & 0.01 & -28.50621 & 0.01 & -28.47115 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Greece} & 1 & -21.59215 & 0.01 & -21.57540 & 0.01 & -21.55078 & 0.01\\
+\cline{2-9}
+ &  & 0 & -23.15216 & 0.01 & -23.13530 & 0.01 & -23.13260 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Netherlands} & 1 & -15.61936 & 0.01 & -15.60730 & 0.01 & -15.60948 & 0.01\\
+\cline{2-9}
+ &  & 0 & -23.49243 & 0.01 & -23.47339 & 0.01 & -23.45490 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Portugal} & 1 & -24.04920 & 0.01 & -24.02971 & 0.01 & -24.01196 & 0.01\\
+\cline{2-9}
+ &  & 0 & -28.09677 & 0.01 & -28.07772 & 0.01 & -28.05790 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Slovakia} & 1 & -26.06214 & 0.01 & -26.04481 & 0.01 & -26.02565 & 0.01\\
+\cline{2-9}
+ &  & 0 & -27.01715 & 0.01 & -26.99666 & 0.01 & -26.97547 & 0.01\\
+\cline{3-9}
+\multirow{-24}{*}[5.5\dimexpr\aboverulesep+\belowrulesep+\cmidrulewidth]{\raggedright\arraybackslash aged45to54} & \multirow{-2}{*}{\raggedright\arraybackslash Spain} & 1 & -22.63057 & 0.01 & -22.61321 & 0.01 & -22.59452 & 0.01\\
+\hline
+\end{tabular}
+\end{table}
+
+\newpage
+
+\begin{table}
+\centering
+\caption{\label{tab:unnamed-chunk-6}Dickey-Fuller test for all combinaisons of countries and age groups investigated}
+\centering
+\begin{tabular}[t]{l|l|r|r|r|r|r|r|r}
+\hline
+\multicolumn{3}{c|}{ } & \multicolumn{2}{c|}{Type 1} & \multicolumn{2}{c|}{Type 2} & \multicolumn{2}{c}{type 3} \\
+\cline{4-5} \cline{6-7} \cline{8-9}
+Age Group & Country & Lag & ADF & p & ADF & p & ADF & p\\
+\hline
+ &  & 0 & -26.36058 & 0.01 & -26.38234 & 0.01 & -26.43354 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Austria} & 1 & -18.56070 & 0.01 & -18.59167 & 0.01 & -18.65297 & 0.01\\
+\cline{2-9}
+ &  & 0 & -32.71086 & 0.01 & -32.68673 & 0.01 & -32.66250 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Belgium} & 1 & -32.88196 & 0.01 & -32.85949 & 0.01 & -32.83267 & 0.01\\
+\cline{2-9}
+ &  & 0 & -26.13729 & 0.01 & -26.11952 & 0.01 & -26.10226 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Bulgaria} & 1 & -30.30713 & 0.01 & -30.29434 & 0.01 & -30.28383 & 0.01\\
+\cline{2-9}
+ &  & 0 & -25.23550 & 0.01 & -25.21183 & 0.01 & -25.18677 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Croatia} & 1 & -25.21501 & 0.01 & -25.19198 & 0.01 & -25.16965 & 0.01\\
+\cline{2-9}
+ &  & 0 & -32.48811 & 0.01 & -32.46605 & 0.01 & -32.44252 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Estonia} & 1 & -27.70305 & 0.01 & -27.68670 & 0.01 & -27.66664 & 0.01\\
+\cline{2-9}
+ &  & 0 & -35.86574 & 0.01 & -35.84069 & 0.01 & -35.81524 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash France} & 1 & -33.05125 & 0.01 & -33.03030 & 0.01 & -33.00719 & 0.01\\
+\cline{2-9}
+ &  & 0 & -20.18560 & 0.01 & -20.17423 & 0.01 & -20.16284 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Germany} & 1 & -31.27442 & 0.01 & -31.25956 & 0.01 & -31.24415 & 0.01\\
+\cline{2-9}
+ &  & 0 & -38.55182 & 0.01 & -38.50321 & 0.01 & -38.45260 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Greece} & 1 & -26.49011 & 0.01 & -26.45904 & 0.01 & -26.42412 & 0.01\\
+\cline{2-9}
+ &  & 0 & -27.94772 & 0.01 & -27.92737 & 0.01 & -27.93414 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Netherlands} & 1 & -17.11511 & 0.01 & -17.10200 & 0.01 & -17.11464 & 0.01\\
+\cline{2-9}
+ &  & 0 & -23.67507 & 0.01 & -23.65581 & 0.01 & -23.63754 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Portugal} & 1 & -22.86478 & 0.01 & -22.84617 & 0.01 & -22.82969 & 0.01\\
+\cline{2-9}
+ &  & 0 & -27.60755 & 0.01 & -27.58805 & 0.01 & -27.56775 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Slovakia} & 1 & -26.70611 & 0.01 & -26.68736 & 0.01 & -26.66729 & 0.01\\
+\cline{2-9}
+ &  & 0 & -27.28275 & 0.01 & -27.26222 & 0.01 & -27.24168 & 0.01\\
+\cline{3-9}
+\multirow{-24}{*}[5.5\dimexpr\aboverulesep+\belowrulesep+\cmidrulewidth]{\raggedright\arraybackslash aged55to64} & \multirow{-2}{*}{\raggedright\arraybackslash Spain} & 1 & -23.33665 & 0.01 & -23.31901 & 0.01 & -23.30107 & 0.01\\
+\cline{1-9}
+ &  & 0 & -26.19272 & 0.01 & -26.18814 & 0.01 & -26.18355 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Austria} & 1 & -23.15797 & 0.01 & -23.16062 & 0.01 & -23.16008 & 0.01\\
+\cline{2-9}
+ &  & 0 & -32.32652 & 0.01 & -32.30278 & 0.01 & -32.27947 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Belgium} & 1 & -33.28664 & 0.01 & -33.26330 & 0.01 & -33.23677 & 0.01\\
+\cline{2-9}
+ &  & 0 & -27.36994 & 0.01 & -27.34943 & 0.01 & -27.32765 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Bulgaria} & 1 & -28.86646 & 0.01 & -28.84861 & 0.01 & -28.82759 & 0.01\\
+\cline{2-9}
+ &  & 0 & -25.22708 & 0.01 & -25.20380 & 0.01 & -25.18027 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Croatia} & 1 & -26.00213 & 0.01 & -25.97853 & 0.01 & -25.95701 & 0.01\\
+\cline{2-9}
+ &  & 0 & -33.10293 & 0.01 & -33.07934 & 0.01 & -33.05590 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Estonia} & 1 & -27.36569 & 0.01 & -27.34678 & 0.01 & -27.32697 & 0.01\\
+\cline{2-9}
+ &  & 0 & -33.12503 & 0.01 & -33.10052 & 0.01 & -33.07513 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash France} & 1 & -33.43283 & 0.01 & -33.40899 & 0.01 & -33.38294 & 0.01\\
+\cline{2-9}
+ &  & 0 & -18.99333 & 0.01 & -18.98122 & 0.01 & -18.96833 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Germany} & 1 & -29.34689 & 0.01 & -29.32911 & 0.01 & -29.30926 & 0.01\\
+\cline{2-9}
+ &  & 0 & -42.15600 & 0.01 & -42.10136 & 0.01 & -42.04594 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Greece} & 1 & -29.46850 & 0.01 & -29.43130 & 0.01 & -29.39236 & 0.01\\
+\cline{2-9}
+ &  & 0 & -29.77934 & 0.01 & -29.75767 & 0.01 & -29.77038 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Netherlands} & 1 & -19.86241 & 0.01 & -19.84772 & 0.01 & -19.86832 & 0.01\\
+\cline{2-9}
+ &  & 0 & -23.87685 & 0.01 & -23.85743 & 0.01 & -23.83916 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Portugal} & 1 & -23.69067 & 0.01 & -23.67139 & 0.01 & -23.65481 & 0.01\\
+\cline{2-9}
+ &  & 0 & -28.99718 & 0.01 & -28.97620 & 0.01 & -28.95489 & 0.01\\
+\cline{3-9}
+ & \multirow{-2}{*}{\raggedright\arraybackslash Slovakia} & 1 & -27.51525 & 0.01 & -27.49538 & 0.01 & -27.47539 & 0.01\\
+\cline{2-9}
+ &  & 0 & -26.92319 & 0.01 & -26.90242 & 0.01 & -26.88100 & 0.01\\
+\cline{3-9}
+\multirow{-24}{*}[5.5\dimexpr\aboverulesep+\belowrulesep+\cmidrulewidth]{\raggedright\arraybackslash aged65+} & \multirow{-2}{*}{\raggedright\arraybackslash Spain} & 1 & -23.39707 & 0.01 & -23.37902 & 0.01 & -23.35995 & 0.01\\
+\hline
+\end{tabular}
+\end{table}
+
+\end{document}

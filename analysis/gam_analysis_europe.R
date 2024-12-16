@@ -127,20 +127,26 @@ gam_results <-
 
 # visualisation ----------------------------------------------------------------
 gam_plot_age <- gam_df |>
-  filter(by == "age_grp") |>
+  filter(.by == "age_grp") |>
   mutate(
-    smooth = smooth |>
+    .smooth = .smooth |>
       str_remove("s\\(schools_time_since_closure\\):age_grpaged") |>
       factor(levels = c("0to4", "5to9", "10to14", "15to19", "20to24"))
-  ) |>
-  ggplot(aes(x = schools_time_since_closure, color = smooth)) +
-  geom_line(aes(y = est)) +
+  ) |> 
+  ggplot(aes(x = schools_time_since_closure)) +
+  geom_ribbon(aes(ymin = .lower_ci, ymax = .upper_ci, fill = .smooth), alpha = 0.3) +
+  geom_line(aes(y = .estimate, color = .smooth)) +
   scale_x_continuous(
     "Day Since Closure",
     breaks = seq(0, 28, by = 7)
   ) +
   scale_y_continuous(
     "Standardized Effect"
+  ) +
+  scale_fill_manual(
+    "Age Group",
+    values = c("#a6611a", "#dfc27d", "#bababa", "#80cdc1", "#018571"),
+    labels = c("0 to 4", "5 to 9", "10 to 14", "15 to 19", "20 to 24")
   ) +
   scale_color_manual(
     "Age Group",
@@ -194,12 +200,13 @@ gam_plot_age <- gam_df |>
 
 # regular facets
 gam_plot_country <- gam_df |>
-  filter(by == "country") |>
+  filter(.by == "country") |>
   mutate(
-    smooth = smooth |>
+    .smooth = .smooth |>
       str_remove("s\\(schools_time_since_closure\\):country")
   ) |>
-  ggplot(aes(x = schools_time_since_closure, y = est, group = smooth)) +
+  ggplot(aes(x = schools_time_since_closure, y = .estimate, group = .smooth)) +
+  geom_ribbon(aes(ymin = .lower_ci, ymax = .upper_ci), alpha = 0.3) +
   geom_line() +
   facet_wrap(~country) +
   scale_x_continuous(
