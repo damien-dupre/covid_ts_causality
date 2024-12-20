@@ -715,6 +715,7 @@
 \newcommand\abbreviationsname{Abbreviations}
 \renewcommand\abstractname{ABSTRACT}
 \newcommand\keywordsname{KEYWORDS}
+
 %
 \setlength\parskip{0\p@}
 \setlength\columnsep{12\p@}

@@ -1,0 +1,127 @@
+\begin{thebibliography}{40}
+\newcommand{\enquote}[1]{``#1''}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\normalfont{#1}}
+\providecommand{\urlprefix}{}
+
+\bibitem[Alfano(2022)]{alfano2022effects}
+Alfano, Vincenzo. 2022. ``The effects of school closures on COVID-19: A cross-country panel analysis.'' \emph{Applied Health Economics and Health Policy} 20 (2): 223--233. https://doi.org/{10.1007/s40258-021-00702-z},  \urlprefix\url{https://link.springer.com/article/10.1007/s40258-021-00702-z}.
+
+\bibitem[Alfano and Ercolano(2020)]{alfano2020efficacy}
+Alfano, Vincenzo, and Salvatore Ercolano. 2020. ``The efficacy of lockdown against COVID-19: A cross-country panel analysis.'' \emph{Applied Health Economics and Health Policy} 18: 509--517. https://doi.org/{10.1007/s40258-020-00596-3},  \urlprefix\url{https://link.springer.com/article/10.1007/s40258-020-00596-3}.
+
+\bibitem[{ARD Tagesschau}(2023)]{ard2023lauterbach}
+{ARD Tagesschau}. 2023. ``Lauterbach räumt Fehler in Corona-Politik ein.'' Accessed: 2024-12-17,  \urlprefix\url{https://www.tagesschau.de/inland/lauterbach-corona-pandemie-101.html}.
+
+\bibitem[Barnett, Barrett, and Seth(2009)]{barnett2009granger}
+Barnett, Lionel, Adam~B. Barrett, and Anil~K. Seth. 2009. ``Granger causality and transfer entropy are equivalent for gaussian variables.'' \emph{Physical Review Letters} 103: 2387011--2387014. https://doi.org/{10.1103/PhysRevLett.103.238701},  \urlprefix\url{https://link.aps.org/doi/10.1103/PhysRevLett.103.238701}.
+
+\bibitem[Bayham and Fenichel(2020)]{bayham2020impact}
+Bayham, Jude, and Eli~P Fenichel. 2020. ``Impact of school closures for COVID-19 on the US health-care workforce and net mortality: A modelling study.'' \emph{The Lancet Public Health} 5 (5): e271--e278. https://doi.org/{10.1016/S2468-2667(20)30082-7},  \urlprefix\url{https://www.thelancet.com/journals/lanpub/article/PIIS2468-2667(20)30082-7/fulltext}.
+
+\bibitem[Behrendt et~al.(2019)]{behrendt2019rtransferentropy}
+Behrendt, Simon, Thomas Dimpfl, Franziska~J. Peter, and David~J. Zimmermann. 2019. ``RTransferEntropy — Quantifying information flow between different time series using effective transfer entropy.'' \emph{SoftwareX} 10 (100265). https://doi.org/{10.1016/j.softx.2019.100265},  \urlprefix\url{https://www.sciencedirect.com/science/article/pii/S2352711019300779}.
+
+\bibitem[Chang et~al.(2020)]{chang2020modelling}
+Chang, Sheryl~L, Nathan Harding, Cameron Zachreson, Oliver~M Cliff, and Mikhail Prokopenko. 2020. ``Modelling transmission and control of the COVID-19 pandemic in Australia.'' \emph{Nature Communications} 11 (1): 1--13. https://doi.org/{10.1038/s41467-020-19393-6},  \urlprefix\url{https://www.nature.com/articles/s41467-020-19393-6}.
+
+\bibitem[De~Simone and Mourao(2021)]{de2021determines}
+De~Simone, Elina, and Paulo~Reis Mourao. 2021. ``What determines governments’ response time to COVID-19? A cross-country inquiry on the measure restricting internal movements.'' \emph{Open Economics} 4 (1): 106--117. https://doi.org/{10.1515/openec-2020-0116},  \urlprefix\url{https://www.degruyter.com/document/doi/10.1515/openec-2020-0116}.
+
+\bibitem[Esposito, Cotugno, and Principi(2021)]{esposito2021comprehensive}
+Esposito, Susanna, Nicola Cotugno, and Nicola Principi. 2021. ``Comprehensive and safe school strategy during COVID-19 pandemic.'' \emph{Italian Journal of Pediatrics} 47: 1--4. https://doi.org/{10.1186/s13052-021-00960-6},  \urlprefix\url{https://ijponline.biomedcentral.com/articles/10.1186/s13052-021-00960-6}.
+
+\bibitem[Fukumoto, McClean, and Nakagawa(2021)]{fukumoto2021no}
+Fukumoto, Kentaro, Charles~T McClean, and Kuninori Nakagawa. 2021. ``No causal effect of school closures in Japan on the spread of COVID-19 in spring 2020.'' \emph{Nature Medicine} 27 (12): 2111--2119. https://doi.org/{10.1038/s41591-021-01571-8},  \urlprefix\url{https://www.nature.com/articles/s41591-021-01571-8}.
+
+\bibitem[{Gras-Le Guen} et~al.(2021)]{grasleguen2021reopening}
+{Gras-Le Guen}, C., R.~Cohen, J.~Rozenberg, E.~Launay, D.~Levy-Bruhl, and C.~Delacourt. 2021. ``Reopening schools in the context of increasing COVID-19 community transmission: The French experience.'' \emph{Archives de Pédiatrie} 28 (3): 178--185. https://doi.org/{10.1016/j.arcped.2021.02.001},  \urlprefix\url{https://www.sciencedirect.com/science/article/pii/S0929693X21000178}.
+
+\bibitem[Heavey et~al.(2020)]{heavey2020evidence}
+Heavey, Laura, Geraldine Casey, Ciara Kelly, David Kelly, and Geraldine McDarby. 2020. ``No evidence of secondary transmission of COVID-19 from children attending school in Ireland, 2020.'' \emph{Eurosurveillance} 25 (21), 2000903. https://doi.org/{10.2807/1560-7917.ES.2020.25.21.2000903},  \urlprefix\url{https://www.eurosurveillance.org/content/10.2807/1560-7917.ES.2020.25.21.2000903}.
+
+\bibitem[Iwata, Doi, and Miyakoshi(2020)]{iwata2020school}
+Iwata, Kentaro, Asako Doi, and Chisato Miyakoshi. 2020. ``Was school closure effective in mitigating coronavirus disease 2019 (COVID-19)? Time series analysis using Bayesian inference.'' \emph{International Journal of Infectious Diseases} 99: 57--61. https://doi.org/{10.1016/j.ijid.2020.07.052},  \urlprefix\url{https://www.ijidonline.com/article/S1201-9712(20)30598-1/fulltext}.
+
+\bibitem[Kawano and Kakehashi(2015)]{kawano2015substantial}
+Kawano, Shoko, and Masayuki Kakehashi. 2015. ``Substantial impact of school closure on the transmission dynamics during the pandemic flu H1N1-2009 in Oita, Japan.'' \emph{PloS one} 10 (12): e0144839. https://doi.org/{10.1371/journal.pone.0144839},  \urlprefix\url{https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0144839}.
+
+\bibitem[Kim et~al.(2021)]{kim2021role}
+Kim, Jieun, Young~June Choe, Jin Lee, Young~Joon Park, Ok~Park, Mi~Seon Han, Jong-Hyun Kim, and Eun~Hwa Choi. 2021. ``Role of children in household transmission of COVID-19.'' \emph{Archives of Disease in Childhood} 106 (7): 709--711. https://doi.org/{10.1136/archdischild-2020-319910},  \urlprefix\url{https://adc.bmj.com/content/106/7/709}.
+
+\bibitem[Kissler et~al.(2020)]{kissler2020symbolic}
+Kissler, Stephen~M, C{\'e}cile Viboud, Bryan~T Grenfell, and Julia~R Gog. 2020. ``Symbolic transfer entropy reveals the age structure of pandemic influenza transmission from high-volume influenza-like illness data.'' \emph{Journal of the Royal Society Interface} 17 (20190628): 1--9. https://doi.org/{10.1098/rsif.2019.0628},  \urlprefix\url{https://royalsocietypublishing.org/doi/10.1098/rsif.2019.0628}.
+
+\bibitem[Lerkkanen et~al.(2023)]{lerkkanen2023reading}
+Lerkkanen, Marja-Kristiina, Eija Pakarinen, Jenni Salminen, and Minna Torppa. 2023. ``Reading and math skills development among Finnish primary school children before and after COVID-19 school closure.'' \emph{Reading and Writing} 36 (2): 263--288. https://doi.org/{10.1007/s11145-022-10358-3},  \urlprefix\url{https://link.springer.com/article/10.1007/s11145-022-10358-3}.
+
+\bibitem[Li et~al.(2020)]{li2020role}
+Li, Xue, Wei Xu, Marshall Dozier, Yazhou He, Amir Kirolos, Evropi Theodoratou, et~al. 2020. ``The role of children in transmission of SARS-CoV-2: A rapid review.'' \emph{Journal of Global Health} 10 (1): 1--10. https://doi.org/{10.7189/jogh.10.011101},  \urlprefix\url{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7323934/}.
+
+\bibitem[Loader(2006)]{loader2006local}
+Loader, Clive. 2006. \emph{Local regression and likelihood}. New York, NY: Springer.
+
+\bibitem[Ludvigsson(2020)]{ludvigsson2020children}
+Ludvigsson, Jonas~F. 2020. ``Children are unlikely to be the main drivers of the COVID-19 pandemic – A systematic review.'' \emph{Acta Paediatrica} 109 (8): 1525--1530. https://doi.org/{10.1111/apa.15371},  \urlprefix\url{https://onlinelibrary.wiley.com/doi/abs/10.1111/apa.15371}.
+
+\bibitem[Molefi et~al.(2021)]{molefi2021impact}
+Molefi, Mooketsi, John~T Tlhakanelo, Thabo Phologolo, Shimeles~G Hamda, Tiny Masupe, Billy Tsima, Vincent Setlhare, Yohana Mashalla, Douglas~J Wiebe, et~al. 2021. ``The impact of China’s lockdown policy on the incidence of CoVID-19: An Interrupted time series analysis.'' \emph{BioMed Research International} 2021. https://doi.org/{10.1155/2021/9498029},  \urlprefix\url{https://www.hindawi.com/journals/bmri/2021/9498029}.
+
+\bibitem[Moser and White(2018)]{moser2018estimating}
+Moser, Carlee~B, and Laura~F White. 2018. ``Estimating age-specific reproductive numbers—A comparison of methods.'' \emph{Statistical Methods in Medical Research} 27 (7): 2050--2059. https://doi.org/{10.1177/0962280216673676},  \urlprefix\url{https://journals.sagepub.com/doi/full/10.1177/0962280216673676}.
+
+\bibitem[Moulin et~al.(2022)]{moulin2022longitudinal}
+Moulin, Flore, Marion Bailhache, Ma{\"e}va Monnier, Xavier Thierry, St{\'e}phanie Vandentorren, Sylvana~M C{\^o}t{\'e}, Bruno Falissard, et~al. 2022. ``Longitudinal impact of psychosocial status on children’s mental health in the context of COVID-19 pandemic restrictions.'' \emph{European Child \& Adolescent Psychiatry} 1--10. https://doi.org/{10.1007/s00787-022-02010-w},  \urlprefix\url{https://link.springer.com/article/10.1007/s00787-022-02010-w}.
+
+\bibitem[Msemburi et~al.(2023)]{msemburi2023estimates}
+Msemburi, William, Ariel Karlinsky, Victoria Knutson, Serge Aleshin-Guendel, Somnath Chatterji, and Jon Wakefield. 2023. ``The WHO estimates of excess mortality associated with the COVID-19 pandemic.'' \emph{Nature} 613 (7942): 130--137.
+
+\bibitem[Riffe, Acosta, and the COVerAGE-DB~team(2021)]{riffe2021data}
+Riffe, Tim, Enrique Acosta, and the COVerAGE-DB~team. 2021. ``{Data Resource Profile: COVerAGE-DB: a global demographic database of COVID-19 cases and deaths}.'' \emph{International Journal of Epidemiology} 50 (2): 390--390f. https://doi.org/{10.1093/ije/dyab027},  \urlprefix\url{https://doi.org/10.1093/ije/dyab027}.
+
+\bibitem[Schreiber(2000)]{schreiber2000measuring}
+Schreiber, Thomas. 2000. ``Measuring information transfer.'' \emph{Physical Review Letters} 85: 461--464. https://doi.org/{10.1103/PhysRevLett.85.461},  \urlprefix\url{https://link.aps.org/doi/10.1103/PhysRevLett.85.461}.
+
+\bibitem[Shannon(1948)]{shannon1948mathematical}
+Shannon, Claude~Elwood. 1948. ``A mathematical theory of communication.'' \emph{The Bell System Technical Journal} 27 (3): 379--423. https://doi.org/{10.1002/j.1538-7305.1948.tb01338.x},  \urlprefix\url{https://onlinelibrary.wiley.com/doi/10.1002/j.1538-7305.1948.tb01338.x}.
+
+\bibitem[Siebach, Piedimonte, and Ley(2021)]{siebach2021childhood}
+Siebach, Melissa~K., Giovanni Piedimonte, and Sylvia~H. Ley. 2021. ``COVID-19 in childhood: Transmission, clinical presentation, complications and risk factors.'' \emph{Pediatric Pulmonology} 56 (6): 1342--1356. https://doi.org/{10.1002/ppul.25344},  \urlprefix\url{https://onlinelibrary.wiley.com/doi/abs/10.1002/ppul.25344}.
+
+\bibitem[Soriano-Arandes et~al.(2023)]{soriano2023policies}
+Soriano-Arandes, Antoni, Ana Brett, Danilo Buonsenso, Louise Emilsson, Isabel de~la Fuente~Garcia, Despoina Gkentzi, Otto Helve, et~al. 2023. ``Policies on children and schools during the SARS-CoV-2 pandemic in Western Europe.'' \emph{Frontiers in public health} 11: 1175444.
+
+\bibitem[Soriano-Arandes et~al.(2021)]{sorianoarandes2021household}
+Soriano-Arandes, Antoni, Anna Gatell, Pepe Serrano, Mireia Biosca, Ferran Campillo, Ramon Capdevila, Anna Fàbrega, et~al. 2021. ``Household Severe Acute Respiratory Syndrome Coronavirus 2 Transmission and Children: A Network Prospective Study.'' \emph{Clinical Infectious Diseases} 73 (6): e1261--e1269. https://doi.org/{10.1093/cid/ciab228},  \urlprefix\url{https://doi.org/10.1093/cid/ciab228}.
+
+\bibitem[Stage et~al.(2021)]{stage2021shut}
+Stage, Helena~B, Joseph Shingleton, Sanmitra Ghosh, Francesca Scarabel, Lorenzo Pellis, and Thomas Finnie. 2021. ``Shut and re-open: the role of schools in the spread of COVID-19 in Europe.'' \emph{Philosophical Transactions of the Royal Society B} 376 (1829): 1--11. https://doi.org/{10.1098/rstb.2020.0277},  \urlprefix\url{https://royalsocietypublishing.org/doi/10.1098/rstb.2020.0277}.
+
+\bibitem[Sugimoto, Murakami, and Sasaki(2023)]{sugimoto2023temporal}
+Sugimoto, Minami, Kentaro Murakami, and Satoshi Sasaki. 2023. ``Temporal patterns of sleep and eating among children during school closure in Japan due to COVID-19 pandemic: associations with lifestyle behaviours and dietary intake.'' \emph{Public Health Nutrition} 26 (2): 393--407. https://doi.org/{10.1017/S1368980022001148},  \urlprefix\url{https://www.cambridge.org/core/journals/public-health-nutrition/article/temporal-patterns-of-sleep-and-eating-among-children-during-school-closure-in-japan-due-to-covid19-pandemic-associations-with-lifestyle-behaviours-and-dietary-intake/A17A174068BC9B8313B006F7C82517AC}.
+
+\bibitem[Sugishita et~al.(2020)]{yoshiyuki2020effects}
+Sugishita, Yoshiyuki, Junko Kurita, Tamie Sugawara, and Yasushi Ohkusa. 2020. ``Effects of voluntary event cancellation and school closure as countermeasures against COVID-19 outbreak in Japan.'' \emph{PLOS ONE} 15 (12): 1--10. https://doi.org/{10.1371/journal.pone.0239455},  \urlprefix\url{https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0239455}.
+
+\bibitem[{United Nations Educational, Scientific and Cultural Organization (UNESCO)}(2022)]{unesco2022https}
+{United Nations Educational, Scientific and Cultural Organization (UNESCO)}. 2022. ``Global monitoring of school closures.'' Accessed: 2024-12-17,  \urlprefix\url{https://webarchive.unesco.org/web/20220629024039/https://en.unesco.org/sites/default/files/duration_school_closures.csv}.
+
+\bibitem[van~der Hoek et~al.(2020)]{vanderhoek2020role}
+van~der Hoek, Wim, Jantien~A Backer, Rogier Bodewes, Ingrid Friesema, Adam Meijer, Roan Pijnacker, Daphne F~M Reukers, et~al. 2020. ``De rol van kinderen in de transmissie van SARS-CoV-2.'' \emph{Nederlands Tijdschrift voor Geneeskunde} 164 (D5140): 1--7.  \urlprefix\url{https://www.ntvg.nl/artikelen/de-rol-van-kinderen-de-transmissie-van-sars-cov-2}.
+
+\bibitem[Walsh et~al.(2021)]{walsh2021school}
+Walsh, Sebastian, Avirup Chowdhury, Vickie Braithwaite, Simon Russell, Jack~Michael Birch, Joseph~L Ward, Claire Waddington, et~al. 2021. ``Do school closures and school reopenings affect community transmission of COVID-19? A systematic review of observational studies.'' \emph{BMJ Open} 11 (8): e053371. https://doi.org/{10.1136/bmjopen-2021-053371},  \urlprefix\url{https://bmjopen.bmj.com/content/11/8/e053371}.
+
+\bibitem[Wood(2011)]{wood2011fast}
+Wood, Simon~N. 2011. ``Fast stable restricted maximum likelihood and marginal likelihood estimation of semiparametric generalized linear models.'' \emph{Journal of the Royal Statistical Society (B)} 73 (1): 3--36. https://doi.org/{10.1111/j.1467-9868.2010.00749.x},  \urlprefix\url{https://rss.onlinelibrary.wiley.com/doi/10.1111/j.1467-9868.2010.00749.x}.
+
+\bibitem[Wood(2017)]{wood2017generalized}
+Wood, Simon~N. 2017. \emph{Generalized additive models: An introduction with R}. Boca Raton, FL: CRC.
+
+\bibitem[{World Health Organization (WHO)}(2022)]{who2022https}
+{World Health Organization (WHO)}. 2022. ``WHO Coronavirus (COVID-19) dashboard.'' Accessed: 2024-12-17,  \urlprefix\url{https://data.who.int/dashboards/covid19/data}.
+
+\bibitem[Zhen-Dong et~al.(2020)]{zhendong2020clinical}
+Zhen-Dong, Yang, Zhou Gao-Jun, Jin Run-Ming, Liu Zhi-Sheng, Dong Zong-Qi, Xie Xiong, and Song Guo-Wei. 2020. ``Clinical and transmission dynamics characteristics of 406 children with coronavirus disease 2019 in China: A review.'' \emph{Journal of Infection} 81 (2): e11--e15. https://doi.org/{10.1016/j.jinf.2020.04.030},  \urlprefix\url{https://www.sciencedirect.com/science/article/pii/S0163445320302413}.
+
+\end{thebibliography}

@@ -18,8 +18,9 @@ header-includes:
   - \def\tightlist{}
 ---
 
-(ref:overall) Cumulative COVID-19 cases number for selected European countries since the beginning of the pandemic. Source: COVerAGE-DB [@riffe2021data].
-(ref:descriptive) Periods of school closure since the beginning of the COVID-19 pandemic for selected European countries and their reason: regular academic break versus closure due to government decisions. Source: @unesco2022https.
+(ref:overall) Cumulative COVID-19 cases number for selected European countries since the beginning of the pandemic. Source: COVerAGE-DB (Riffe, Acosta, and COVerAGE-DB team 2021).
+(ref:descriptive) Periods of school closure since the beginning of the COVID-19 pandemic for selected European countries and their reason: regular academic break versus closure due to government decisions. Source: United Nations Educational, Scientific and
+Cultural Organization (UNESCO) (2022).
 (ref:country) Standardized effect of the smooth term in Generalized Additive Model by country. Standardized effects are reported to compare the shape of the curve between countries.
 (ref:age) Standardized effect of the smooth term in Generalized Additive Model by age group. Standardized effects are reported to compare the shape of the curve between age groups.
 (ref:te) Matrix of Transfer Entropy coefficients according to every age group combination for each of the selected European country. Age groups on the x-axis are influencing the age groups on the y-axis ($ag\,x \rightarrow\,ag\,y$). The significance of each Transfer Entropy coefficient is provided in Appendix 2.
