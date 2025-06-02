@@ -3,5 +3,6 @@
 .RData
 .Ruserdata
 .spl
-exploration
-report
+manuscript_tf/manuscript.pdf
+manuscript_tf/manuscript.Rmd
+manuscript_tf/manuscript_files
