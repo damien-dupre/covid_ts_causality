@@ -76,18 +76,15 @@
 \title{Divergent Impacts of COVID-19 School Closures on Youth Infection Dynamics: Evidence from 12 European Countries}
 
 
-\author{\name{Author 1$^{1}$, Author 2$^{2}$}
-\affil{$^{1}$Affiliation 1; $^{2}$Affiliation 2}
+\author{\name{Damien Dupré$^{1}$, Edgar Morgenroth$^{1}$}
+\affil{$^{1}$Dublin City University Business School, Glasnevin, Dublin 9, Ireland}
 }
 
 
 \maketitle
 
 \begin{abstract}
-The effectiveness of school closures as a COVID-19 control measure remains a subject of debate. This paper critically reassesses their impact by examining infection trends across various age groups in 12 European countries. We apply a dual analytical approach: Generalised Additive Models (GAMs) are used to capture complex, non-linear effects of closures on age-specific case numbers, while Transfer Entropy (TE) is employed to robustly quantify directional transmission patterns between these age groups.
-Our findings reveal notable deviations from commonly held assumptions. While school closures were associated with a non-linear decline in overall national COVID-19 cases, the effects on children and young adults varied considerably. A consistent downward trend in infections was seen only in the 0--4 pre-school age group. In contrast, school-aged children (5--14 years) experienced a marked rise in COVID-19 cases following an initial period of stability or slight decrease after closures began. Among adolescents and young adults (15--24 years), infections surged immediately after closures, followed by a decline approximately two weeks later.
-The Transfer Entropy analysis also identified asymmetric, directional patterns in transmission, revealing that infection trends in specific age groups could predict subsequent changes in others. This highlights the importance of intergenerational dynamics in the spread of the virus.
-These results challenge the assumption that school closures uniformly benefit younger populations. They emphasise the need for age-specific analysis in pandemic planning and support the development of more nuanced, evidence-based public health policies that reflect the complex and sometimes unexpected transmission dynamics across different age groups.
+The effectiveness of school closures as a COVID-19 control measure remains a subject of debate. This paper critically reassesses their impact by examining infection trends across various age groups in 12 European countries. We apply a dual analytical approach: Generalised Additive Models (GAMs) are used to capture complex, non-linear effects of closures on age-specific case numbers, while Transfer Entropy (TE) is employed to quantify directional transmission patterns between these age groups. Our findings reveal deviations from commonly held assumptions. While school closures were associated with a non-linear decline in overall national COVID-19 cases, the effects on children and young adults varied considerably. A consistent downward trend in infections was seen only in the pre-school age group. In contrast, school-aged children experienced a marked rise in COVID-19 cases following an initial period of stability or slight decrease after closures began. The Transfer Entropy analysis also identified asymmetric, directional patterns in transmission, revealing that infection trends in specific age groups could predict subsequent changes in others. These results challenge the assumption that school closures uniformly benefit younger populations and emphasise the need for age-specific analysis in pandemic planning and support the development of more nuanced, evidence-based public health policies.
 \end{abstract}
 
 \begin{keywords}
@@ -176,13 +173,13 @@ The day-by-day difference in COVID-19 confirmed cases \(n\prime\prime_t\) is use
 The data show that the trend of confirmed COVID-19 cases follows similar patterns across the selected European countries, with scales following the size of the population in these countries (Figure \ref{fig:overall}). Thus, the bigger the country, the higher the total number of COVID-19 cases.
 
 \begin{figure}
-\includegraphics[width=\textwidth]{manuscript_files/figure-latex/overall-1} \caption{Cumulative COVID-19 cases number for selected European countries since the beginning of the pandemic. Source: COVerAGE-DB \citep{riffe2021data}.}\label{fig:overall}
+\includegraphics[width=\textwidth]{manuscript_blind_files/figure-latex/overall-1} \caption{Cumulative COVID-19 cases number for selected European countries since the beginning of the pandemic. Source: COVerAGE-DB \citep{riffe2021data}.}\label{fig:overall}
 \end{figure}
 
 The evolution of COVID-19 cases reveals some similarities across all age groups. However, the influence of each wave on individual age groups also has some particularities (Figure \ref{fig:descriptive}). For example, the first wave was more important among the oldest age groups, whereas the third wave was more important among the youngest age groups.
 
 \begin{figure}
-\includegraphics[width=\textwidth]{manuscript_files/figure-latex/descriptive-1} \caption{Periods of school closure since the beginning of the COVID-19 pandemic for selected European countries and their reason: regular academic break versus closure due to government decisions. Source: \citet{unesco2022https}.}\label{fig:descriptive}
+\includegraphics[width=\textwidth]{manuscript_blind_files/figure-latex/descriptive-1} \caption{Periods of school closure since the beginning of the COVID-19 pandemic for selected European countries and their reason: regular academic break versus closure due to government decisions. Source: \citet{unesco2022https}.}\label{fig:descriptive}
 \end{figure}
 
 As outlined above, to evaluate the shape of the trend in the numbers of COVID-19 cases reported after the three school closures longer than 21 consecutive days, a GAM was fitted as described above, taking into account the overall effect across all the selected European countries, as well as the effect for age groups: 0 to 4, 5 to 9, 10 to 14, 15 to 19, and 20 to 24 years old. The obtained results satisfy the requirements to fit this model, which explains 80.2\% of the variation in COVID-19 cases.
@@ -190,17 +187,17 @@ As outlined above, to evaluate the shape of the trend in the numbers of COVID-19
 Overall, the results revealed a decreasing non-linear effect of school closure at a country level for the selected European countries (Austria: \(\chi^2(5.82) = 3243.01\), \(p < 0.001\); Belgium: \(\chi^2(5.98) = 6206.45\), \(p < 0.001\); Bulgaria: \(\chi^2(5.89) = 258.19\), \(p < 0.001\); Croatia: \(\chi^2(5.1) = 740.24\), \(p < 0.001\); Estonia: \(\chi^2(5.93) = 1834.26\), \(p < 0.001\); France: \(\chi^2(1) = 2412.59\), \(p < 0.001\); Germany (\(\chi^2(5.98) = 3081.05\), \(p < 0.001\)); Greece: \(\chi^2(5.95) = 2423.67\), \(p < 0.001\); The Netherlands: \(\chi^2(4.97) = 5878.92\), \(p < 0.001\); Portugal: \(\chi^2(5.94) = 2692.56\), \(p < 0.001\); Slovakia (\(\chi^2(5.97) = 5335.74\), \(p < 0.001\); Spain: \(\chi^2(5.94) = 498.09\), \(p < 0.001\), see Figure \ref{fig:age}).
 
 \begin{figure}
-\includegraphics[width=\textwidth]{manuscript_files/figure-latex/country-1} \caption{Standardized effect of the smooth term in Generalized Additive Model by country. Standardized effects are reported to compare the shape of the curve between countries.}\label{fig:country}
+\includegraphics[width=\textwidth]{manuscript_blind_files/figure-latex/country-1} \caption{Standardized effect of the smooth term in Generalized Additive Model by country. Standardized effects are reported to compare the shape of the curve between countries.}\label{fig:country}
 \end{figure}
 
 \begin{figure}
-\includegraphics[width=\textwidth]{manuscript_files/figure-latex/age-1} \caption{Standardized effect of the smooth term in Generalized Additive Model by age group. Standardized effects are reported to compare the shape of the curve between age groups.}\label{fig:age}
+\includegraphics[width=\textwidth]{manuscript_blind_files/figure-latex/age-1} \caption{Standardized effect of the smooth term in Generalized Additive Model by age group. Standardized effects are reported to compare the shape of the curve between age groups.}\label{fig:age}
 \end{figure}
 
 While the general patterns described above were evident in the aggregated analysis, country-specific smooths indicated some national variations in the timing and magnitude of these age-specific effects, although the paradoxical increase in the 5-14 age cohorts was observed in a majority of countries.
 
 \begin{figure}[H]
-\includegraphics[width=\textwidth]{manuscript_files/figure-latex/te-1} \caption{Matrix of Transfer Entropy coefficients according to every age group combination for each of the selected European country. Age groups on the x-axis are influencing the age groups on the y-axis (\(ag\,x \rightarrow\,ag\,y\)). The significance of each Transfer Entropy coefficient is provided in Appendix 2.}\label{fig:te}
+\includegraphics[width=\textwidth]{manuscript_blind_files/figure-latex/te-1} \caption{Matrix of Transfer Entropy coefficients according to every age group combination for each of the selected European country. Age groups on the x-axis are influencing the age groups on the y-axis (\(ag\,x \rightarrow\,ag\,y\)). The significance of each Transfer Entropy coefficient is provided in Appendix 2.}\label{fig:te}
 \end{figure}
 
 Considering all countries, the analysis of age groups reveals distinct patterns (Figure \ref{fig:te}). For the 0 to 4 age group, i.e., the pre-school group, there was a downward trend during the initial three weeks following school closure, followed by an increase during the fourth week (\(\chi^2(5.96) = 410.48\), \(p < 0.001\)). A similar, but more moderate, trend is observer for the age group ranging from 5 to 9 (\(\chi^2(5.95) = 878.29\), \(p < 0.001\)), where a decrease is observed during the first two weeks, followed by an increase. while the trend for the age group ranging from 10 to 14 is flat during the first two weeks, a similar increase is shown at the beginning of the third week of school closure (\(\chi^2(1) = 61.62\), \(p < 0.001\)). For age groups between 15 and 24, there is a notable surge immediately after school closure, followed by a decrease after 14 days (15 to 19 age group: \(\chi^2(5.97) = 7929.88\), \(p < 0.001\) and 20 to 24 age group: \(\chi^2(4.98) = 18386.65\), \(p < 0.001\)). Thus, while the total case number declined following school closures, among younger age groups only the pre-school age group had a consistent reduction in cases, while for other age groups, there was even an increase in cases following school closures.

@@ -1,4 +1,4 @@
-\begin{thebibliography}{40}
+\begin{thebibliography}{41}
 \newcommand{\enquote}[1]{``#1''}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\normalfont{#1}}
@@ -36,6 +36,9 @@ Fukumoto, Kentaro, Charles~T McClean, and Kuninori Nakagawa. 2021. ``No causal e
 
 \bibitem[{Gras-Le Guen} et~al.(2021)]{grasleguen2021reopening}
 {Gras-Le Guen}, C., R.~Cohen, J.~Rozenberg, E.~Launay, D.~Levy-Bruhl, and C.~Delacourt. 2021. ``Reopening schools in the context of increasing COVID-19 community transmission: The French experience.'' \emph{Archives de Pédiatrie} 28 (3): 178--185. https://doi.org/{10.1016/j.arcped.2021.02.001},  \urlprefix\url{https://www.sciencedirect.com/science/article/pii/S0929693X21000178}.
+
+\bibitem[Hale et~al.(2021)]{hale2021global}
+Hale, Thomas, Noam Angrist, Rafael Goldszmidt, Beatriz Kira, Anna Petherick, Toby Phillips, Samuel Webster, et~al. 2021. ``A global panel database of pandemic policies (Oxford COVID-19 Government Response Tracker).'' \emph{Nature human behaviour} 5 (4): 529--538.
 
 \bibitem[Heavey et~al.(2020)]{heavey2020evidence}
 Heavey, Laura, Geraldine Casey, Ciara Kelly, David Kelly, and Geraldine McDarby. 2020. ``No evidence of secondary transmission of COVID-19 from children attending school in Ireland, 2020.'' \emph{Eurosurveillance} 25 (21), 2000903. https://doi.org/{10.2807/1560-7917.ES.2020.25.21.2000903},  \urlprefix\url{https://www.eurosurveillance.org/content/10.2807/1560-7917.ES.2020.25.21.2000903}.

@@ -4,6 +4,7 @@ library(future)
 library(glue)
 library(gratia)
 library(here)
+library(janitor)
 library(mgcv)
 library(parallel)
 library(scales)
@@ -14,6 +15,27 @@ options(scipen = 999)
 plan("future::multisession")
 
 # data -------------------------------------------------------------------------
+countries_of_interest <- c(
+  "Austria", "Belgium", "Bulgaria", "Croatia", "Estonia", "France",
+  "Germany", "Greece", "Netherlands", "Portugal", "Slovakia", "Spain"
+)
+
+OxCGRT_compact_national <- read_csv("https://raw.githubusercontent.com/OxCGRT/covid-policy-dataset/refs/heads/main/data/OxCGRT_compact_national_v1.csv") |> 
+  clean_names() |> 
+  mutate(
+    country = if_else(country_name == "Slovak Republic", "Slovakia", country_name),
+    date = as.Date(as.character(date), format = "%Y%m%d")
+  ) |> 
+  filter(country %in% countries_of_interest) |> 
+  select(
+    country, 
+    date, 
+    stringency_index_average, 
+    government_response_index_average, 
+    containment_health_index_average, 
+    economic_support_index
+  )
+
 df_global <- read_csv(here("data/df_global.csv"))
 df_global_age <- read_csv(here("data/df_global_age.csv"))
 
@@ -72,10 +94,11 @@ df_gam <- df_global_school |>
   ) |>
   anti_join(negative_daily_case_wave, by = c("country", "schools_closure_wave")) |>
   anti_join(missing_daily_case_wave, by = c("country", "schools_closure_wave")) |>
-  filter(who_region == "EURO") |>
+  filter(who_region == "EURO") |> 
+  left_join(OxCGRT_compact_national, by = join_by(country, date)) |>
   mutate(
-    age_grp = factor(age_grp),
-    country = factor(country)
+    age_grp = as.factor(age_grp),
+    country = as.factor(country)
   )
 
 system.time(
@@ -87,7 +110,11 @@ system.time(
         s(country, bs="re") +
         s(schools_time_since_closure, by = age_grp, bs="tp", k=7) +
         s(schools_time_since_closure, by = country, bs="tp", k=7) +
-        s(schools_time_since_closure, schools_closure_wave, bs="re"),
+        s(schools_time_since_closure, schools_closure_wave, bs="re") +
+        s(stringency_index_average, bs = "re") +
+        s(government_response_index_average, bs = "re") +
+        s(containment_health_index_average, bs = "re") +
+        s(economic_support_index, bs = "re"),
       data = df_gam,
       family = poisson,
       method = "fREML",
@@ -95,7 +122,7 @@ system.time(
       control = list(nthreads = detectCores()),
       drop.unused.levels = FALSE,
       discrete = TRUE,
-      rho = 0.88 # acf(residuals(gam_model))$acf[2]
+      rho = 0.86 # acf(residuals(gam_model))$acf[2]
     )
 )#  summary(gam_model); draw(gam_model); gam_model$aic
 
@@ -119,7 +146,7 @@ gam_results <-
       add_p = FALSE, 
       prefix = c("< ", "= ", "> ")
     ),
-    across(where(is.numeric), round, 2),
+    across(where(is.numeric), \(x) round(x, 2)),
     print = glue("$\\chi^2({edf}) = {statistic}$, $p {p.value}$")
   ) |> 
   select(term, print) |> 
