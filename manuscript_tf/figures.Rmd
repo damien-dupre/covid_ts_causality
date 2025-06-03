@@ -181,8 +181,8 @@ opts_chunk$set(
 # 
 # write_csv(df_global_age, here("data/df_global_age.csv"))
 
-df_global <- read_csv(here("data/df_global.csv"))
-df_global_age <- read_csv(here("data/df_global_age.csv"))
+# df_global <- read_csv(here("data/df_global.csv"))
+# df_global_age <- read_csv(here("data/df_global_age.csv"))
 ```
 
 ```{r analyses, cache=FALSE}

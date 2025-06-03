@@ -1,34 +1,34 @@
 ---
 title: |
   Divergent Impacts of COVID-19 School Closures on Youth Infection Dynamics: Evidence from 12 European Countries
-author:
-  - name: Damien Dupré
-    affil: 1
-    email: damien.dupre@dcu.ie (corresponding author)
-  - name: Edgar Morgenroth
-    affil: 1
-    email: edgar.morgenroth@dcu.ie
-affiliation:
-  - num: 1
-    address: |
-      Dublin City University Business School, Glasnevin, Dublin 9, Ireland
-# thanks:
-#   author
-      
 # author:
-#   - name: Author 1
+#   - name: Damien Dupré
 #     affil: 1
-#     email: Email 1
-#   - name: Author 2
-#     affil: 2
-#     email: Email 2
+#     email: damien.dupre@dcu.ie (corresponding author)
+#   - name: Edgar Morgenroth
+#     affil: 1
+#     email: edgar.morgenroth@dcu.ie
 # affiliation:
 #   - num: 1
 #     address: |
-#       Affiliation 1
-#   - num: 2
-#     address: |
-#       Affiliation 2
+#       Dublin City University Business School, Glasnevin, Dublin 9, Ireland
+# thanks:
+#   author
+      
+author:
+  - name: Author 1
+    affil: 1
+    email: Email 1
+  - name: Author 2
+    affil: 2
+    email: Email 2
+affiliation:
+  - num: 1
+    address: |
+      Affiliation 1
+  - num: 2
+    address: |
+      Affiliation 2
 
 bibliography: bibliography.bib
 abstract: |

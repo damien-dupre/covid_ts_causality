@@ -1,0 +1,865 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.6.3)  3 JUN 2025 10:31
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**manuscript.tex
+(./manuscript.tex
+LaTeX2e <2025-06-01>
+L3 programming layer <2025-05-26>
+(./interact.cls
+Document Class: interact 2016/10/17 v1.03 Interact LaTeX document class
+(/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2025/01/22 v1.4n Standard LaTeX document class
+(/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/base/size11.clo
+File: size11.clo 2025/01/22 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count275
+\c@section=\count276
+\c@subsection=\count277
+\c@subsubsection=\count278
+\c@paragraph=\count279
+\c@subparagraph=\count280
+\c@figure=\count281
+\c@table=\count282
+\abovecaptionskip=\skip49
+\belowcaptionskip=\skip50
+\bibindent=\dimen148
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2025/05/18 v2.17x AMS math features
+\@mathmargin=\skip51
+
+For additional information on amsmath, use the `?' option.
+(/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2024/11/17 v2.01 AMS text
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks17
+\ex@=\dimen149
+)) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen150
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2022/04/08 v2.04 operator names
+)
+\inf@bad=\count283
+LaTeX Info: Redefining \frac on input line 233.
+\uproot@=\count284
+\leftroot@=\count285
+LaTeX Info: Redefining \overline on input line 398.
+LaTeX Info: Redefining \colon on input line 409.
+\classnum@=\count286
+\DOTSCASE@=\count287
+LaTeX Info: Redefining \ldots on input line 495.
+LaTeX Info: Redefining \dots on input line 498.
+LaTeX Info: Redefining \cdots on input line 619.
+\Mathstrutbox@=\box53
+\strutbox@=\box54
+LaTeX Info: Redefining \big on input line 721.
+LaTeX Info: Redefining \Big on input line 722.
+LaTeX Info: Redefining \bigg on input line 723.
+LaTeX Info: Redefining \Bigg on input line 724.
+\big@size=\dimen151
+LaTeX Font Info:    Redeclaring font encoding OML on input line 742.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 743.
+\macc@depth=\count288
+LaTeX Info: Redefining \bmod on input line 904.
+LaTeX Info: Redefining \pmod on input line 909.
+LaTeX Info: Redefining \smash on input line 939.
+LaTeX Info: Redefining \relbar on input line 969.
+LaTeX Info: Redefining \Relbar on input line 970.
+\c@MaxMatrixCols=\count289
+\dotsspace@=\muskip17
+\c@parentequation=\count290
+\dspbrk@lvl=\count291
+\tag@help=\toks18
+\row@=\count292
+\column@=\count293
+\maxfields@=\count294
+\andhelp@=\toks19
+\eqnshift@=\dimen152
+\alignsep@=\dimen153
+\tagshift@=\dimen154
+\tagwidth@=\dimen155
+\totwidth@=\dimen156
+\lineht@=\dimen157
+\@envbody=\toks20
+\multlinegap=\skip52
+\multlinetaggap=\skip53
+\mathdisplay@stack=\toks21
+LaTeX Info: Redefining \[ on input line 2949.
+LaTeX Info: Redefining \] on input line 2950.
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+)) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/amscls/amsthm.sty
+Package: amsthm 2020/05/29 v2.20.6
+\thm@style=\toks22
+\thm@bodyfont=\toks23
+\thm@headfont=\toks24
+\thm@notefont=\toks25
+\thm@headpunct=\toks26
+\thm@preskip=\skip54
+\thm@postskip=\skip55
+\thm@headsep=\skip56
+\dth@everypar=\toks27
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/booktabs/booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen158
+\lightrulewidth=\dimen159
+\cmidrulewidth=\dimen160
+\belowrulesep=\dimen161
+\belowbottomsep=\dimen162
+\aboverulesep=\dimen163
+\abovetopsep=\dimen164
+\cmidrulesep=\dimen165
+\cmidrulekern=\dimen166
+\defaultaddspace=\dimen167
+\@cmidla=\count295
+\@cmidlb=\count296
+\@aboverulesep=\dimen168
+\@belowrulesep=\dimen169
+\@thisruleclass=\count297
+\@lastruleclass=\count298
+\@thisrulewidth=\dimen170
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/graphics/epsfig.sty
+Package: epsfig 2024/01/14 v1.7b (e)psfig emulation (SPQR)
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2024/12/31 v1.2e Enhanced LaTeX Graphics (DPC,SPQR)
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
+\KV@toks@=\toks28
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2024/08/06 v1.4g Standard LaTeX Graphics (DPC,SPQR)
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 106.
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2024/04/13 v1.2c Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen171
+\Gin@req@width=\dimen172
+)
+\epsfxsize=\dimen173
+\epsfysize=\dimen174
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/graphics/rotating.sty
+Package: rotating 2025/01/14 v2.16e rotated objects in LaTeX
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
+)
+\c@r@tfl@t=\count299
+\rotFPtop=\skip57
+\rotFPbot=\skip58
+\rot@float@box=\box55
+\rot@mess@toks=\toks29
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2024/12/12 v1.0g TeX engine tests
+))
+\Gm@cnth=\count300
+\Gm@cntv=\count301
+\c@Gm@tempcnt=\count302
+\Gm@bindingoffset=\dimen175
+\Gm@wd@mp=\dimen176
+\Gm@odd@mp=\dimen177
+\Gm@even@mp=\dimen178
+\Gm@layoutwidth=\dimen179
+\Gm@layoutheight=\dimen180
+\Gm@layouthoffset=\dimen181
+\Gm@layoutvoffset=\dimen182
+\Gm@dimlist=\toks30
+)
+\c@mv@upright=\count303
+\c@mv@boldupright=\count304
+LaTeX Font Info:    Overwriting symbol font `letters' in version `upright'
+(Font)                  OML/cmm/m/it --> OML/eur/m/n on input line 163.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `boldupright'
+(Font)                  OML/cmm/m/it --> OML/eur/b/n on input line 164.
+\figheight=\dimen183
+\figwidth=\dimen184
+\tabledim=\dimen185
+\LabelSep=\dimen186
+\TopSep=\skip59
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epstopdf.sty
+Package: epstopdf 2020-01-24 v2.11 Conversion with epstopdf on the fly (HO)
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/grfext/grfext.sty
+Package: grfext 2019/12/03 v1.3 Manage graphics extensions (HO)
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+)) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
+)) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 504.
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
+))) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/subfigure/subfigure.sty
+Package: subfigure 2002/03/15 v2.1.5 subfigure package
+\subfigtopskip=\skip60
+\subfigcapskip=\skip61
+\subfigcaptopadj=\dimen187
+\subfigbottomskip=\skip62
+\subfigcapmargin=\dimen188
+\subfiglabelskip=\skip63
+\c@subfigure=\count305
+\c@lofdepth=\count306
+\c@subtable=\count307
+\c@lotdepth=\count308
+
+****************************************
+* Local config file subfigure.cfg used *
+****************************************
+(/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/subfigure/subfigure.cfg)
+\subfig@top=\skip64
+\subfig@bottom=\skip65
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/natbib/natbib.sty
+Package: natbib 2010/09/13 8.31b (PWD, AO)
+\bibhang=\skip66
+\bibsep=\skip67
+LaTeX Info: Redefining \cite on input line 694.
+\c@NAT@ctr=\count309
+)
+\c@theorem=\count310
+\c@remark=\count311
+\c@notation=\count312
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty
+Package: longtable 2024-12-18 v4.23 Multi-page Table package (DPC)
+\LTleft=\skip68
+\LTright=\skip69
+\LTpre=\skip70
+\LTpost=\skip71
+\LTchunksize=\count313
+\LTcapwidth=\dimen189
+\LT@head=\box56
+\LT@firsthead=\box57
+\LT@foot=\box58
+\LT@lastfoot=\box59
+\LT@gbox=\box60
+\LT@cols=\count314
+\LT@rows=\count315
+\c@LT@tables=\count316
+\c@LT@chunks=\count317
+\LT@p@ftn=\toks31
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/tools/array.sty
+Package: array 2025/05/19 v2.6i Tabular extension package (FMi)
+\col@sep=\dimen190
+\ar@mcellbox=\box61
+\extrarowheight=\dimen191
+\NC@list=\toks32
+\extratabsurround=\skip72
+\backup@length=\skip73
+\ar@cellbox=\box62
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2025/03/01 v4.3b Infix arithmetic (KKT,FJ)
+\calc@Acount=\count318
+\calc@Bcount=\count319
+\calc@Adimen=\dimen192
+\calc@Bdimen=\dimen193
+\calc@Askip=\skip74
+\calc@Bskip=\skip75
+LaTeX Info: Redefining \setlength on input line 86.
+LaTeX Info: Redefining \addtolength on input line 87.
+\calc@Ccount=\count320
+\calc@Cskip=\skip76
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2025/02/11 v2.5l e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count321
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/mdwtools/footnote.sty
+Package: footnote 1997/01/28 1.13 Save footnotes around boxes
+\fn@notes=\box63
+\fn@width=\dimen194
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count322
+\float@exts=\toks33
+\float@box=\box64
+\@float@everytoks=\toks34
+\@floatcapt=\box65
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/threeparttable/threeparttable.sty
+Package: threeparttable 2003/06/13  v 3.0
+\@tempboxb=\box66
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2023/08/05 v3.6o Customizing captions (AR)
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
+\caption@tempdima=\dimen195
+\captionmargin=\dimen196
+\caption@leftmargin=\dimen197
+\caption@rightmargin=\dimen198
+\caption@width=\dimen199
+\caption@indent=\dimen256
+\caption@parindent=\dimen257
+\caption@hangindent=\dimen258
+Package caption Info: Unknown document class (or package),
+(caption)             standard defaults will be used.
+Package caption Info: \@makecaption = \long macro:#1#2->\ifx \FigName \@captype \vskip \abovecaptionskip \setbox \@tempboxa \hbox {\figcaptionfont {\fignumfont #1}\hskip 4pt#2}\ifdim \wd \@tempboxa >\hsize {\figcaptionfont \noindent {\fignumfont #1}\hskip 7pt\ignorespaces #2\par }\else \global \@minipagefalse \hb@xt@ \hsize {\hfil \box \@tempboxa \hfil }\fi \else {\tablecaptionfont {\tablenumfont #1}\hskip 7pt\ignorespaces {#2}\par }\vskip \belowcaptionskip \fi  on input line 1175.
+)
+
+Package caption Warning: Unknown document class (or package),
+(caption)                standard defaults will be used.
+See the caption package documentation for explanation.
+
+\c@caption@flags=\count323
+\c@continuedfloat=\count324
+Package caption Info: float package is loaded.
+Package caption Info: longtable package is loaded.
+(/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/caption/ltcaption.sty
+Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
+)
+Package caption Info: rotating package is loaded.
+Package caption Info: subfigure package is loaded.
+Package caption Info: threeparttable package is loaded.
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2025-05-20 v7.01m Hypertext links for LaTeX
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2023-11-26 v2.56 Cross-referencing by name of section
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+)
+\c@section@level=\count325
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/generic/stringenc/stringenc.sty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
+)
+\@linkdim=\dimen259
+\Hy@linkcounter=\count326
+\Hy@pagecounter=\count327
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2025-05-20 v7.01m Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+)
+\Hy@SavedSpaceFactor=\count328
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
+File: puenc.def 2025-05-20 v7.01m Hyperref: PDF Unicode definition (HO)
+Now handling font encoding PU ...
+... no UTF-8 mapping file for font encoding PU
+)
+Package hyperref Info: Hyper figures OFF on input line 4157.
+Package hyperref Info: Link nesting OFF on input line 4162.
+Package hyperref Info: Hyper index ON on input line 4165.
+Package hyperref Info: Plain pages OFF on input line 4172.
+Package hyperref Info: Backreferencing OFF on input line 4177.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4424.
+\c@Hy@tempcnt=\count329
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip18
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 4763.
+\XeTeXLinkMargin=\dimen260
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
+))
+\Fld@menulength=\count330
+\Field@Width=\dimen261
+\Fld@charsize=\dimen262
+Package hyperref Info: Hyper figures OFF on input line 6042.
+Package hyperref Info: Link nesting OFF on input line 6047.
+Package hyperref Info: Hyper index ON on input line 6050.
+Package hyperref Info: backreferencing OFF on input line 6057.
+Package hyperref Info: Link coloring OFF on input line 6062.
+Package hyperref Info: Link coloring with OCG OFF on input line 6067.
+Package hyperref Info: PDF/A mode OFF on input line 6072.
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx.sty
+Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
+package with kernel methods
+)
+\Hy@abspage=\count331
+\c@Item=\count332
+\c@Hfootnote=\count333
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2025-05-20 v7.01m Hyperref driver for pdfTeX
+\Fld@listcount=\count334
+\c@bookmark@seq@number=\count335
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+Package: rerunfilecheck 2022-07-10 v1.10 Rerun checks for auxiliary files (HO)
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/base/atveryend-ltx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend package
+with kernel methods
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 285.
+)
+\Hy@SectionHShift=\skip77
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2024/02/08 v1.3d Input encoding file
+\inpenc@prehook=\toks35
+\inpenc@posthook=\toks36
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/multirow/multirow.sty
+Package: multirow 2024/11/12 v2.9 Span multiple rows of a table
+\multirow@colwidth=\skip78
+\multirow@cntb=\count336
+\multirow@dima=\skip79
+\bigstrutjot=\dimen263
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/wrapfig/wrapfig.sty
+\wrapoverhang=\dimen264
+\WF@size=\dimen265
+\c@WF@wrappedlines=\count337
+\WF@box=\box67
+\WF@everypar=\toks37
+Package: wrapfig 2003/01/31  v 3.6
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/colortbl/colortbl.sty
+Package: colortbl 2024/10/29 v1.0k Color table columns (DPC)
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/graphics/color.sty
+Package: color 2025/01/14 v1.3e Standard LaTeX Color (DPC)
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package color Info: Driver file: pdftex.def on input line 149.
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/graphics/mathcolor.ltx))
+\everycr=\toks38
+\minrowclearance=\skip80
+\rownum=\count338
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/pdflscape/pdflscape.sty
+Package: pdflscape 2022-10-27 v0.13 Display of landscape pages in PDF
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/pdflscape/pdflscape-nometadata.sty
+Package: pdflscape-nometadata 2022-10-28 v0.13 Display of landscape pages in PDF (HO)
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/graphics/lscape.sty
+Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
+)
+Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
+)) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/tabu/tabu.sty
+Package: tabu 2019/01/11 v2.9 - flexible LaTeX tabulars (FC+tabu-fixed)
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/varwidth/varwidth.sty
+Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
+\@vwid@box=\box68
+\sift@deathcycles=\count339
+\@vwid@loff=\dimen266
+\@vwid@roff=\dimen267
+)
+==> First Aid for varwidth.sty applied!
+\c@taburow=\count340
+\tabu@nbcols=\count341
+\tabu@cnt=\count342
+\tabu@Xcol=\count343
+\tabu@alloc=\count344
+\tabu@nested=\count345
+\tabu@target=\dimen268
+\tabu@spreadtarget=\dimen269
+\tabu@naturalX=\dimen270
+\tabucolX=\dimen271
+\tabu@Xsum=\dimen272
+\extrarowdepth=\dimen273
+\abovetabulinesep=\dimen274
+\belowtabulinesep=\dimen275
+\tabustrutrule=\dimen276
+\tabu@thebody=\toks39
+\tabu@footnotes=\toks40
+\tabu@box=\box69
+\tabu@arstrutbox=\box70
+\tabu@hleads=\box71
+\tabu@vleads=\box72
+\tabu@cellskip=\skip81
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/threeparttablex/threeparttablex.sty
+Package: threeparttablex 2013/07/23 v0.3 by daleif
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/environ/environ.sty
+Package: environ 2014/05/04 v0.3 A new way to define environments
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/trimspaces/trimspaces.sty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+))
+\TPTL@width=\skip82
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/generic/ulem/ulem.sty
+\UL@box=\box73
+\UL@hyphenbox=\box74
+\UL@skip=\skip83
+\UL@hook=\toks41
+\UL@height=\dimen277
+\UL@pe=\count346
+\UL@pixel=\dimen278
+\ULC@box=\box75
+Package: ulem 2019/11/18
+\ULdepth=\dimen279
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/makecell/makecell.sty
+Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
+\rotheadsize=\dimen280
+\c@nlinenum=\count347
+\TeXr@lab=\toks42
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2024/09/29 v3.02 LaTeX color extensions (UK)
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 274.
+LaTeX Info: Redefining \color on input line 762.
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/graphics/mathcolor.ltx)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1349.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1353.
+Package xcolor Info: Model `RGB' extended on input line 1365.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1367.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1370.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1371.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
+) (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2025-04-14 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count348
+) (./manuscript.aux)
+\openout1 = `manuscript.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 71.
+LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 71.
+LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 71.
+LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 71.
+LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 71.
+LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 71.
+LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 71.
+LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 71.
+LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 71.
+LaTeX Font Info:    ... okay on input line 71.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: <default>
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(94.75394pt, 408.0pt, 94.75394pt)
+* v-part:(T,H,B)=(78.01874pt, 650.0pt, 117.0281pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=408.0pt
+* \textheight=650.0pt
+* \oddsidemargin=22.48395pt
+* \evensidemargin=22.48395pt
+* \topmargin=-31.25125pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=11.0pt
+* \footskip=30.0pt
+* \marginparwidth=50.0pt
+* \marginparsep=10.0pt
+* \columnsep=12.0pt
+* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: hyperref package is loaded.
+Package caption Info: wrapfig package is loaded.
+Package caption Info: End \AtBeginDocument code.
+Package hyperref Info: Link coloring OFF on input line 71.
+(./manuscript.out) (./manuscript.out)
+\@outlinefile=\write3
+\openout3 = `manuscript.out'.
+
+
+
+LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <13> not available
+(Font)              size <12> substituted on input line 88.
+
+
+LaTeX Font Warning: Font shape `OT1/cmr/bx/n' in size <13> not available
+(Font)              size <12> substituted on input line 88.
+
+LaTeX Font Info:    Calculating math sizes for size <11> on input line 88.
+
+LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <5.5> not available
+(Font)              size <5> substituted on input line 88.
+
+
+LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <5.5> not available
+(Font)              size <5> substituted on input line 88.
+
+
+LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <5.5> not available
+(Font)              size <5> substituted on input line 88.
+
+LaTeX Font Info:    Trying to load font information for U+msa on input line 88.
+(/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 88.
+ (/Users/damienhome/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+Overfull \vbox (1.08754pt too high) has occurred while \output is active []
+
+
+
+[1
+
+
+
+{/Users/damienhome/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+
+[2]
+
+[3]
+
+[4]
+Overfull \hbox (47.96423pt too wide) detected at line 168
+[]
+ []
+
+
+
+[5]
+<manuscript_files/figure-latex/overall-1.png, id=217, 469.755pt x 216.81pt>
+File: manuscript_files/figure-latex/overall-1.png Graphic file (type png)
+<use manuscript_files/figure-latex/overall-1.png>
+Package pdftex.def Info: manuscript_files/figure-latex/overall-1.png  used on input line 179.
+(pdftex.def)             Requested size: 408.0pt x 188.30888pt.
+<manuscript_files/figure-latex/descriptive-1.png, id=223, 469.755pt x 216.81pt>
+File: manuscript_files/figure-latex/descriptive-1.png Graphic file (type png)
+<use manuscript_files/figure-latex/descriptive-1.png>
+Package pdftex.def Info: manuscript_files/figure-latex/descriptive-1.png  used on input line 185.
+(pdftex.def)             Requested size: 408.0pt x 188.30888pt.
+
+
+[6 <./manuscript_files/figure-latex/overall-1.png>]
+<manuscript_files/figure-latex/country-1.png, id=242, 469.755pt x 216.81pt>
+File: manuscript_files/figure-latex/country-1.png Graphic file (type png)
+<use manuscript_files/figure-latex/country-1.png>
+Package pdftex.def Info: manuscript_files/figure-latex/country-1.png  used on input line 193.
+(pdftex.def)             Requested size: 408.0pt x 188.30888pt.
+
+
+[7 <./manuscript_files/figure-latex/descriptive-1.png>]
+<manuscript_files/figure-latex/age-1.png, id=251, 469.755pt x 216.81pt>
+File: manuscript_files/figure-latex/age-1.png Graphic file (type png)
+<use manuscript_files/figure-latex/age-1.png>
+Package pdftex.def Info: manuscript_files/figure-latex/age-1.png  used on input line 197.
+(pdftex.def)             Requested size: 408.0pt x 188.30888pt.
+<manuscript_files/figure-latex/te-1.png, id=252, 469.755pt x 578.16pt>
+File: manuscript_files/figure-latex/te-1.png Graphic file (type png)
+<use manuscript_files/figure-latex/te-1.png>
+Package pdftex.def Info: manuscript_files/figure-latex/te-1.png  used on input line 203.
+(pdftex.def)             Requested size: 408.0pt x 502.15704pt.
+
+
+[8 <./manuscript_files/figure-latex/country-1.png> <./manuscript_files/figure-latex/age-1.png>]
+
+[9 <./manuscript_files/figure-latex/te-1.png>]
+
+[10]
+
+[11]
+
+[12]
+Underfull \hbox (badness 1178) in paragraph at lines 248--249
+\OT1/cmr/m/n/10.95 The data can be ac-cessed from the COVerAGE-DB OSF repos-i-tory ([]$\OT1/cmtt/m/n/10.95 https :
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 248--249
+\OT1/cmtt/m/n/10.95 file / unesco-[]data-[]school-[]closures-[]february-[]2020-[]june-[]2022csv-[]zip$[]\OT1/cmr/m/n/10.95 ). All
+ []
+
+(./manuscript.bbl
+Underfull \hbox (badness 4266) in paragraph at lines 8--9
+[]\OT1/cmr/m/n/10 Alfano, Vin-cenzo. 2022. ``The ef-fects of school clo-sures on COVID-19: A cross-
+ []
+
+
+Underfull \hbox (badness 1072) in paragraph at lines 26--27
+[]\OT1/cmr/m/n/10 Chang, Sh-eryl L, Nathan Hard-ing, Cameron Zachre-son, Oliver M Cliff, and Mikhail
+ []
+
+
+Underfull \hbox (badness 1394) in paragraph at lines 32--33
+\OT1/cmr/m/n/10 school strat-egy dur-ing COVID-19 pan-demic.'' \OT1/cmr/m/it/10 Ital-ian Jour-nal of Pe-di-atrics \OT1/cmr/m/n/10 47: 1--
+ []
+
+
+
+[13]
+Underfull \hbox (badness 7631) in paragraph at lines 38--39
+[]\OT1/cmr/m/n/10 Gras-Le Guen, C., R. Co-hen, J. Rozen-berg, E. Lau-nay, D. Levy-Bruhl, and
+ []
+
+
+Underfull \hbox (badness 4927) in paragraph at lines 38--39
+\OT1/cmr/m/n/10 C. Dela-court. 2021. ``Re-open-ing schools in the con-text of in-creas-ing COVID-
+ []
+
+
+Underfull \hbox (badness 4726) in paragraph at lines 38--39
+\OT1/cmr/m/n/10 19 com-mu-nity trans-mis-sion: The French ex-pe-ri-ence.'' \OT1/cmr/m/it/10 Archives de P^^Sediatrie \OT1/cmr/m/n/10 28
+ []
+
+
+Underfull \hbox (badness 1953) in paragraph at lines 44--45
+\OT1/cmr/m/n/10 in Ire-land, 2020.'' \OT1/cmr/m/it/10 Eu-ro-surveil-lance \OT1/cmr/m/n/10 25 (21), 2000903. https://doi.org/10.2807/1560-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 44--45
+\OT1/cmr/m/n/10 7917.ES.2020.25.21.2000903, []$\OT1/cmtt/m/n/10 https : / / www . eurosurveillance . org / content / 10 . 2807 /
+ []
+
+
+Underfull \hbox (badness 2158) in paragraph at lines 47--48
+[]\OT1/cmr/m/n/10 Iwata, Ken-taro, Asako Doi, and Chisato Miyakoshi. 2020. ``Was school clo-sure ef-
+ []
+
+
+Underfull \hbox (badness 4378) in paragraph at lines 47--48
+\OT1/cmr/m/n/10 fec-tive in mit-i-gat-ing coro-n-avirus dis-ease 2019 (COVID-19)? Time se-ries anal-y-
+ []
+
+
+Underfull \hbox (badness 1331) in paragraph at lines 47--48
+\OT1/cmr/m/n/10 sis us-ing Bayesian in-fer-ence.'' \OT1/cmr/m/it/10 In-ter-na-tional Jour-nal of In-fec-tious Dis-eases \OT1/cmr/m/n/10 99: 57--
+ []
+
+
+Underfull \hbox (badness 2384) in paragraph at lines 47--48
+\OT1/cmr/m/n/10 61. https://doi.org/10.1016/j.ijid.2020.07.052, []$\OT1/cmtt/m/n/10 https : / / www . ijidonline . com / article /
+ []
+
+
+Underfull \hbox (badness 1043) in paragraph at lines 59--60
+\OT1/cmr/m/n/10 ``Read-ing and math skills de-vel-op-ment among Finnish pri-mary school chil-dren be-
+ []
+
+
+Underfull \hbox (badness 1796) in paragraph at lines 59--60
+\OT1/cmr/m/n/10 fore and af-ter COVID-19 school clo-sure.'' \OT1/cmr/m/it/10 Read-ing and Writ-ing \OT1/cmr/m/n/10 36 (2): 263--288.
+ []
+
+
+Underfull \hbox (badness 2103) in paragraph at lines 59--60
+\OT1/cmr/m/n/10 https://doi.org/10.1007/s11145-022-10358-3, []$\OT1/cmtt/m/n/10 https : / / link . springer . com / article / 10 .
+ []
+
+
+Underfull \hbox (badness 2088) in paragraph at lines 68--69
+[]\OT1/cmr/m/n/10 Ludvigsson, Jonas F. 2020. ``Chil-dren are un-likely to be the main drivers of the
+ []
+
+
+Underfull \hbox (badness 3735) in paragraph at lines 68--69
+\OT1/cmr/m/n/10 COVID-19 pan-demic { A sys-tem-atic re-view.'' \OT1/cmr/m/it/10 Acta Pae-di-atrica \OT1/cmr/m/n/10 109 (8): 1525--
+ []
+
+
+
+[14]
+Underfull \hbox (badness 3635) in paragraph at lines 104--105
+[]\OT1/cmr/m/n/10 Sugimoto, Mi-nami, Ken-taro Mu-rakami, and Satoshi Sasaki. 2023. ``Tem-po-ral pat-
+ []
+
+
+Underfull \hbox (badness 1389) in paragraph at lines 104--105
+\OT1/cmr/m/n/10 terns of sleep and eat-ing among chil-dren dur-ing school clo-sure in Japan due to
+ []
+
+
+Underfull \hbox (badness 5756) in paragraph at lines 104--105
+\OT1/cmr/m/it/10 lic Health Nu-tri-tion \OT1/cmr/m/n/10 26 (2): 393--407. https://doi.org/10.1017/S1368980022001148,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 104--105
+[]$\OT1/cmtt/m/n/10 https : / / www . cambridge . org / core / journals / public-[]health-[]nutrition / article /
+ []
+
+
+Overfull \hbox (485.94243pt too wide) in paragraph at lines 104--105
+\OT1/cmtt/m/n/10 temporal-[]patterns-[]of-[]sleep-[]and-[]eating-[]among-[]children-[]during-[]school-[]closure-[]in-[]japan-[]due-[]to-[]covid19-[]pandemic-[]associations-[]with-[]lifestyle-[]behaviours-[]and-[]dietary-[]intake /
+ []
+
+
+Underfull \hbox (badness 1596) in paragraph at lines 110--111
+\OT1/cmr/m/n/10 mon-i-tor-ing of school clo-sures.'' Ac-cessed: 2024-12-17, []$\OT1/cmtt/m/n/10 https : / / webarchive . unesco .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 110--111
+\OT1/cmtt/m/n/10 org / web / 20220629024039 / https : / / en . unesco . org / sites / default / files / duration _
+ []
+
+
+
+[15]
+Underfull \hbox (badness 1199) in paragraph at lines 128--129
+[]\OT1/cmr/m/n/10 Zhen-Dong, Yang, Zhou Gao-Jun, Jin Run-Ming, Liu Zhi-Sheng, Dong Zong-Qi, Xie
+ []
+
+)
+
+[16] (./manuscript.aux)
+ ***********
+LaTeX2e <2025-06-01>
+L3 programming layer <2025-05-26>
+ ***********
+
+
+LaTeX Font Warning: Size substitutions with differences
+(Font)              up to 1.0pt have occurred.
+
+Package rerunfilecheck Info: File `manuscript.out' has not changed.
+(rerunfilecheck)             Checksum: 7639E5FE863DE1F0DC7A645B126292B4;2207.
+ ) 
+Here is how much of TeX's memory you used:
+ 14985 strings out of 469812
+ 239967 string characters out of 5481260
+ 660041 words of memory out of 5000000
+ 42966 multiletter control sequences out of 15000+600000
+ 637294 words of font info for 83 fonts, out of 8000000 for 9000
+ 36 hyphenation exceptions out of 8191
+ 87i,11n,93p,1966b,643s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</Users/damienhome/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></Users/damienhome/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></Users/damienhome/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></Users/damienhome/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></Users/damienhome/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></Users/damienhome/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></Users/damienhome/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></Users/damienhome/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></Users/damienhome/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></Users/damienhome/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></Users/damienhome/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></Users/damienhome/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></Users/damienhome/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></Users/damienhome/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></Users/damienhome/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></Users/damienhome/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></Users/damienhome/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></Users/damienhome/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></Users/damienhome/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
+Output written on manuscript.pdf (16 pages, 809098 bytes).
+PDF statistics:
+ 486 PDF objects out of 1000 (max. 8388607)
+ 416 compressed objects within 5 object streams
+ 82 named destinations out of 1000 (max. 500000)
+ 154 words of extra memory for PDF output out of 10000 (max. 10000000)
+
