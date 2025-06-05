@@ -1,0 +1,30 @@
+\articletype{$article-type$}
+
+\received{$received$}
+\revised{$revised$}
+\accepted{$accepted$}
+\journal{$journal$}
+\volume{$volume$}
+\copyyear{$copy-year$}
+\startpage{$start-page$}
+
+% TODO: Inherited from WileyNJD example. Is this needed?
+% \raggedbottom
+
+
+$title-correspondence.tex()$
+
+$if(title)$
+\title{$title$}
+\titlemark{$titlemark$}
+$endif$
+
+$if(abstract)$
+\abstract[Abstract]{$abstract$}
+$endif$
+
+$if(keywords)$
+{\keywords{$for(keywords)$$it$$sep$, $endfor$}
+$endif$
+
+\maketitle

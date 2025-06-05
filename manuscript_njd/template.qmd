@@ -1,0 +1,248 @@
+---
+title: "Quarto Template (wiley-njd) Example"
+
+format:
+  wiley-njd-pdf:
+    article-type: "Article Type: Exemplar"
+    received: "10 November 2024"
+    revised: "10 November 2024"
+    accepted: "1 January 2025"
+    journal: "Journal: None"
+    volume: "00"
+    copy-year: 2024
+    start-page: 1024
+
+    titlemark: "Short Title (in header)"
+    authormark: "Short Author (in header)"
+    
+    keywords:
+      - keyword1
+      - buzzword
+      - keyword3
+
+author:
+  - name: Josh Cowley
+    email: joshcowley@fakeemails.com
+    corresponding: true
+    affiliations:
+      - name: That University
+        department: School of Something
+        city: City
+        country: UK
+
+  - name: The Supervisor
+    email: thesupervisor@fakeemails.com
+    affiliations:
+      - name: That University
+        department: School of Something
+        city: City
+        country: UK
+
+  - name: Business Contact
+    email: businesscontact@fakebusinessemails.com
+    affiliations:
+      - name: That Company
+        department: Advanced Department
+        city: City
+        country: Germany
+
+present-address: |
+  The present address is currently hidden.
+
+abstract: |
+  Document serves as example input for Quarto template openly available
+    from Github, see more information at
+    <https://github.com/nclJoshCowley/wiley-njd>.
+  All rendering requires LaTeX to be installed, this includes any 
+    TeX installation bundled with Quarto.
+  Since Wiley's "New Journal Design" (NJD) LaTeX template is utilised in
+    the build process, usage is subject to any license associated with
+    original template.
+
+keep-tex: true
+bibliography: bibliography.bib
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(ggplot2)
+ggplot2::theme_set(ggplot2::theme_minimal(base_size = 10))
+
+library(knitr)
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  # Example journal specifications: (width: 17.15 cm, DPI: >= 300)
+  fig.width = 17.15 / 2.54,
+  dpi = 300
+)
+```
+
+# Example Content
+
+## Raw Latex {#sec-rawlatex}
+
+Any required LaTeX can be added to the document as required.
+For Quarto, this is best done by including the raw LaTeX inside a 
+  ` ```{=latex} ... ``` ` block, as shown in the source document.
+
+```{=latex}
+\setlength{\parindent}{0pt}
+```
+
+## Equations {#sec-eqns}
+
+As with LaTeX, we can create in-line equations with $y = mx + c$ and create
+  display single-line equations with
+
+$$
+    a^n
+        = b^n + c^n
+$$
+
+For multi-line equations, use the `$$` around a `begin{aligned}[t]` method.
+
+$$
+\begin{aligned}[t]
+    y_1
+        &= \beta_0 + \beta_1 x_1
+    \\
+        &\vdots
+    \\
+    y_n
+        &= \beta_0 + \beta_1 x_n
+\end{aligned}
+$$ {#eq-linreg}
+
+## Code
+
+In-line code can be enacted with backticks, for example $1 + 1 = `r 1 + 1`$.
+Display code chunks are formulated in the usual Quarto way.
+
+```{r}
+factorial(5)
+```
+
+For example, output is suppressed via the chunk option `#| echo: false`.
+
+```{r}
+#| echo: false
+sprintf("10! = %i", factorial(10))
+```
+
+## Images
+
+We can include graphics that already exist with `knitr::include_graphics`
+  or by `\includegraphics` using the method described in @sec-rawlatex.
+
+```{r}
+knitr::include_graphics("https://quarto.org/quarto.png")
+```
+
+And we can generate our own plots using R code.
+Note that we only change `fig.width` and `fig.height` or `fig.asp`;
+  changing `out.height` or `out.width` will stretch the image.
+
+```{r}
+#| label: fig-cars
+#| fig-cap: "A scatter plot of weight and MPG from the `mtcars` dataset"
+#| fig-asp: 0.8
+#| echo: false
+mtcars |> 
+  ggplot2::ggplot(ggplot2::aes(x = mpg, y = wt)) +
+  ggplot2::geom_smooth(method = "lm", formula = y ~ x, colour = "red") +
+  ggplot2::geom_point() +
+  ggplot2::labs(
+    title = "Negative Correlation between Weight and MPG",
+    y = "Weight",
+    x = "Miles per Gallon (MPG)"
+  )
+```
+
+## Cross-Reference
+
+We want to be able to reference already defined items such as
+
+1. linear regression, as described in (@eq-linreg) from @sec-eqns.
+
+1. scatter plot of `mtcars` data, @fig-cars.
+
+## Citations
+
+We can cite is a few different ways that are consistent with `natbib`
+
+1. Parenthesised citation, using `citep` [@Hirt1974].
+
+1. Textual citation, using `citet` as in @Hirt1974.
+
+Multiple citations follow (semi-colon separated) Quarto syntax
+  [@Hirt1974; @Benson1992; @Dukowicz1984].
+
+## Footnotes
+
+Here is a footnote reference,[^1] and another.[^longnote]
+
+[^1]: Here is the footnote.
+
+[^longnote]: Here's one with multiple blocks.
+
+    Subsequent paragraphs are indented to show that they belong to the previous
+    footnote.
+
+    Multi-paragraph footnotes work like multi-paragraph list items.
+
+## Quotes
+
+The `quote` environment is supplied by the Markdown quote syntax where lines
+  begin with `>`.
+For example,
+
+> The combination of some data and an aching desire for an answer does not
+> ensure that a reasonable answer can be extracted from a given body of data.
+> 
+> -- John Tukey
+
+\newpage
+
+# Future Work
+
+## NJD Consistency
+
+Wiley's NJD supplies
+
+* 2 column layouts, only 1 column layouts apply here.
+
+* Multiple referencing systems, only Harvard applies here.
+
+* Font options (Helvetica, Lato, etc.) but installing fonts is non-trivial.
+  Currently Times is used but we may want sans-serif.
+
+
+## Theorems
+
+Custom environments supplied by NJD should work with Quarto divs, however
+  further testing is required.
+
+::: {#thm-1}
+This is a theorem.
+:::
+
+::: {proof}
+With a proof.
+:::
+
+::: {#prp-1}
+This is a proposition.
+:::
+
+::: {#def-1}
+This is a definition
+:::
+
+\newpage
+
+# References
+
+::: {#refs}
+:::
