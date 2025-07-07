@@ -1,0 +1,166 @@
+\begin{thebibliography}{10}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \def\href#1#2{#2} \def\path#1{#1}\fi
+
+\bibitem{msemburi2023estimates}
+W.~Msemburi, A.~Karlinsky, V.~Knutson, S.~Aleshin-Guendel, S.~Chatterji, J.~Wakefield, The who estimates of excess mortality associated with the covid-19 pandemic, Nature 613~(7942) (2023) 130--137.
+
+\bibitem{moser2018estimating}
+C.~B. Moser, L.~F. White, Estimating age-specific reproductive numbers—a comparison of methods, Statistical Methods in Medical Research 27~(7) (2018) 2050--2059.
+\newblock \href {https://doi.org/10.1177/0962280216673676} {\path{doi:10.1177/0962280216673676}}.
+
+\bibitem{kawano2015substantial}
+S.~Kawano, M.~Kakehashi, Substantial impact of school closure on the transmission dynamics during the pandemic flu h1n1-2009 in oita, japan, PloS one 10~(12) (2015) e0144839.
+\newblock \href {https://doi.org/10.1371/journal.pone.0144839} {\path{doi:10.1371/journal.pone.0144839}}.
+
+\bibitem{moulin2022longitudinal}
+F.~Moulin, M.~Bailhache, M.~Monnier, X.~Thierry, S.~Vandentorren, S.~M. C{\^o}t{\'e}, B.~Falissard, T.~Simeon, B.~Geay, L.~Marchand, et~al., Longitudinal impact of psychosocial status on children’s mental health in the context of covid-19 pandemic restrictions, European Child \& Adolescent Psychiatry (2022) 1--10\href {https://doi.org/10.1007/s00787-022-02010-w} {\path{doi:10.1007/s00787-022-02010-w}}.
+
+\bibitem{sugimoto2023temporal}
+M.~Sugimoto, K.~Murakami, S.~Sasaki, Temporal patterns of sleep and eating among children during school closure in japan due to covid-19 pandemic: associations with lifestyle behaviours and dietary intake, Public Health Nutrition 26~(2) (2023) 393--407.
+\newblock \href {https://doi.org/10.1017/S1368980022001148} {\path{doi:10.1017/S1368980022001148}}.
+
+\bibitem{lerkkanen2023reading}
+M.-K. Lerkkanen, E.~Pakarinen, J.~Salminen, M.~Torppa, Reading and math skills development among finnish primary school children before and after covid-19 school closure, Reading and Writing 36~(2) (2023) 263--288.
+\newblock \href {https://doi.org/10.1007/s11145-022-10358-3} {\path{doi:10.1007/s11145-022-10358-3}}.
+
+\bibitem{de2021determines}
+E.~De~Simone, P.~R. Mourao, What determines governments’ response time to covid-19? a cross-country inquiry on the measure restricting internal movements, Open Economics 4~(1) (2021) 106--117.
+\newblock \href {https://doi.org/10.1515/openec-2020-0116} {\path{doi:10.1515/openec-2020-0116}}.
+
+\bibitem{ard2023lauterbach}
+{ARD Tagesschau}, \href{https://www.tagesschau.de/inland/lauterbach-corona-pandemie-101.html}{Lauterbach räumt fehler in corona-politik ein}, accessed: 2024-12-17 (2023).
+\newline\urlprefix\url{https://www.tagesschau.de/inland/lauterbach-corona-pandemie-101.html}
+
+\bibitem{alfano2022effects}
+V.~Alfano, The effects of school closures on covid-19: A cross-country panel analysis, Applied Health Economics and Health Policy 20~(2) (2022) 223--233.
+\newblock \href {https://doi.org/10.1007/s40258-021-00702-z} {\path{doi:10.1007/s40258-021-00702-z}}.
+
+\bibitem{walsh2021school}
+S.~Walsh, A.~Chowdhury, V.~Braithwaite, S.~Russell, J.~M. Birch, J.~L. Ward, C.~Waddington, C.~Brayne, C.~Bonell, R.~M. Viner, et~al., Do school closures and school reopenings affect community transmission of covid-19? a systematic review of observational studies, BMJ Open 11~(8) (2021) e053371.
+\newblock \href {https://doi.org/10.1136/bmjopen-2021-053371} {\path{doi:10.1136/bmjopen-2021-053371}}.
+
+\bibitem{bayham2020impact}
+J.~Bayham, E.~P. Fenichel, Impact of school closures for covid-19 on the us health-care workforce and net mortality: A modelling study, The Lancet Public Health 5~(5) (2020) e271--e278.
+\newblock \href {https://doi.org/10.1016/S2468-2667(20)30082-7} {\path{doi:10.1016/S2468-2667(20)30082-7}}.
+
+\bibitem{esposito2021comprehensive}
+S.~Esposito, N.~Cotugno, N.~Principi, Comprehensive and safe school strategy during covid-19 pandemic, Italian Journal of Pediatrics 47 (2021) 1--4.
+\newblock \href {https://doi.org/10.1186/s13052-021-00960-6} {\path{doi:10.1186/s13052-021-00960-6}}.
+
+\bibitem{stage2021shut}
+H.~B. Stage, J.~Shingleton, S.~Ghosh, F.~Scarabel, L.~Pellis, T.~Finnie, Shut and re-open: the role of schools in the spread of covid-19 in europe, Philosophical Transactions of the Royal Society B 376~(1829) (2021) 1--11.
+\newblock \href {https://doi.org/10.1098/rstb.2020.0277} {\path{doi:10.1098/rstb.2020.0277}}.
+
+\bibitem{yoshiyuki2020effects}
+Y.~Sugishita, J.~Kurita, T.~Sugawara, Y.~Ohkusa, Effects of voluntary event cancellation and school closure as countermeasures against covid-19 outbreak in japan, PLOS ONE 15~(12) (2020) 1--10.
+\newblock \href {https://doi.org/10.1371/journal.pone.0239455} {\path{doi:10.1371/journal.pone.0239455}}.
+
+\bibitem{chang2020modelling}
+S.~L. Chang, N.~Harding, C.~Zachreson, O.~M. Cliff, M.~Prokopenko, Modelling transmission and control of the covid-19 pandemic in australia, Nature Communications 11~(1) (2020) 1--13.
+\newblock \href {https://doi.org/10.1038/s41467-020-19393-6} {\path{doi:10.1038/s41467-020-19393-6}}.
+
+\bibitem{iwata2020school}
+K.~Iwata, A.~Doi, C.~Miyakoshi, Was school closure effective in mitigating coronavirus disease 2019 (covid-19)? time series analysis using bayesian inference, International Journal of Infectious Diseases 99 (2020) 57--61.
+\newblock \href {https://doi.org/10.1016/j.ijid.2020.07.052} {\path{doi:10.1016/j.ijid.2020.07.052}}.
+
+\bibitem{fukumoto2021no}
+K.~Fukumoto, C.~T. McClean, K.~Nakagawa, No causal effect of school closures in japan on the spread of covid-19 in spring 2020, Nature Medicine 27~(12) (2021) 2111--2119.
+\newblock \href {https://doi.org/10.1038/s41591-021-01571-8} {\path{doi:10.1038/s41591-021-01571-8}}.
+
+\bibitem{sorianoarandes2021household}
+A.~Soriano-Arandes, A.~Gatell, P.~Serrano, M.~Biosca, F.~Campillo, R.~Capdevila, A.~Fàbrega, Z.~Lobato, N.~López, A.~M. Moreno, M.~Poblet, M.~T. Riera-Bosch, N.~Rius, M.~Ruiz, A.~Sánchez, C.~Valldepérez, M.~Vilà, V.~Pineda, U.~Lazcano, Y.~Díaz, J.~Reyes-Urueña, P.~Soler-Palacín, C.-. P.~D. in~Catalonia Research~Group, Household severe acute respiratory syndrome coronavirus 2 transmission and children: A network prospective study, Clinical Infectious Diseases 73~(6) (2021) e1261--e1269.
+\newblock \href {https://doi.org/10.1093/cid/ciab228} {\path{doi:10.1093/cid/ciab228}}.
+
+\bibitem{siebach2021childhood}
+M.~K. Siebach, G.~Piedimonte, S.~H. Ley, Covid-19 in childhood: Transmission, clinical presentation, complications and risk factors, Pediatric Pulmonology 56~(6) (2021) 1342--1356.
+\newblock \href {https://doi.org/10.1002/ppul.25344} {\path{doi:10.1002/ppul.25344}}.
+
+\bibitem{zhendong2020clinical}
+Y.~Zhen-Dong, Z.~Gao-Jun, J.~Run-Ming, L.~Zhi-Sheng, D.~Zong-Qi, X.~Xiong, S.~Guo-Wei, Clinical and transmission dynamics characteristics of 406 children with coronavirus disease 2019 in china: A review, Journal of Infection 81~(2) (2020) e11--e15.
+\newblock \href {https://doi.org/10.1016/j.jinf.2020.04.030} {\path{doi:10.1016/j.jinf.2020.04.030}}.
+
+\bibitem{heavey2020evidence}
+L.~Heavey, G.~Casey, C.~Kelly, D.~Kelly, G.~McDarby, No evidence of secondary transmission of covid-19 from children attending school in ireland, 2020, Eurosurveillance 25~(21) (2020) 1--4.
+\newblock \href {https://doi.org/10.2807/1560-7917.ES.2020.25.21.2000903} {\path{doi:10.2807/1560-7917.ES.2020.25.21.2000903}}.
+
+\bibitem{vanderhoek2020role}
+W.~van~der Hoek, J.~A. Backer, R.~Bodewes, I.~Friesema, A.~Meijer, R.~Pijnacker, D.~F.~M. Reukers, C.~Reusken, I.~Roof, N.~Rots, M.~J.~M. Te~Wierik, A.~van Gageldonk-Lafeber, C.~Waegemaekers, S.~van~den Hof, \href{https://www.ntvg.nl/artikelen/de-rol-van-kinderen-de-transmissie-van-sars-cov-2}{De rol van kinderen in de transmissie van sars-cov-2}, Nederlands Tijdschrift voor Geneeskunde 164~(D5140) (2020) 1--7.
+\newline\urlprefix\url{https://www.ntvg.nl/artikelen/de-rol-van-kinderen-de-transmissie-van-sars-cov-2}
+
+\bibitem{kim2021role}
+J.~Kim, Y.~J. Choe, J.~Lee, Y.~J. Park, O.~Park, M.~S. Han, J.-H. Kim, E.~H. Choi, Role of children in household transmission of covid-19, Archives of Disease in Childhood 106~(7) (2021) 709--711.
+\newblock \href {https://doi.org/10.1136/archdischild-2020-319910} {\path{doi:10.1136/archdischild-2020-319910}}.
+
+\bibitem{ludvigsson2020children}
+J.~F. Ludvigsson, Children are unlikely to be the main drivers of the covid-19 pandemic – a systematic review, Acta Paediatrica 109~(8) (2020) 1525--1530.
+\newblock \href {https://doi.org/10.1111/apa.15371} {\path{doi:10.1111/apa.15371}}.
+
+\bibitem{grasleguen2021reopening}
+C.~{Gras-Le Guen}, R.~Cohen, J.~Rozenberg, E.~Launay, D.~Levy-Bruhl, C.~Delacourt, Reopening schools in the context of increasing covid-19 community transmission: The french experience, Archives de Pédiatrie 28~(3) (2021) 178--185.
+\newblock \href {https://doi.org/10.1016/j.arcped.2021.02.001} {\path{doi:10.1016/j.arcped.2021.02.001}}.
+
+\bibitem{riffe2021data}
+T.~Riffe, E.~Acosta, the COVerAGE-DB~team, {Data Resource Profile: COVerAGE-DB: a global demographic database of COVID-19 cases and deaths}, International Journal of Epidemiology 50~(2) (2021) 390--390f.
+\newblock \href {https://doi.org/10.1093/ije/dyab027} {\path{doi:10.1093/ije/dyab027}}.
+
+\bibitem{who2022https}
+{World Health Organization (WHO)}, \href{https://data.who.int/dashboards/covid19/data}{Who coronavirus (covid-19) dashboard}, accessed: 2024-12-17 (2022).
+\newline\urlprefix\url{https://data.who.int/dashboards/covid19/data}
+
+\bibitem{hale2021global}
+T.~Hale, N.~Angrist, R.~Goldszmidt, B.~Kira, A.~Petherick, T.~Phillips, S.~Webster, E.~Cameron-Blake, L.~Hallas, S.~Majumdar, et~al., A global panel database of pandemic policies (oxford covid-19 government response tracker), Nature human behaviour 5~(4) (2021) 529--538.
+
+\bibitem{wood2017generalized}
+S.~N. Wood, Generalized additive models: An introduction with R, CRC, Boca Raton, FL, 2017.
+
+\bibitem{wood2011fast}
+S.~N. Wood, Fast stable restricted maximum likelihood and marginal likelihood estimation of semiparametric generalized linear models, Journal of the Royal Statistical Society (B) 73~(1) (2011) 3--36.
+\newblock \href {https://doi.org/10.1111/j.1467-9868.2010.00749.x} {\path{doi:10.1111/j.1467-9868.2010.00749.x}}.
+
+\bibitem{loader2006local}
+C.~Loader, Local regression and likelihood, Springer, New York, NY, 2006.
+
+\bibitem{schreiber2000measuring}
+T.~Schreiber, Measuring information transfer, Physical Review Letters 85 (2000) 461--464.
+\newblock \href {https://doi.org/10.1103/PhysRevLett.85.461} {\path{doi:10.1103/PhysRevLett.85.461}}.
+
+\bibitem{barnett2009granger}
+L.~Barnett, A.~B. Barrett, A.~K. Seth, Granger causality and transfer entropy are equivalent for gaussian variables, Physical Review Letters 103 (2009) 2387011--2387014.
+\newblock \href {https://doi.org/10.1103/PhysRevLett.103.238701} {\path{doi:10.1103/PhysRevLett.103.238701}}.
+
+\bibitem{kissler2020symbolic}
+S.~M. Kissler, C.~Viboud, B.~T. Grenfell, J.~R. Gog, Symbolic transfer entropy reveals the age structure of pandemic influenza transmission from high-volume influenza-like illness data, Journal of the Royal Society Interface 17~(20190628) (2020) 1--9.
+\newblock \href {https://doi.org/10.1098/rsif.2019.0628} {\path{doi:10.1098/rsif.2019.0628}}.
+
+\bibitem{shannon1948mathematical}
+C.~E. Shannon, A mathematical theory of communication, The Bell System Technical Journal 27~(3) (1948) 379--423.
+\newblock \href {https://doi.org/10.1002/j.1538-7305.1948.tb01338.x} {\path{doi:10.1002/j.1538-7305.1948.tb01338.x}}.
+
+\bibitem{behrendt2019rtransferentropy}
+S.~Behrendt, T.~Dimpfl, F.~J. Peter, D.~J. Zimmermann, Rtransferentropy — quantifying information flow between different time series using effective transfer entropy, SoftwareX 10~(100265) (2019).
+\newblock \href {https://doi.org/10.1016/j.softx.2019.100265} {\path{doi:10.1016/j.softx.2019.100265}}.
+
+\bibitem{unesco2022https}
+{United Nations Educational, Scientific and Cultural Organization (UNESCO)}, \href{https://webarchive.unesco.org/web/20220629024039/https://en.unesco.org/sites/default/files/duration_school_closures.csv}{Global monitoring of school closures}, accessed: 2024-12-17 (2022).
+\newline\urlprefix\url{https://webarchive.unesco.org/web/20220629024039/https://en.unesco.org/sites/default/files/duration_school_closures.csv}
+
+\bibitem{li2020role}
+X.~Li, W.~Xu, M.~Dozier, Y.~He, A.~Kirolos, E.~Theodoratou, et~al., The role of children in transmission of sars-cov-2: A rapid review, Journal of Global Health 10~(1) (2020) 1--10.
+\newblock \href {https://doi.org/10.7189/jogh.10.011101} {\path{doi:10.7189/jogh.10.011101}}.
+
+\bibitem{soriano2023policies}
+A.~Soriano-Arandes, A.~Brett, D.~Buonsenso, L.~Emilsson, I.~de~la Fuente~Garcia, D.~Gkentzi, O.~Helve, K.~P. Kepp, M.~Mossberg, T.~Muka, et~al., Policies on children and schools during the sars-cov-2 pandemic in western europe, Frontiers in public health 11 (2023) 1175444.
+
+\bibitem{alfano2020efficacy}
+V.~Alfano, S.~Ercolano, The efficacy of lockdown against covid-19: A cross-country panel analysis, Applied Health Economics and Health Policy 18 (2020) 509--517.
+\newblock \href {https://doi.org/10.1007/s40258-020-00596-3} {\path{doi:10.1007/s40258-020-00596-3}}.
+
+\bibitem{molefi2021impact}
+M.~Molefi, J.~T. Tlhakanelo, T.~Phologolo, S.~G. Hamda, T.~Masupe, B.~Tsima, V.~Setlhare, Y.~Mashalla, D.~J. Wiebe, et~al., The impact of china’s lockdown policy on the incidence of covid-19: An interrupted time series analysis, BioMed Research International 2021 (2021).
+\newblock \href {https://doi.org/10.1155/2021/9498029} {\path{doi:10.1155/2021/9498029}}.
+
+\end{thebibliography}

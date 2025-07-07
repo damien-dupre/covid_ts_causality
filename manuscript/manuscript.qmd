@@ -1,53 +1,48 @@
 ---
 title: "Divergent Impacts of COVID-19 School Closures on Youth Infection Dynamics: Evidence from 12 European Countries"
 
-format:
-  wiley-njd-pdf:
-    article-type: "Article Type: Research Article"
-    # received: "10 November 2024"
-    # revised: "10 November 2024"
-    # accepted: "1 January 2025"
-    journal: "Journal of Policy Analysis and Management"
-    volume: "00"
-    copy-year: 2025
-    start-page: 1
+format: docx
+  # elsevier-pdf:
+  #   keep-tex: true
+  
 
-    titlemark: "COVID-19 School Closures and Youth Infection Dynamics"
-    authormark: "Dupré and Morgenroth"
-    
-    keywords:
-      - COVID-19
-      - School closures
-      - Intergenerational transmission
-      - Non-linear effects
-      - Infection dynamics.
+# author:
+#   - name: Damien Dupré
+#     email: damien.dupre@dcu.ie
+#     corresponding: true
+#     affiliations:
+#       - name: Dublin City University
+#         department: Business School
+#         city: Dublin
+#         country: Ireland
+# 
+#   - name: Edgar Morgenroth
+#     email: edgar.morgenroth@dcu.ie
+#     affiliations:
+#       - name: Dublin City University
+#         department: Business School
+#         city: Dublin
+#         country: Ireland
+# 
+# present-address: |
+#   DCU Business School, Dublin 9, Ireland.
 
 author:
-  - name: Damien Dupré
-    email: damien.dupre@dcu.ie
-    corresponding: true
-    affiliations:
-      - name: Dublin City University
-        department: Business School
-        city: Dublin
-        country: Ireland
-
-  - name: Edgar Morgenroth
-    email: edgar.morgenroth@dcu.ie
-    affiliations:
-      - name: Dublin City University
-        department: Business School
-        city: Dublin
-        country: Ireland
-
-present-address: |
-  DCU Business School, Dublin 9, Ireland.
+  - name: Anonymous Authors
 
 abstract: |
   The effectiveness of school closures as a COVID-19 control measure remains a subject of debate. This paper critically reassesses their impact by examining infection trends across various age groups in 12 European countries. We apply a dual analytical approach: Generalised Additive Models (GAMs) are used to capture complex, non-linear effects of closures on age-specific case numbers, while Transfer Entropy (TE) is employed to quantify directional transmission patterns between these age groups. Our findings reveal deviations from commonly held assumptions. While school closures were associated with a non-linear decline in overall national COVID-19 cases, the effects on children and young adults varied considerably. A consistent downward trend in infections was seen only in the pre-school age group. In contrast, school-aged children experienced a marked rise in COVID-19 cases following an initial period of stability or slight decrease after closures began. The Transfer Entropy analysis also identified asymmetric, directional patterns in transmission, revealing that infection trends in specific age groups could predict subsequent changes in others. These results challenge the assumption that school closures uniformly benefit younger populations and emphasise the need for age-specific analysis in pandemic planning and support the development of more nuanced, evidence-based public health policies.
-pdf-engine: lualatex
+
 keep-tex: true
 bibliography: bibliography.bib
+csl: https://www.zotero.org/styles/apa
+
+keywords:
+  - COVID-19
+  - School closures
+  - Intergenerational transmission
+  - Non-linear effects
+  - Infection dynamics.
 ---
 
 ```{r}
@@ -304,7 +299,7 @@ None declared.
 
 ## Data Availability
 
-The data can be accessed from the COVerAGE-DB OSF repository (https://osf.io/mpwjq/), from the Oxford Covid-19 Government Response Tracker (OxCGRT) "covid-policy-dataset" GitHub repository (https://github.com/OxCGRT/covid-policy-dataset), and from the UNESCO servers (https://en.unesco.org/file/unesco-data-school-closures-february-2020-june-2022csv-zip). All preprocessing, analyses and code used to build the submitted paper are available at https://github.com/damien-dupre/covid_ts_causality.
+The data can be accessed from the COVerAGE-DB OSF repository (https://osf.io/mpwjq/), from the Oxford Covid-19 Government Response Tracker (OxCGRT) "covid-policy-dataset" GitHub repository (https://github.com/OxCGRT/covid-policy-dataset), and from the UNESCO servers (https://en.unesco.org/file/unesco-data-school-closures-february-2020-june-2022csv-zip). All preprocessing, analyses and code used to build the submitted paper are available at [URL hidden for anonymous peer-review].
 
 # References
 

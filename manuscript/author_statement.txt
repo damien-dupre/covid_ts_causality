@@ -1,0 +1,14 @@
+Conceptualization: Damien Dupré & Edgar Morgenroth
+Data curation: Damien Dupré
+Formal analysis: Damien Dupré
+Funding acquisition: Damien Dupré & Edgar Morgenroth
+Investigation: Damien Dupré & Edgar Morgenroth
+Methodology: Damien Dupré & Edgar Morgenroth
+Project administration:
+Resources: Damien Dupré & Edgar Morgenroth
+Software: Damien Dupré
+Supervision: Damien Dupré & Edgar Morgenroth
+Validation: Damien Dupré & Edgar Morgenroth
+Visualization: Damien Dupré
+Writing - original draft: Damien Dupré & Edgar Morgenroth
+Writing - review and editing: Damien Dupré & Edgar Morgenroth

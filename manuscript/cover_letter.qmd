@@ -1,0 +1,29 @@
+---
+title: "Submission to the Journal of Health Economics"
+
+format: pdf
+---
+
+Dear editors of the Journal of Health Economics,
+
+
+
+Please find enclosed our manuscript for consideration for publication in the Journal of Health Economics, entitled “Divergent Impacts of COVID-19 School Closures on Youth Infection Dynamics: Evidence from 12 European Countries”.
+
+This study offers an examination of how school closures influenced COVID-19 infection trends across different age groups in twelve European countries. By employing rigorous analytical methods, including Generalised Additive Models (GAM) and Transfer Entropy (TE), we aim to provide valuable insights into the role of age-specific public health interventions in shaping infection dynamics during the pandemic.
+
+Our analysis reveals that the effectiveness of school closures varies not only across national contexts but also between age groups. We find that while the youngest children (ages 0 to 4) consistently experienced a reduction in infections following closures, the 5 to 14 age group saw a marked increase in cases. Among youth aged 15 to 24, a short-term surge was followed by a subsequent decline. Furthermore, our use of Transfer Entropy exposes asymmetrical relationships between age cohorts, highlighting how infection trends in one group can predict changes in another, thereby informing a more nuanced understanding of pandemic spread and policy impact.
+
+We believe this research makes a timely and policy-relevant contribution to the field of public administration by offering evidence-based insights into how targeted interventions may yield differential effects. Our findings carry important implications for the design and evaluation of public health policies, particularly those aimed at mitigating the impact of communicable diseases in varied demographic groups.
+
+All authors declare that there are no conflicts of interest, whether financial, personal or professional, that could be seen to influence the outcomes of this research. The manuscript has not been published, accepted or submitted elsewhere, and we have fully complied with ethical standards in data handling and manuscript preparation. We have not discussed this submission with any member of the editorial board prior to this submission.
+
+The authors of this study are:
+
+- Damien Dupré (corresponding author), Dublin City University, damien.dupre@dcu.ie
+- Edgar Morgenroth, Dublin City University, edgar.morgenroth@dcu.ie
+
+Should you have any questions regarding our submission, please do not hesitate to contact me directly. We appreciate your time and consideration, and we look forward to the opportunity to contribute to the ongoing scholarly dialogue through the Journal of Health Economics.
+
+Yours sincerely,
+Damien Dupré
